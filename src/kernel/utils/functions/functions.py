@@ -40,14 +40,16 @@ class gauss_kernel():
         return self.compute(x,y)
         
     def compute(self, x,y):
-        if len(x.shape) ==1 or len(x.shape)==1: #np.array([x1,x2,...,xn]) 
-            raise ValueError(f"operands should be numpy 2d-array: shape of x:{x.shape}, y:{y.shape}.")
+        if len(x.shape) ==1:
+            x = np.array([x]) # convert [x,x] to [[x,x]]
+        if len(y.shape) ==1:
+            y = np.array([y]) # convert [y,y] to [[y,y]]
         
         dim = x.shape[1]
         log_pdf = -1*euclidean_distances(x,y)/(2*(self.sigma**2))
         val =  np.exp(log_pdf) /((2*np.pi*self.sigma**2)**(dim/2.))
         """
-                                    np.exp(log_pdf) 
+                               np.exp(log_pdf) 
             val  =  -----------------------------------------
                       ((2*np.pi*self.sigma**2)**(dim/2.))
         
