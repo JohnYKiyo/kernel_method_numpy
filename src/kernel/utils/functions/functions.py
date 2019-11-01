@@ -32,17 +32,25 @@ def get_band_width(d, method='median'):
     
     return sigma
 
-
 class gauss_kernel():
     def __init__(self,sigma):
-        self.sigma = sigma
-        
+        self.sigma = sigma # not covariance matrix
+            
     def __call__(self,x,y):
         return self.compute(x,y)
-    
-    def compute(self, x,y):
-        if x.shape != y.shape:
-            raise ValueError(f"operands could not be broadcast together with shapes {x.shape} {y.shape}")
         
-        p = scp.stats.multivariate_normal.pdf(x,y,self.sigma)
-        return p
+    def compute(self, x,y):
+        if len(x.shape) ==1 or len(x.shape)==1: #np.array([x1,x2,...,xn]) 
+            raise ValueError(f"operands should be numpy 2d-array: shape of x:{x.shape}, y:{y.shape}.")
+        
+        dim = x.shape[1]
+        log_pdf = -1*euclidean_distances(x,y)/(2*(self.sigma**2))
+        val =  np.exp(log_pdf) /((2*np.pi*self.sigma**2)**(dim/2.))
+        """
+                                    np.exp(log_pdf) 
+            val  =  -----------------------------------------
+                      ((2*np.pi*self.sigma**2)**(dim/2.))
+        
+        """
+        #val = scp.stats.multivariate_normal.pdf(x,y,self.sigma)
+        return val
