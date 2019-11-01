@@ -27,6 +27,8 @@ class KernelMean():
         """
         input shuld be numpy 2d-array. np.array([[x,x,x,x], [...] ,... ,[...]])
         """
+        if len(val.shape)==1: # np.array([x,x]):shape (2,)
+            val = np.array([val])
         kernel = gauss_kernel(self.sigma)
         weighted_val = np.dot(kernel(val,self.x),self.p.T)
         return weighted_val
