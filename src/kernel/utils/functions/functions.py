@@ -46,7 +46,7 @@ class gauss_kernel():
             y = np.array([y]) # convert [y,y] to [[y,y]]
         
         dim = x.shape[1]
-        log_pdf = -1*euclidean_distances(x,y)/(2*(self.sigma**2))
+        log_pdf = -1*euclidean_distances(x,y,squared=True)/(2*(self.sigma**2))
         val =  np.exp(log_pdf) /((2*np.pi*self.sigma**2)**(dim/2.))
         """
                                np.exp(log_pdf) 
