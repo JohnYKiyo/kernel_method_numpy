@@ -86,8 +86,19 @@ class KernelHerding():
                     args['jac'] = lambda x: -1*(self._kernel_gradient_from_samples(x, self.KM.x.values))
             else:
                 raise ValueError(f'jac is not defined. The gradient is needed when using [CG, BFGS, l-bfgs-b,tnc, slsqp]')
-                     
-        optimize_result = scp.optimize.minimize(h, **args)
+ 
+        mins = self.KM.x.min() - 3*self.KM.x.std()
+        maxs = self.KM.x.max() + 3*self.KM.x.std()
+
+        optimize_fail = True
+        while optimize_fail:
+            optimize_result = scp.optimize.minimize(h, **args)
+            if not optimize_result.success or (optimize_result.x < mins).all() or (optimize_result.x > maxs).all():
+                args['x0'] = kM.x.sample().values
+                continue
+
+            optimize_fail = False
+
         return optimize_result
     
     def _optimizer_TPE(self, h, **args):
