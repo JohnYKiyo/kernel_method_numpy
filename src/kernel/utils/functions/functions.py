@@ -46,7 +46,7 @@ class gauss_kernel():
             y = np.array([y]) # convert [y,y] to [[y,y]]
         
         dim = x.shape[1]
-        log_pdf = -1*euclidean_distances(x,y)/(2*(self.sigma**2))
+        log_pdf = -1*euclidean_distances(x,y,squared=True)/(2*(self.sigma**2))
         val =  np.exp(log_pdf) /((2*np.pi*self.sigma**2)**(dim/2.))
         """
                                np.exp(log_pdf) 
@@ -54,5 +54,36 @@ class gauss_kernel():
                       ((2*np.pi*self.sigma**2)**(dim/2.))
         
         """
-        #val = scp.stats.multivariate_normal.pdf(x,y,self.sigma)
         return val
+   
+    def grad(self, x, y):
+        if len(x.shape) ==1:
+            x = np.array([x]) #convert [x,x,...,x] to [[x,x,...,x]
+        if len(y.shape) ==1:
+            y = np.array([y]) #convert [y,y,...,y] to [[y,y,...,y]]
+    
+        dim = x.shape[1]
+        Nx_Samples = x.shape[0]
+        Ny_Samples = y.shape[0]
+    
+        #compute kernels at each sample
+        k = self.compute(x,y)
+        #repeat kernels at each sample 'dim' times in order to calculate element wise product for gradient.
+        V = np.reshape(np.tile(k,dim), (Nx_Samples, dim, Ny_Samples) )
+        """
+       
+                                       np.exp(log_pdf) 
+          V_{k,d,i}   =  -----------------------------------------
+                            ((2*np.pi*self.sigma**2)**(dim/2.))
+   
+        """
+    
+        #compute element wise differences at each sample
+        W = -1*(x.reshape(Nx_Samples, 1, dim) - y).transpose(0, 2, 1) / (self.sigma**2)
+        """
+                           - (x^d_k - y^d_i)
+            W_{k,d,i} =  ---------------------
+                               sigma**2
+        """
+        return W*V
+
