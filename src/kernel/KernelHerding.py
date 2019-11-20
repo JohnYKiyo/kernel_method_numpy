@@ -52,7 +52,7 @@ class KernelHerding():
         
         if optimizer =='scipy_optim':
             optimize_result = self._optimizer_scipy(minus_h,**args)
-            return optimize_result.x
+            return optimize_result.x.squeeze()
         
         if optimizer =='optuna':
             optimize_result = self._optimizer_TPE(minus_h, **args)
@@ -70,42 +70,40 @@ class KernelHerding():
         return np.average(self.kernel(x,self.samples),axis=1)
     
     def _kernel_gradient_from_samples(self,x,samples):
-        return np.average(self.kernel.grad(x,samples), axis=2)
+        return np.average(self.kernel.grad(x,samples), axis=2).squeeze()
     
-    def _optimizer_scipy(self, h, **args):
+    def _optimizer_scipy(self, h, derivatives=False,**args):
         if 'x0' not in args:
             args['x0'] = np.zeros_like(self.KM.x.loc[0])
         if 'method' not in args:
             args['method'] = 'Powell'
             
-        if 'jac' in args:
-            if args['jac'] == 'grad':            
-                if hasattr(self,'samples'):
-                    args['jac'] = lambda x: -1*(self._kernel_gradient_from_samples(x, self.KM.x.values) - self._kernel_gradient_from_samples(x,self.samples))
-                else:
-                    args['jac'] = lambda x: -1*(self._kernel_gradient_from_samples(x, self.KM.x.values))
+        if derivatives:
+            if hasattr(self,'samples'):
+                args['jac'] = lambda x: -1*(self._kernel_gradient_from_samples(x, self.KM.x.values) - self._kernel_gradient_from_samples(x,self.samples))
             else:
-                raise ValueError(f'jac is not defined. The gradient is needed when using [CG, BFGS, l-bfgs-b,tnc, slsqp]')
+                args['jac'] = lambda x: -1*(self._kernel_gradient_from_samples(x, self.KM.x.values))
+            #else:
+            #    raise ValueError(f'derivatives is not defined. The gradient is needed when using [CG, BFGS, l-bfgs-b,tnc, slsqp]')
  
-        mins = self.KM.x.min() - 3*self.KM.x.std()
-        maxs = self.KM.x.max() + 3*self.KM.x.std()
+        mins = (self.KM.x.min() - 3*self.KM.sigma).values  ## in the future, np.diag(sigma)
+        maxs = (self.KM.x.max() + 3*self.KM.sigma).values  ## in the future, np.diag(sigma)
 
         optimize_fail = True
         while optimize_fail:
             optimize_result = scp.optimize.minimize(h, **args)
-            if not optimize_result.success or (optimize_result.x < mins).all() or (optimize_result.x > maxs).all():
-                args['x0'] = kM.x.sample().values
+            if not optimize_result.success or (optimize_result.x < mins).any() or (optimize_result.x > maxs).any():
+                args['x0'] = self.KM.x.sample().values
                 continue
 
             optimize_fail = False
-
         return optimize_result
     
     def _optimizer_TPE(self, h, **args):
         dim = self.KM.x.shape[1]
         #min max of feature values
-        mins = self.KM.x.min() - 3*self.KM.x.std()
-        maxs = self.KM.x.max() + 3*self.KM.x.std()
+        mins = (self.KM.x.min() - 3*self.KM.sigma).values  ## in the future, np.diag(sigma)
+        maxs = (self.KM.x.max() + 3*self.KM.sigma).values  ## in the future, np.diag(sigma)
         
         if 'n_trials' not in args:
             args['n_trials'] = 100
