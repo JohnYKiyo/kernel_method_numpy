@@ -17,7 +17,7 @@ def get_band_width(d, method='median'):
         sigma = np.median(np.sqrt(K)) #最頻する距離で正規化するためにmedian取ってる
         
     elif method in ['silverman', 'scott']:
-        factor = 1.06 if method == 'silverman' else 0.9
+        factor = 1.06 if method == 'scott' else 0.9
         distances_from_mean = euclidean_distances(d,[d.mean(axis=0)], squared=False)
         std = np.sqrt(np.square(distances_from_mean).mean())
         sig = min(std,\
