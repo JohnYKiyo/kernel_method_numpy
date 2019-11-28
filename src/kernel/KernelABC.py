@@ -6,19 +6,23 @@ import numpy as np
 import pandas as pd
 
 class KernelABC():
-    def __init__(self,Dataset,sigma=None):
+    def __init__(self,Dataset,sigma_y=None,sigma_para=None):
         if not isinstance(Dataset,ABCDataSet):
             TypeError(f'Type is not ABCDataSet type.')
         
         self.Dataset = Dataset
-        self.sigma = sigma
-        if isinstance(sigma,str):
-            self.sigma = get_band_width(self.Dataset.prior_data.values,method=sigma)
+        self.sigma_y = sigma_y
+        if isinstance(sigma_y,str):
+            self.sigma_y = get_band_width(self.Dataset.prior_data.values,method=sigma_y)
+
+        self.sigma_para = sigma_para
+        if isinstance(sigma_para,str):
+            self.sigma_para = get_band_width(self.Dataset.parameters.values,method=sigma_para)
         
-        self.kernel = gauss_kernel(self.sigma)
+        self.kernel = gauss_kernel(self.sigma_y)
         self.n_theta_set = self.Dataset.parameters.shape[0]
         self.epsilon = 0.01/np.sqrt(self.n_theta_set)
-        self.gram = gram_matrix(self.Dataset.prior_data.values,self.sigma)
+        self.gram = gram_matrix(self.Dataset.prior_data.values,self.sigma_y)
         
         self._kernel_ridge_regression()
         
@@ -37,4 +41,4 @@ class KernelABC():
                             columns=self.Dataset.parameter_keys,index=['mean'])
     
     def posterior_kernel(self):
-        return KernelMean(sigma=self.sigma,weights=self.w,x=self.Dataset.parameters)
+        return KernelMean(sigma=self.sigma_para,weights=self.w.squeeze(),x=self.Dataset.parameters)
