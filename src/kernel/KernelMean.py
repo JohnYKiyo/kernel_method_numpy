@@ -19,6 +19,8 @@ class KernelMean():
             
         self.p = np.array([np.full(len(self.x),1./len(self.x))])
         if weights is not None:
+            if len(weights) != len(self.x):
+                raise ValueError(f'length of weights should be {len(self.x)}')
             self.p = np.array([weights/np.sum(weights)])
                     
         self.mu_p = lambda val: self._compute_kernel_from_samples(val)
