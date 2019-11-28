@@ -35,19 +35,23 @@ def get_band_width(d, method='median'):
 class gauss_kernel():
     def __init__(self,sigma):
         self.sigma = sigma # not covariance matrix
-            
+       
     def __call__(self,x,y):
         return self.compute(x,y)
-        
-    def compute(self, x,y):
+
+    def compute(self, x,y,normalize=True):
         if len(x.shape) ==1:
             x = np.array([x]) # convert [x,x] to [[x,x]]
         if len(y.shape) ==1:
             y = np.array([y]) # convert [y,y] to [[y,y]]
         
-        dim = x.shape[1]
+        nom_factor = 1
+        if normalize:
+            dim = x.shape[0]
+            nom_factor = self._normalize_factor(dim)
+
         log_pdf = -1*euclidean_distances(x,y,squared=True)/(2*(self.sigma**2))
-        val =  np.exp(log_pdf) /((2*np.pi*self.sigma**2)**(dim/2.))
+        val =  np.exp(log_pdf) / nom_factor
         """
                                np.exp(log_pdf) 
             val  =  -----------------------------------------
@@ -55,6 +59,9 @@ class gauss_kernel():
         
         """
         return val
+
+    def _normalize_factor(self,d):
+        return (2*np.pi*self.sigma**2)**(d/2.)
    
     def grad(self, x, y):
         if len(x.shape) ==1:
@@ -87,3 +94,11 @@ class gauss_kernel():
         """
         return W*V
 
+class gram_matrix(gauss_kernel):
+    def __init__(self,x,sigma):
+        super().__init__(sigma)
+        self.gram_matrix = self.compute(x,x,normalize=False)
+        self.normalize_factor = self._normalize_factor(x.shape[0])
+
+    def __call__(self):
+        return self.gram_matrix 
