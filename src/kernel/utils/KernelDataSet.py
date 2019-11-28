@@ -11,6 +11,7 @@ class KernelDataSet_for_ABC():
         if not (isinstance(parameter_keys, list) and isinstance(data_key, list)):
             raise TypeError(f'Type of keys should be list.')
         self.row_samples = prior_samples
+        self.row_obs = observed_samples
         self.parameter_keys = parameter_keys
         self.data_key = data_key
         self._duplicate_parameter(prior_samples, observed_samples, parameter_keys, data_key)
@@ -23,7 +24,7 @@ class KernelDataSet_for_ABC():
         if not (isinstance(parameter_keys, list) and isinstance(data_key, list)):
             raise TypeError(f'Type of keys should be list.')
         
-        self._duplicate_parameter(self.row_samples,parameter_keys,data_key)
+        self._duplicate_parameter(self.row_samples, self.row_obs, parameter_keys, data_key)
         self.data_key = data_key
         self.parameter_keys = parameter_keys
         
