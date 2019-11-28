@@ -11,10 +11,9 @@ class KernelDataSet_for_ABC():
         if not (isinstance(parameter_keys, list) and isinstance(data_key, list)):
             raise TypeError(f'Type of keys should be list.')
         self.row_samples = prior_samples
-        self.observed_samples = observed_samples
         self.parameter_keys = parameter_keys
         self.data_key = data_key
-        self._duplicate_parameter(prior_samples,parameter_keys,data_key)
+        self._duplicate_parameter(prior_samples, observed_samples, parameter_keys, data_key)
     
     def reset_keys(self,parameter_keys=None, data_key=None):
         if data_key is None:
@@ -29,12 +28,15 @@ class KernelDataSet_for_ABC():
         self.parameter_keys = parameter_keys
         
     def _duplicate_parameter(self, 
-                             prior_samples, 
+                             prior_samples,
+                             observed_samples,
                              parameter_keys,
                              data_key):
         duplicates_df = prior_samples[parameter_keys].drop_duplicates().reset_index(drop=True)
         duplicates_df.index.names = ['para_idx']
-        self.paramseters = duplicates_df
+        self.parameters = duplicates_df
+        
+        self.observed_samples = observed_samples.loc[:,data_key].T
         
         tmp = pd.DataFrame()
         for i,row in duplicates_df.iterrows():
