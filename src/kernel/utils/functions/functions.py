@@ -17,7 +17,7 @@ def get_band_width(d, method='median'):
         sigma = np.median(np.sqrt(K)) #最頻する距離で正規化するためにmedian取ってる
         
     elif method in ['silverman', 'scott']:
-        factor = 1.06 if method == 'scott' else 0.9
+        factor = 1.06 if method == 'silverman' else 1.0
         distances_from_mean = euclidean_distances(d,[d.mean(axis=0)], squared=False)
         std = np.sqrt(np.square(distances_from_mean).mean())
         sig = min(std,\
@@ -31,6 +31,16 @@ def get_band_width(d, method='median'):
         raise ValueError(f"method should be ['median', 'silverman', 'scott', 'LSCV']")
     
     return sigma
+
+    '''
+    in future.
+    H = diag(h_1,h_2,...,h_d)
+    and \Sigma = diag(\sigma_1,...,\sigma_d)
+    
+    so, j-th band width is 
+    h_j = (4/(j+2))**(1/(d+1)) * n**(-1/(d+1)) * sig_j
+    ref: Wolfgang Karl et al., "Nonparametric and Semiparametric Models", 2012
+    '''
 
 class gauss_kernel():
     def __init__(self,sigma):
