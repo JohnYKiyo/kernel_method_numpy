@@ -1,6 +1,6 @@
-from .utils.progressbar import progbar
-from .utils.functions import gauss_kernel
-from .KernelMean import KernelMean
+from ..utils.progressbar import progbar
+from ..utils.functions import gauss_kernel
+from ..KernelMean import KernelMean
 
 import scipy as scp
 import numpy as np
