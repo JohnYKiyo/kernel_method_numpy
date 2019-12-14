@@ -2,6 +2,14 @@ from sklearn.metrics.pairwise import euclidean_distances
 import numpy as np
 import scipy as scp
 
+def convert_array(x):
+    if isinstance(x,list):
+        x = np.array(x)
+    
+    if len(x.shape) ==1:
+        x = np.array([x]) # convert [x_1,x_2] to [[x_1,x_2]] d is dimention
+    return x
+
 def get_band_width(d, method='median'):
     '''
     Determine bandwidth of gaussian kernel. 
@@ -11,7 +19,7 @@ def get_band_width(d, method='median'):
         - Scott heuristic
         - LSCV
     '''
-    
+    ndim = d.shape[1]    
     if method == 'median':
         K = euclidean_distances(d, squared=True) #データ間のユークリッド距離を総当たり的に求めてる
         sigma = np.median(np.sqrt(K)) #最頻する距離で正規化するためにmedian取ってる
@@ -50,11 +58,8 @@ class gauss_kernel():
         return self.compute(x,y)
 
     def compute(self, x,y,normalize=True):
-        if len(x.shape) ==1:
-            x = np.array([x]) # convert [x,x] to [[x,x]]
-        if len(y.shape) ==1:
-            y = np.array([y]) # convert [y,y] to [[y,y]]
-        
+        x,y = convert_array(x), convert_array(x)
+
         nom_factor = 1
         if normalize:
             dim = x.shape[0]
