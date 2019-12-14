@@ -1,4 +1,4 @@
-from ..utils.progressbar import progbar
+from ...utils.progressbar import progbar
 import numpy as np
 
 class Metropolis():
@@ -17,7 +17,7 @@ class Metropolis():
     ndim : sample's dimention
     proposal_std : proposal distribution std
     sample_rate : Interval for thinning samples
-    buff : Number of ignore initial samples
+    T : Number of ignore initial samples
     '''
     def __init__(self, f, ndim, proposal_std=1., sample_rate=1):
         self.f = f
@@ -25,10 +25,10 @@ class Metropolis():
         self.proposal_std = proposal_std
         self.sample_rate = sample_rate
     
-    def __call__(self,N,buff=0):
-        return self.sampling(N,buff)
+    def __call__(self,N,T=0):
+        return self.sampling(N,T)
     
-    def sampling(self,sample_size, buff_size=0):
+    def sampling(self,sample_size, T=0):
         x = np.zeros(self.ndim)
         samples = []
         for i in range(sample_size*self.sample_rate):
@@ -45,4 +45,4 @@ class Metropolis():
                 
             if i % self.sample_rate == 0:
                 samples.append(x)
-        return np.array(samples[buff_size:])
+        return np.array(samples[T:])
