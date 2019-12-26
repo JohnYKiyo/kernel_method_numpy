@@ -52,6 +52,9 @@ inv_cov:
 >probability density function estimated by gauss kernel functions.  
 if normalize is False, normalize factor = 1.
 <img src="https://latex.codecogs.com/gif.latex?pdf(x,y)=\frac{\exp\{-0.5(x-y)^T&space;Q&space;(x-y)\}}{\sqrt{2\pi^d|\Sigma|}}"/>   
+>x,y: 2D-array: (N_x X N_features) matrix or
+>1D-array: [x_1,x_2,...,x_n] input is treated as 1-dimensional data: [[x_1],[x_2],...,[x_n]]     
+>*return*: (N_x X N_y) matrix.
 
 *logpdf(x,y,normalize=False)*:   
 >Log pdf
