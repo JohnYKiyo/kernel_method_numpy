@@ -46,7 +46,7 @@ cov:
 >The covariance matrix of dataset, scaled by the calculated bandwidth. $\Sigma$   
 
 inv_cov:
->The inverse of covariance: <img src="https://latex.codecogs.com/gif.latex?Q"/
+>The inverse of covariance: <img src="https://latex.codecogs.com/gif.latex?Q"/>
 
 *pdf(x,y,normalize=False)*:   
 >probability density function estimated by gauss kernel functions.  
