@@ -35,7 +35,7 @@ inv_cov:
 **Parameters:**    
 
 covariance: array_like
->2D-array: Covariance matrix <img src="https://latex.codecogs.com/gif.latex?\Sigma"/>
+>2D-array: Covariance matrix <img src="https://latex.codecogs.com/gif.latex?\Sigma"/>   
 The covariance matrix of dataset, scaled by the calculated bandwidth.   
  
 n_features: int   
@@ -43,21 +43,21 @@ n_features: int
  
 **Attributes:**    
 cov:   
->The covariance matrix of dataset, scaled by the calculated bandwidth. $\Sigma$   
+>The covariance matrix of dataset, scaled by the calculated bandwidth. <img src="https://latex.codecogs.com/gif.latex?\Sigma"/>   
 
 inv_cov:
 >The inverse of covariance: <img src="https://latex.codecogs.com/gif.latex?Q"/>
 
 *pdf(x,y,normalize=False)*:   
 >probability density function estimated by gauss kernel functions.  
-if normalize is False, normalize factor = 1.
+if normalize is False, normalize factor = 1.   
 <img src="https://latex.codecogs.com/gif.latex?pdf(x,y)=\frac{\exp\{-0.5(x-y)^T&space;Q&space;(x-y)\}}{\sqrt{2\pi^d|\Sigma|}}"/>   
->x,y: 2D-array: (N_x X N_features) matrix or
+>x,y: 2D-array: (N_x , N_features) matrix or
 >1D-array: [x_1,x_2,...,x_n] input is treated as 1-dimensional data: [[x_1],[x_2],...,[x_n]]     
->*return*: (N_x X N_y) matrix.
+>*return*: (N_x , N_y) matrix.   
 
 *logpdf(x,y,normalize=False)*:   
->Log pdf
+>ln(pdf)    
 <img src="https://latex.codecogs.com/gif.latex?logpdf(x,y)=-0.5(x-y)^T&space;Q&space;(x-y)-\log\left(\sqrt{2\pi^d|\Sigma|}\right)"/>   
 
 norm_factor: 
