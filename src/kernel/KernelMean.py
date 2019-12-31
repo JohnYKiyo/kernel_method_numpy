@@ -1,36 +1,39 @@
-from .utils.functions import get_band_width, gauss_kernel
+from .utils.functions import gauss_kernel
 
 import numpy as np
 import pandas as pd
 
 class KernelMean():
     """ 
-    input: x is pandas dataframe
+    input: data is pandas dataframe
     """
-    def __init__(self, x, sigma='median', weights=None):
-        if isinstance(x,pd.DataFrame):
-            self.x = x 
+    def __init__(self, data, cov, weights=None):
+        if isinstance(data,pd.DataFrame):
+            self.data = data
         else:
-            self.x = pd.DataFrame(x)
-            
-        self.sigma = sigma
-        if isinstance(sigma,str):
-            self.sigma = get_band_width(self.x.values,sigma)
-            
-        self.p = np.array([np.full(len(self.x),1./len(self.x))])
+            self.data = pd.DataFrame(data)
+        self._n_samples, self._n_features = self.data.shape
+        self._cov = cov
+        
+        self._weights = np.atleast_1d(np.full(self._n_samples,1./self._n_samples))
         if weights is not None:
-            if len(weights) != len(self.x):
-                raise ValueError(f'length of weights should be {len(self.x)}')
-            self.p = np.array([weights/np.sum(weights)])
-                    
-        self.mu_p = lambda val: self._compute_kernel_from_samples(val)
-          
-    def _compute_kernel_from_samples(self, val):
+            if len(weights) != self._n_samples:
+                raise ValueError(f'length of weights should be {self._n_samples}')
+            self._weights = np.atleast_1d(weights/np.sum(weights))
+
+        self.kernel = gauss_kernel(covariance=self._cov, n_features=self._n_features)
+
+    @property
+    def weights(self):
+        return self._weights
+
+    def kernel_mean(self, val,normalize=False):
         """
         input shuld be numpy 2d-array. np.array([[x,x,x,x], [...] ,... ,[...]])
         """
-        if len(val.shape)==1: # np.array([x,x]):shape (2,)
-            val = np.array([val])
-        kernel = gauss_kernel(self.sigma)
-        weighted_val = np.dot(kernel(val,self.x),self.p.T)
-        return weighted_val
+        val = np.atleast_2d(val)
+        return np.average(self.kernel.pdf(x=val, y=self.data, normalize=normalize),weights=self._weights, axis=1)
+        #return np.dot(self.kernel.pdf(x=val, y=self.x, normalize=True), np.atleast_2d(self._weights).T) #-> (NxF) x (Fx1)=(Nx1)
+    
+    def __call__(self,val):
+        return self.kernel_mean(val)

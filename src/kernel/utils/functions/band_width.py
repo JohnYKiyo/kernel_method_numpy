@@ -158,7 +158,7 @@ class band_width():
             del lcv
 
     def __call__(self):
-        return self.bandwidth(save_dim=True)
+        return self.bandwidth(save_dim=False,squared=False)
 
     def bandwidth(self, save_dim=False,squared=True):
         '''
@@ -172,7 +172,7 @@ class band_width():
         if squared:
             val = np.sqrt(val)
 
-        return np.sqrt(val)
+        return val
 
     @property
     def cov(self):
