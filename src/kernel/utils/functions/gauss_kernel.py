@@ -57,6 +57,9 @@ class gauss_kernel():
     @property
     def inv_cov(self):
         return self._inv_cov
+    @property
+    def n_features(self):
+        return self._n_features
 
     def grad_logpdf(self, x,y):
         """
