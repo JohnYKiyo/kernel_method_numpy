@@ -6,13 +6,13 @@ import numpy as np
 import pandas as pd
 
 class KernelABC():
-    def __init__(self,Dataset,cov_y=None,cov_para=None):
+    def __init__(self,Dataset,cov_y=None,cov_para=None,delta=0.01):
         if not isinstance(Dataset,ABCDataSet):
             TypeError(f'Type is not ABCDataSet type.')
 
         self.Dataset = Dataset
         self.n_para_set = self.Dataset.parameters.shape[0]
-        self._epsilon = 0.01/np.sqrt(self.n_para_set)
+        self._epsilon = delta/np.sqrt(self.n_para_set)
 
         self.cov_y = cov_y
         if isinstance(cov_y,str):
@@ -33,7 +33,7 @@ class KernelABC():
         k_y = self.kernel_y.pdf(self.Dataset.prior_data.values,
                                 self.Dataset.observed_samples.values,False)
         w = np.dot(np.linalg.inv(G_NeI), k_y)
-        w = w/w.sum()
+        #w = w/w.sum()
         self._w = w
         self._G_NeI = G_NeI
         self._k_key = k_y
@@ -51,6 +51,9 @@ class KernelABC():
     @property
     def posterior_kernel(self):
         return self._post_para_kernel
+    @property
+    def ky(self):
+      return self._k_key
 
     @property
     def weights(self):
