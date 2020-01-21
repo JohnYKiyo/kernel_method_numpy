@@ -35,5 +35,9 @@ class KernelMean():
         return np.average(self.kernel.pdf(x=val, y=self.data, normalize=normalize),weights=self._weights, axis=1)
         #return np.dot(self.kernel.pdf(x=val, y=self.x, normalize=True), np.atleast_2d(self._weights).T) #-> (NxF) x (Fx1)=(Nx1)
     
+    def grad_kernel_mean(self, val, normalize=False):
+        val = np.atleast_2d(val)
+        return np.average(self.kernel.grad(x=val,y=self.data,normalize=normalize), weights=self._weights, axis=1)
+
     def __call__(self,val):
         return self.kernel_mean(val)
