@@ -33,7 +33,7 @@ class KernelABC():
         k_y = self.kernel_y.pdf(self.Dataset.prior_data.values,
                                 self.Dataset.observed_samples.values,False)
         w = np.dot(np.linalg.inv(G_NeI), k_y)
-        #w = w/w.sum()
+        w = w/w.sum()
         self._w = w
         self._G_NeI = G_NeI
         self._k_key = k_y
