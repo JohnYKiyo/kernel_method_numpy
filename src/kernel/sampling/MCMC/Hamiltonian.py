@@ -57,7 +57,7 @@ class Hamiltonian():
             q_accept = q
         return q_accept
 
-    def sampling(self,n_samples,reject=0):
+    def sampling(self,n_samples, WarmUp=0):
         samples = [self._init_position]
         for i in range(n_samples):
             samples.append(self._step_HMC_iter(samples[i]))
