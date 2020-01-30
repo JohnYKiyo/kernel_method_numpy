@@ -28,7 +28,7 @@ class Metropolis():
     def __call__(self,N,T=0):
         return self.sampling(N,T)
     
-    def sampling(self,sample_size, T=0):
+    def sampling(self,sample_size, WarmUp=0):
         x = np.zeros(self.ndim)
         samples = []
         for i in range(sample_size*self.sample_rate):
