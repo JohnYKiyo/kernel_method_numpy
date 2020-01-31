@@ -61,4 +61,4 @@ class Hamiltonian():
         samples = [self._init_position]
         for i in range(n_samples):
             samples.append(self._step_HMC_iter(samples[i]))
-        return np.array(samples[1+reject:])
+        return np.array(samples[1+WarmUp:])
