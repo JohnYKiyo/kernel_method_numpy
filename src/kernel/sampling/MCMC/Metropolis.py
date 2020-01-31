@@ -25,8 +25,8 @@ class Metropolis():
         self.proposal_std = proposal_std
         self.sample_rate = sample_rate
     
-    def __call__(self,N,T=0):
-        return self.sampling(N,T)
+    def __call__(self,N,WarmUp=0):
+        return self.sampling(N,WarmUp)
     
     def sampling(self,sample_size, WarmUp=0):
         x = np.zeros(self.ndim)
@@ -45,4 +45,4 @@ class Metropolis():
                 
             if i % self.sample_rate == 0:
                 samples.append(x)
-        return np.array(samples[T:])
+        return np.array(samples[WarmUp:])
