@@ -21,7 +21,7 @@ class KernelMean():
                 raise ValueError(f'length of weights should be {self._n_samples}')
             self._weights = np.atleast_1d(weights/np.sum(weights))
 
-        self.kernel = gauss_kernel(covariance=self._cov, n_features=self._n_features)
+        self.kernel = gauss_kernel.gauss_kernel(covariance=self._cov, n_features=self._n_features)
 
     @property
     def weights(self):
