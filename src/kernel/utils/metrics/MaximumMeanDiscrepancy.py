@@ -1,4 +1,5 @@
 from ...KernelMean import KernelMean
+from ..functions import gauss_kernel
 import numpy as np
 
 def MaximumMeanDiscrepancy(X,Y, kernel=None):
@@ -28,3 +29,20 @@ def MaximumMeanDiscrepancy(X,Y, kernel=None):
         + np.dot(weights_Y, np.dot(weights_Y,kernel_X.pdf(Y_samples,Y_samples)))\
         - 2*np.dot(weights_Y,np.dot(weights_X,kernel_X.pdf(X_samples,Y_samples)))
     return MMD
+
+def MaximumMeanDiscrepancy_of_normal_pdf_and_kernel_mean(kernelmean, mu, sigma):
+    if not isinstance(kernelmean, KernelMean):
+        raise TypeError(f"kernelmean shuld be KernelMean class, but got {type(kernelmean)}")
+
+    w = kernelmean.weights
+    cov_kernel_mean = kernelmean.cov
+    samples = kernelmean.data.values
+    if cov_kernel_mean.shape != (1,1):
+        raise TypeError(f"kernelmean covariance shuld be scolar.")
+
+    K = gauss_kernel.gauss_kernel(n_features=1, covariance=(sigma**2+cov_kernel_mean))
+    val = K.pdf(samples,np.atleast_2d(mu))
+    cross_term = -2*np.dot(w,val)*np.sqrt(cov_kernel_mean)/np.sqrt(cov_kernel_mean+sigma**2)
+    normal_pdf_term = np.sqrt(cov_kernel_mean)/np.sqrt(2*sigma**2+cov_kernel_mean)
+    
+    return np.dot(w, np.dot(w, KM.kernel.pdf(samples,samples))) + cross_term + normal_pdf_term
