@@ -35,7 +35,7 @@ def MaximumMeanDiscrepancy_of_normal_pdf_and_kernel_mean(kernelmean, mu, sigma):
         raise TypeError(f"kernelmean shuld be KernelMean class, but got {type(kernelmean)}")
 
     w = kernelmean.weights
-    cov_kernel_mean = kernelmean.cov
+    cov_kernel_mean = kernelmean.kernel.cov
     samples = kernelmean.data.values
     if cov_kernel_mean.shape != (1,1):
         raise TypeError(f"kernelmean covariance shuld be scolar.")
@@ -45,4 +45,4 @@ def MaximumMeanDiscrepancy_of_normal_pdf_and_kernel_mean(kernelmean, mu, sigma):
     cross_term = -2*np.dot(w,val)*np.sqrt(cov_kernel_mean)/np.sqrt(cov_kernel_mean+sigma**2)
     normal_pdf_term = np.sqrt(cov_kernel_mean)/np.sqrt(2*sigma**2+cov_kernel_mean)
     
-    return np.dot(w, np.dot(w, KM.kernel.pdf(samples,samples))) + cross_term + normal_pdf_term
+    return np.dot(w, np.dot(w, kernelmean.kernel.pdf(samples,samples))) + cross_term + normal_pdf_term
