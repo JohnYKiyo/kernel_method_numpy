@@ -1,2 +1,2 @@
-from .pairwise import *
-from .MaximumMeanDiscrepancy import *
+from .distance import euclid_distance, mahalanobis_distance
+#from .MaximumMeanDiscrepancy import *
