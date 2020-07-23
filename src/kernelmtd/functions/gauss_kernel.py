@@ -1,4 +1,9 @@
-from ..metrics.pairwise import mahalanobis_distances
+from jax.config import config; config.update("jax_enable_x64", True)
+import jax
+import jax.numpy as np
+from jax import jit, vmap
+
+from ..metrics.pairwise import euclid_distance, mahalanobis_distance, pairwise_distances
 import numpy as np
 import scipy as scp
 
