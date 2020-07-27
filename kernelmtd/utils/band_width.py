@@ -1,12 +1,13 @@
-from ..metrics.pairwise import euclidean_distances,mahalanobis_distances
-from .gauss_kernel import gauss_kernel
+from kernelmtd.utils import transform_data, pairwise
+from kernelmtd.metrics import mahalanobis_distance,euclid_distance
 
-from sklearn.model_selection import KFold
-import numpy as np
-import scipy as scp
-import pandas as pd
-import optuna
+from jax.config import config; config.update("jax_enable_x64", True)
+import jax
+import jax.numpy as np
+from jax import jit, vmap
+import numpy as onp
 
+from functools import partial
 class band_width(object):
     '''bandwidth of rbf-kernel.
     method: str
@@ -15,7 +16,8 @@ class band_width(object):
         - Silverman heuristic [2]
         - LSCV [3-5]
         - LCV
-
+        - covariance of data
+        'cov', 'scott', 'silverman', 'scalar', 'median', 'LSCV'
     data: array_like
         Datapoints to estimate.
         1D-array: [x_1,x_2,...,x_n]
@@ -34,92 +36,91 @@ class band_width(object):
     [5] W. Härdle, P. Hall, and J. S. Marron, “How far are automatically chosen regression smoothing parameters from their optimum?,” J. Am. Stat. Assoc., vol. 83, no. 401, pp. 86–95, 1988.
     '''
 
-    def __init__(self, data, method=None, weights=None):
-        if isinstance(data,list):
-            data = np.array(data)
-        if isinstance(data,pd.DataFrame):
-            data = data.values
-        if data.ndim ==1: #1D-array
-            data = data.reshape(-1,1) # 1D-array [x1,...,xn] as data having 1D feature. -> [[x1], [x2],...,[xn]]
-        self._data = data
-        self._Ndata, self._ndim = self._data.shape
-        if not self._Ndata > 1:
-            raise ValueError("'dataset' input should have multiple elements.")
+    def __init__(self, data, method='scott', weights=None):
+        self.__data = transform_data(data)
+        self.__n_data, self.__ndim = self.__data.shape
 
         if weights is not None:
-            self._weights = np.atleast_1d(weights).astype(float)
-            self._weights /= np.sum(self._weights)
-            if self._weights.ndim != 1:
+            self.__weights = np.atleast_1d(weights).astype(float)
+            self.__weights /= np.sum(self.__weights)
+            if self.__weights.ndim != 1:
                 raise ValueError("`weights` input should be one-dimensional.")
-            if len(self._weights) != self._Ndata:
-                raise ValueError("'weights' input should be of length the number of datapoints.")
-        else:
-            self._weights = np.atleast_1d(np.ones(self._Ndata)/self._Ndata) #1/N
 
-        self._neff = 1./np.sum(self._weights**2) # if weight is None -> neff = N
-        self._compute_covariance()
+            if self.__weights.size != self.__n_data:
+                raise ValueError("'weights' input should be of length the number of datapoints.")
+
+        else:
+            self.__weights = np.ones(self.__n_data)/self.__n_data #1/N
+
+        self.__neff = 1./np.sum(self.__weights**2) # if weight is None -> neff = N
+        self.__compute_covariance()
         self.set_bandwidth(method=method)
 
-    def _compute_covariance(self):
-        epsilon=1e-12
-        lambdaI = epsilon*np.eye(self._ndim)
-        if not hasattr(self, '_data_inv_cov'):
-            self._data_cov = np.atleast_2d(np.cov(self._data,rowvar=False,
-                                                  bias=False,
-                                                  aweights=self._weights))
+    def __compute_covariance(self):
+        epsilon = 1e-12
+        lambdaI = epsilon*np.eye(self.__ndim)
+        if not hasattr(self, '__data_inv_cov'):
+            self.__data_cov = np.atleast_2d(onp.cov(self.__data, rowvar=False, bias=False, aweights=self.__weights))
+
             try:
-                self._data_inv_cov = np.linalg.inv(self._data_cov)
+                self.__data_inv_cov = np.linalg.inv(self.__data_cov)
+
             except:
-                self._data_cov += lambdaI
-                self._data_inv_cov = np.linalg.inv(self._data_cov+lambdaI)
+                self.__data_cov += lambdaI
+                self.__data_inv_cov = np.linalg.inv(self.__data_cov)
 
     def set_bandwidth(self, method=None):
         if (method is None) or (method == 'cov'):
-            self._method = 'cov'
-            self._covariance_factor = lambda: 1.0 # band width is std of data.
+            self.__method = 'cov'
+            self.__covariance_factor = lambda: 1.0 # band width is std of data.
+
         elif method == 'median':
-            self._method = method
-            self._covariance_factor = self.median_method
+            self.__method = method
+            self.__covariance_factor = self.median_method
+
         elif method == 'scott':
-            self._method = method
-            self._covariance_factor = self.scott_factor
+            self.__method = method
+            self.__covariance_factor = self.scott_factor
+
         elif method == 'silverman':
-            self._method = method
-            self._covariance_factor = self.silverman_factor
+            self.__method = method
+            self.__covariance_factor = self.silverman_factor
+
         elif method == 'LSCV':
             """
-            minimizing Integrated Mean Square Error (IMSE) method.
+            minimizing Least Square Cross Validation.
             """
-            self._method = method
-            raise KeyError('Sorry, Least Square CV method have not implemented yet.')
+            raise NotImplementedError
+        
         elif method == 'LCV':
             """
-            minimizing Likelifood method.
+            maximizing Likelihood Cross Validation.
             """
-            self._method = method
-            self._covariance_factor = self.LCV_method
+            self.__method = method
+            self.__covariance_factor = self.LCV_method
+
         elif np.isscalar(method) and not isinstance(method, str):
-            self._method = 'use constant'
-            self._covariance_factor = lambda: method
+            self.__method = 'constant'
+            self.__covariance_factor = lambda: method
+
         else:
-            msg = "'method' should be 'cov', 'scott', 'silverman', 'scalar', 'median', 'LCV','LSCV'"
+            msg = "'method' should be 'cov', 'scott', 'silverman', 'scalar', 'median', 'LSCV'"
             raise ValueError(msg)
 
-        self._compute_corrected_cov()
+        self.__compute_cov()
 
-    def _compute_corrected_cov(self):
-        self._factor = self._covariance_factor()
-        if self._method not in ['median', 'LCV']:
-            self._cov = self._data_cov * self._factor**2
-            self._inv_cov = self._data_inv_cov / self._factor**2
-        self._normalize = np.sqrt(np.linalg.det(2*np.pi*self.cov))
+    def __compute_cov(self):
+        self.__factor = self.__covariance_factor()
+        if self.__method not in ['median', 'LSCV', 'LCV']:
+            self._cov = self.__data_cov * self.__factor**2
+            self._inv_cov = self.__data_inv_cov / self.__factor**2
 
     def scott_factor(self):
         """
         Compute Scott's factor.
         : n ^ (-1/(d+4))
         """
-        return np.power(self._neff, -1./(self._ndim+4))
+        return np.power(self.__neff, -1./(self.__ndim+4))
 
     def silverman_factor(self):
         """
@@ -128,49 +129,67 @@ class band_width(object):
         so, j-th bandwidth
         h_j = factor*sig_j
         """
-        return np.power(self._neff*(self._ndim+2.0)/4.0, -1./(self._ndim+4))
+        return np.power(self.__neff*(self.__ndim+2.0)/4.0, -1./(self.__ndim+4))
 
     def median_method(self):
         '''
         The Euclidean distance between data is calculated, and the mode of distance is defined as the bandwidth.
         '''
-        dists = euclidean_distances(self._data, squared=True)
-        h = np.median(np.sqrt(dists))
-        if self._method == 'median':
+        euclidean_distances = pairwise(euclid_distance,squared=True)
+        dists = euclidean_distances(self.__data, self.__data)
+        ind = np.triu_indices(self.__n_data , k=1)
+        h = np.median(dists[ind])
+        if self.__method == 'median':
             """Prevents the calculated cov from changing when this function is executed."""
-            self._cov = np.eye(self._ndim)*h
-            self._inv_cov = np.eye(self._ndim)/h
+            self._cov = np.eye(self.__n_data)*h
+            self._inv_cov = np.eye(self.__n_data)/h
         return h
 
     def LCV_method(self):
-        if self._method == 'LCV':
-            lcv = LCV(self._data,self._ndim)
-            lcv.compute(n_trials=150,#trial shuld increase as dimentions increase
-                        pruner='SHM',
-                        vervose=True,
-                        min_resource=5,
-                        reduction_factor=2,
-                        min_early_stopping_rate=0)
-            self._cov = lcv.cov
+        if self.__method == 'LCV':
+            #try:
+            #    import optuna
+            #except ImportError:
+            #    print("Cannot find optuna library, please install it to use this option.")
+            #    raise
+            #    
+            #optuna.logging.disable_default_handler()
+            #def LogLikelihood(trial):
+            #    epsilon=1e-12
+            #    cov = []
+            #    for i in range(2):
+            #        cov.append(trial.suggest_loguniform(f'h{i}', 1e-3, 1e+2))
+            #    cov = onp.diag(cov)
+            #    M = gauss_kernel(self.__data,self.__data,cov=cov)
+            #    return np.log((M-np.diag(onp.diag(M))).mean(axis=1)+epsilon).mean().ravel()
+            #
+            #study = optuna.create_study(direction='maximize')
+            #study.optimize(LogLikelihood,n_trials=100)
+            #self._cov = np.diag(onp.fromiter(study.best_params.values(),dtype=float))
+            #self._inv_cov = np.linalg.inv(self._cov)
+            try:
+                import gpbayesopt
+            except ImportError:
+                print("Cannot find gpbayesopt library, please install it to use this option. \n \
+                      Install: pip install git+https://github.com/JohnYKiyo/bayesian_optimization.git")
+                raise
+            def LogLikelihood(cov):
+                epsilon=1e-12
+                M = gauss_kernel(self.__data,self.__data,cov=np.diag(cov.ravel()))
+                return np.log((M-onp.diag(onp.diag(M))).mean(axis=1)+epsilon).mean().ravel()
+
+            bo = gpbayesopt.BayesOpt(LogLikelihood,
+                                     initial_input=np.atleast_2d(np.ones(self.__ndim)),
+                                     alpha=1e-6,
+                                     kernel=gpbayesopt.kernel.MaternKernel(),
+                                     acq=gpbayesopt.acquisition.UCB,
+                                     acq_optim=gpbayesopt.acquisition_optimizer.Acquisition_L_BFGS_B_LogOptimizer(bounds=np.array([[-3,2] for i in range(self.__ndim)]),n_trial=2),
+                                     maximize=True,
+                                     function_input_unpacking=False)
+            bo.run_optim(50)
+            self._cov = np.diag(bo.best_params)
             self._inv_cov = np.linalg.inv(self._cov)
-            del lcv
-
-    def __call__(self):
-        return self.bandwidth(save_dim=False,squared=False)
-
-    def bandwidth(self, save_dim=False,squared=True):
-        '''
-        general band-width is calculated by the law of propagation of error.
-        '''
-        if save_dim:
-            val = np.diag(self.cov)
-        else:
-            val = np.diag(self.cov).sum() #\sigma = \sqrt(\sigma_1^2 + \sigma_2^2 + ...+\sigma_d^2))
-
-        if squared:
-            val = np.sqrt(val)
-
-        return val
+            return 1.
 
     @property
     def cov(self):
@@ -180,55 +199,13 @@ class band_width(object):
     def inv_cov(self):
         return self._inv_cov
 
-
-class LCV():
-    def __init__(self,Data,n_params):
-        self._data = Data
-        self._nparams = n_params
-
-    def LOOLL(self,test,train,kernel):
-        epsilon=1e-12
-        return np.log(np.average(kernel.pdf(test,train,normalize=True),axis=1)+epsilon)
-
-    def __call__(self, n_trials, pruner=None, vervose=False, **args):
-        self.compute(n_trials,pruner,vervose,**args)
-        
-    def compute(self,n_trials,pruner=None,vervose=True,**args):
-        if pruner=='SHM':
-            pruner_method = optuna.pruners.SuccessiveHalvingPruner(**args)
-        if not vervose:
-            optuna.logging.disable_default_handler()
-        study = optuna.create_study(pruner=pruner_method)
-        study.optimize(self._objective(),n_trials=n_trials)
-        self._study = study
-        self._cov = np.diag(np.fromiter(study.best_params.values(),dtype=float))
-
-    #this is for TPE+Successive Halving Algorithm.
-    def _objective(self):
-        kf = KFold(n_splits=len(self._data), shuffle=True)
-        min_search= 1e-12
-        max_search= 10**(np.log10(self._data.max(axis=0)-self._data.min(axis=0)+10).astype(int)+1)
-
-        def obj(trial):
-            epsilon=1e-12
-            cov = []
-            for i in range(self._nparams):
-                cov.append(trial.suggest_loguniform(f'h{i}', min_search, max_search[i]))
-            cov = np.diag(cov)
-
-            k = gauss_kernel(covariance=cov,n_features=self._nparams)
-            losses = []
-            for i, (train_idx,test_idx) in enumerate(kf.split(self._data)):
-                losses.append(self.LOOLL(self._data[test_idx],self._data[train_idx],k))
-                if i%100==0:
-                    trial.report(-1*np.mean(losses),i)
-                    if trial.should_prune(i):
-                        raise optuna.exceptions.TrialPruned()
-            return -1*np.mean(losses)
-        return obj
-
     @property
-    def cov(self):
-        if not hasattr(self,'_cov'):
-            self.__call__(n_trials=50)
-        return self._cov
+    def bandwidth(self):
+        return np.sqrt(np.diag(self._cov).sum())
+
+@jit
+def gauss_kernel(x,y,cov):
+    dim = cov.shape[0]
+    A=np.sqrt(np.linalg.det(cov)*2.*np.pi**dim)
+    dists = pairwise(mahalanobis_distance,Q=np.linalg.inv(cov))
+    return 1./A * np.exp(-0.5*dists(x,y))
