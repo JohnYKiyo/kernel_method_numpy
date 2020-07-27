@@ -8,35 +8,58 @@ from jax import jit, vmap
 import numpy as onp
 
 from functools import partial
-class band_width(object):
-    '''bandwidth of rbf-kernel.
-    method: str
-        - Median heuristic
-        - Scott heuristic [1]
-        - Silverman heuristic [2]
-        - LSCV [3-5]
-        - LCV
-        - covariance of data
-        'cov', 'scott', 'silverman', 'scalar', 'median', 'LSCV'
-    data: array_like
-        Datapoints to estimate.
-        1D-array: [x_1,x_2,...,x_n]
-        1D-array input is treated as 1-dimensional data
-        2D-array: [[x_1^d1,x_1^d2], [x_2^d1,x_2^d2],...,[x_n^d1,x_n^d2]]
+class Bandwidth(object):
+    """bandwidth selection for rbf-kernel hyperparameter.
 
-    weights: array_like
-        weights of datapoints. This must be the same shape as dataset.
+    Args:
+        cov (ndarray): [description]
+        inv_cov (ndarray): [description]
+        bandwidth (ndarray): [description]
+
+    Raises:
+        ValueError: [description]
+        ValueError: [description]
+        NotImplementedError: [description]
+        ValueError: [description]
+
+    Returns:
+        [type]: [description]
 
     Notes:
         Bandwidth selection strongly affects kernel density estimation.
-    [1] D.W. Scott, “Multivariate Density Estimation: Theory, Practice, and Visualization”, John Wiley & Sons, New York, Chicester, 1992.
-    [2] B.W. Silverman, “Density Estimation for Statistics and Data Analysis”, Vol. 26, Monographs on Statistics and Applied Probability, Chapman and Hall, London, 1986.
-    [3] P. Hall, “Large Sample Optimality of Least Squares Cross-Validation in Density Estimation,” Ann. Stat., vol. 11, no. 4, pp. 1156–1174, 1983. 
-    [4] C. J. Stone, “An Asymptotically Optimal Window Selection Rule for Kernel Density Estimates,” Ann. Stat., vol. 12, no. 4, pp. 1285–1297, 1984.
-    [5] W. Härdle, P. Hall, and J. S. Marron, “How far are automatically chosen regression smoothing parameters from their optimum?,” J. Am. Stat. Assoc., vol. 83, no. 401, pp. 86–95, 1988.
-    '''
+        [1] D.W. Scott, “Multivariate Density Estimation: Theory, Practice, and Visualization”, John Wiley & Sons, New York, Chicester, 1992.
+        [2] B.W. Silverman, “Density Estimation for Statistics and Data Analysis”, Vol. 26, Monographs on Statistics and Applied Probability, Chapman and Hall, London, 1986.
+        [3] P. Hall, “Large Sample Optimality of Least Squares Cross-Validation in Density Estimation,” Ann. Stat., vol. 11, no. 4, pp. 1156–1174, 1983. 
+        [4] C. J. Stone, “An Asymptotically Optimal Window Selection Rule for Kernel Density Estimates,” Ann. Stat., vol. 12, no. 4, pp. 1285–1297, 1984.
+        [5] W. Härdle, P. Hall, and J. S. Marron, “How far are automatically chosen regression smoothing parameters from their optimum?,” J. Am. Stat. Assoc., vol. 83, no. 401, pp. 86–95, 1988.
+    """    
 
     def __init__(self, data, method='scott', weights=None):
+        """[summary]
+
+        Args:
+            data (array-like): 
+                Datapoints to estimate.
+                1D-array [x_1,x_2,...,x_n]. This input is treated as 1-dimensional data.
+                2D-array [[x_1^d1,x_1^d2], [x_2^d1,x_2^d2],...,[x_n^d1,x_n^d2]].
+
+            method (str or float, optional): 
+                Select the bandwidth selection method from　['cov', 'scott', 'silverman', 'median', 'LCV','LSCV'] .
+                - Median heuristic
+                - Scott heuristic [1]
+                - Silverman heuristic [2]
+                - LSCV [3-5]
+                - LCV
+                - covariance of data
+                Defaults to 'scott'.
+
+            weights (array-like, optional): 
+                Weights of datapoints. This must be the same shape as dataset. Defaults to None.
+
+        Raises:
+            ValueError: [description]
+            ValueError: [description]
+        """        
         self.__data = transform_data(data)
         self.__n_data, self.__ndim = self.__data.shape
 
