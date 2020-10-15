@@ -158,14 +158,14 @@ class Bandwidth(object):
         '''
         The Euclidean distance between data is calculated, and the mode of distance is defined as the bandwidth.
         '''
-        euclidean_distances = pairwise(euclid_distance,squared=True)
+        euclidean_distances = pairwise(euclid_distance,square=True)
         dists = euclidean_distances(self.__data, self.__data)
         ind = np.triu_indices(self.__n_data , k=1)
         h = np.median(dists[ind])
         if self.__method == 'median':
             """Prevents the calculated cov from changing when this function is executed."""
-            self._cov = np.eye(self.__n_data)*h
-            self._inv_cov = np.eye(self.__n_data)/h
+            self._cov = np.eye(self.__ndim)*h
+            self._inv_cov = np.eye(self.__ndim)/h
         return h
 
     def LCV_method(self):
