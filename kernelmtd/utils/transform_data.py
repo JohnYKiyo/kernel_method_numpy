@@ -15,6 +15,15 @@ def transform_data(x):
     Returns:
         array-like : [description]
 
+    Examples:
+        >>> transform_data([1,2,3])
+        DeviceArray([[1.],
+                     [2.],
+                     [3.]], dtype=float64)
+        
+        >>> transform_data([[1,2,3]])
+        DeviceArray([[1., 2., 3.]], dtype=float64)
+        
     """
     if isinstance(x,np.ndarray):
         if len(x.shape)==1:
@@ -25,3 +34,7 @@ def transform_data(x):
         return transform_data(np.array(x))
     else:
         raise ValueError("Cannot convert to numpy.array")
+    
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
