@@ -225,3 +225,11 @@ class Bandwidth(object):
     @property
     def bandwidth(self):
         return np.sqrt(np.diag(self._cov).sum())
+
+    def __repr__(self):
+        val =  f'Bandwidth selection method: {self.__method}\n'
+        val += f'Number of data: {self.__n_data}\n'
+        val += f'Dimensions: {self.__ndim}\n'
+        val += f'Covariance matrix:\n {self.cov}\n'
+        val += f'Bandwidth: {self.bandwidth}\n'
+        return val
