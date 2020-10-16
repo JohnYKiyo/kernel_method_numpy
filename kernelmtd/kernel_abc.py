@@ -37,7 +37,7 @@ class KernelABC(object):
             raise ValueError(error)
         self.__obs = obs
         self.__k_obs = np.prod(self.__kernel(self.__data,self.__obs,normalize=False),axis=1,keepdims=True) #(ndata,1) vector
-        w = np.dot(self.__gram_inv,self__k_obs)
+        w = np.dot(self.__gram_inv,self.__k_obs)
         self.__weights = w.ravel()
         print(f'sum weights:{w.sum()}')
     
