@@ -13,7 +13,7 @@ class KernelMean(object):
     Args:
         object ([type]): [description]
     """    
-    def __init__(self, data, weights=None, kernel='Gauss',**kwargs):
+    def __init__(self, data, kernel, weights=None): #def __init__(self, data, weights=None, kernel='Gauss',**kwargs):
         """[summary]
 
         Args:
@@ -37,20 +37,21 @@ class KernelMean(object):
                 raise ValueError(f'length of weights should be {self._n_samples}')
             self._weights = np.atleast_1d(weights/np.sum(weights))
         
-        if kernel=='Gauss':
-            if 'covariance' not in kwargs:
-                raise ValueError('GaussKernel requires a covariance matrix as "covariance"')
-            cov = kwargs.get('covariance')
-            self.kernel = GaussKernel(cov)
-            
-        elif kernel=='Matern':
-            a = kwargs.get('a',1.)
-            l = kwargs.get('l')
-            nu = kwargs.get('nu',1.5)
-            self.kernel = MaternKernel(a,l,nu)
-            
-        else:
-            raise ValueError('kernel is not defined.')
+        self.__kernel = kernel
+        #if kernel=='Gauss':
+        #    if 'covariance' not in kwargs:
+        #        raise ValueError('GaussKernel requires a covariance matrix as "covariance"')
+        #    cov = kwargs.get('covariance')
+        #    self.__kernel = GaussKernel(cov)
+        #    
+        #elif kernel=='Matern':
+        #    a = kwargs.get('a',1.)
+        #    l = kwargs.get('l')
+        #    nu = kwargs.get('nu',1.5)
+        #    self.__kernel = MaternKernel(a,l,nu)
+        #    
+        #else:
+        #    raise ValueError('kernel is not defined.')
     
     def __call__(self,val,**kwargs):
         return self.kde(val,**kwargs)
@@ -86,3 +87,7 @@ class KernelMean(object):
         except:
             raise NotImplementedError
         return np.average(grad,weights=self._weights,axis=1)
+
+    @property
+    def kernel(self):
+        return self.__kernel
