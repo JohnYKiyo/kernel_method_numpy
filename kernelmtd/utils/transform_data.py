@@ -2,6 +2,7 @@ from jax.config import config; config.update("jax_enable_x64", True)
 import jax
 import jax.numpy as np
 from jax import jit, vmap
+import pandas as pd
 
 def transform_data(x):
     """data transform
@@ -32,6 +33,8 @@ def transform_data(x):
             return np.atleast_2d(x.astype(np.float64))
     elif isinstance(x,list):
         return transform_data(np.array(x))
+    elif isinstance(x,pd.DataFrame):
+        return transform_data(x.values)
     else:
         raise ValueError("Cannot convert to numpy.array")
     
