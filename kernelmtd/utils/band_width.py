@@ -1,5 +1,6 @@
 from kernelmtd.utils import transform_data, pairwise
 from kernelmtd.metrics import mahalanobis_distance,euclid_distance
+from kernelmtd.kernel import GaussKernel
 
 from jax.config import config; config.update("jax_enable_x64", True)
 import jax
@@ -44,20 +45,19 @@ class Bandwidth(object):
                 2D-array [[x_1^d1,x_1^d2], [x_2^d1,x_2^d2],...,[x_n^d1,x_n^d2]].
 
             method (str or float, optional): 
+                Defaults to 'scott'.
                 Select the bandwidth selection method from　['cov', 'scott', 'silverman', 'median', 'LCV','LSCV'] .
                 - Median heuristic
                 - Scott heuristic [1]
                 - Silverman heuristic [2]
                 - LSCV [3-5]
-                - LCV
+                - LCV [3-5]
                 - covariance of data
-                Defaults to 'scott'.
 
             weights (array-like, optional): 
-                Weights of datapoints. This must be the same shape as dataset. Defaults to None.
+                Defaults to None. Weights of datapoints. This must be the same shape as dataset. 
 
         Raises:
-            ValueError: [description]
             ValueError: [description]
         """        
         self.__data = transform_data(data)
@@ -66,12 +66,8 @@ class Bandwidth(object):
         if weights is not None:
             self.__weights = np.atleast_1d(weights).astype(float)
             self.__weights /= np.sum(self.__weights)
-            if self.__weights.ndim != 1:
-                raise ValueError("`weights` input should be one-dimensional.")
-
-            if self.__weights.size != self.__n_data:
-                raise ValueError("'weights' input should be of length the number of datapoints.")
-
+            if (self.__weights.ndim != 1) or (self.__weights.size != self.__n_data):
+                raise ValueError("`weights` input should be one-dimensional or the length of the number of datapoints.")
         else:
             self.__weights = np.ones(self.__n_data)/self.__n_data #1/N
 
@@ -196,10 +192,14 @@ class Bandwidth(object):
                 print("Cannot find gpbayesopt library, please install it to use this option. \n \
                       Install: pip install git+https://github.com/JohnYKiyo/bayesian_optimization.git")
                 raise
+            
+            kernel = GaussKernel(covariance=np.diag(np.ones(self.__ndim)))
             def LogLikelihood(cov):
+                #print(cov,kernel.cov)
                 epsilon=1e-12
-                M = gauss_kernel(self.__data,self.__data,cov=np.diag(cov.ravel()))
-                return np.log((M-onp.diag(onp.diag(M))).mean(axis=1)+epsilon).mean().ravel()
+                kernel.cov = np.diag(cov.ravel()) 
+                M = kernel(self.__data,self.__data,normalize=True)
+                return np.log((M-np.diag(np.diag(M))).mean(axis=1)+epsilon).mean().ravel()
 
             bo = gpbayesopt.BayesOpt(LogLikelihood,
                                      initial_input=np.atleast_2d(np.ones(self.__ndim)),
@@ -225,10 +225,3 @@ class Bandwidth(object):
     @property
     def bandwidth(self):
         return np.sqrt(np.diag(self._cov).sum())
-
-@jit
-def gauss_kernel(x,y,cov):
-    dim = cov.shape[0]
-    A=np.sqrt(np.linalg.det(cov)*2.*np.pi**dim)
-    dists = pairwise(mahalanobis_distance,Q=np.linalg.inv(cov))
-    return 1./A * np.exp(-0.5*dists(x,y))
