@@ -10,11 +10,11 @@ from kernelmtd.utils import transform_data, pairwise, gradpairwise
 
 #this is jit compiled distance for exec speed.
 @jit
-def _calculate_normalize_factor(Q):
+def _calculate_normalize_factor(C):
     """
-    nom_factor = np.sqrt((2*pi)^k |S|)
+    nom_factor = np.sqrt((2*pi)^k |C|)
     """
-    return np.sqrt(np.linalg.det(2*np.pi*Q))
+    return np.sqrt(np.linalg.det(2*np.pi*C))
 
 class GaussKernel(object):
     def __init__(self, covariance):
@@ -24,7 +24,7 @@ class GaussKernel(object):
         self.__dists = pairwise(mahalanobis_distance,Q=self.__inv_cov,square=True)
         self.__grad_dists = gradpairwise(mahalanobis_distance,Q=self.__inv_cov,square=True)
         try:
-            self.__norm_factor = _calculate_normalize_factor(self.__inv_cov)
+            self.__norm_factor = _calculate_normalize_factor(self.__cov)
         except:
             warnings.warn('The normalization factor could not be calculated. set to 1.')
             self.__norm_factor = 1.
@@ -66,6 +66,10 @@ class GaussKernel(object):
     @property
     def cov(self):
         return self.__cov
+    
+    @cov.setter
+    def cov(self, covariance):
+        self.__init__(covariance)
     
     @property
     def inv_cov(self):
