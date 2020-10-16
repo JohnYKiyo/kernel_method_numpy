@@ -34,6 +34,13 @@ class GaussKernel(object):
         normalize = kwargs.get('normalize',False)
         return self.kde(x1,x2,normalize=normalize)
     
+    def __repr__(self):
+        val =  f'Kernel: GaussKernel\n'
+        val += f'Normalization factor: {self.norm_factor}\n'
+        val += f'Covariance matrix: \n{self.cov}\n'
+        val += f'Dimensions: {self.n_features}\n'
+        return val
+    
     def logkde(self,x1,x2, **kwargs):
         normalize = kwargs.get('normalize',False)
         x1 = np.atleast_2d(x1)
