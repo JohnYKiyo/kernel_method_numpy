@@ -2,7 +2,6 @@ from jax.config import config; config.update("jax_enable_x64", True)
 import jax
 import jax.numpy as np
 from jax import jit, vmap,grad
-from functools import partial
 
 def pairwise(function,Nopts=0):
     """return vectorized function
