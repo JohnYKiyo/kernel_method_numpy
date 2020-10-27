@@ -1,6 +1,6 @@
-from kernelmtd.utils import transform_data, pairwise
-from kernelmtd.metrics import mahalanobis_distance,euclid_distance
-from kernelmtd.kernel import GaussKernel
+from ..utils import transform_data, pairwise
+from ..metrics import mahalanobis_distance,euclid_distance
+from ..kernel import GaussKernel
 
 from jax.config import config; config.update("jax_enable_x64", True)
 import jax
