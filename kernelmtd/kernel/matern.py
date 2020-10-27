@@ -102,7 +102,8 @@ class MaternKernel(object):
         >>> import numpy as onp
         >>> kernel_matern = MaternKernel(l=1.,nu=0.5)
         >>> x = np.atleast_2d(np.linspace(-5.,5.,3)).T
-        >>> onp.asarray(np.squeeze(kernel_matern.kde(x,np.array([[0.],[1.]])),axis=(2,3)))
+        >>> x = np.expand_dims(x,axis=0)
+        >>> onp.asarray(np.squeeze(kernel_matern.kde(x,np.array([[[0.],[1.]]])),axis=(0,1)))
         array([[0.00673795, 0.00247875],
                [1.        , 0.36787944],
                [0.00673795, 0.01831564]])
@@ -117,8 +118,8 @@ class MaternKernel(object):
         """compute kernel density
 
         Args:
-            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim) or (n_samples_x1, n_dim).
-            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim) or (n_samples_x2, n_dim).
+            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim).
 
         Returns:
             KV (ndarray): return kernel value tensor. ndarray of shape (n_batch_x1,n_bathc_x2,n_samples_x1,n_samples_x2).
@@ -130,8 +131,8 @@ class MaternKernel(object):
         """compute kernel density
 
         Args:
-            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim) or (n_samples_x1, n_dim).
-            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim) or (n_samples_x2, n_dim).
+            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim).
 
         Returns:
             KV (ndarray): return kernel value tensor. ndarray of shape (n_batch_x1,n_bathc_x2,n_samples_x1,n_samples_x2).
@@ -143,8 +144,8 @@ class MaternKernel(object):
         """compute kernel density
 
         Args:
-            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim) or (n_samples_x1, n_dim).
-            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim) or (n_samples_x2, n_dim).
+            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim).
 
         Returns:
             KV (ndarray): return kernel value tensor. ndarray of shape (n_batch_x1,n_bathc_x2,n_samples_x1,n_samples_x2).
@@ -156,8 +157,8 @@ class MaternKernel(object):
         """compute gradient of kernel density
 
         Args:
-            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim) or (n_samples_x1, n_dim).
-            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim) or (n_samples_x2, n_dim).
+            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim).
 
         Returns:
             KV (ndarray): return gradient value tensor. ndarray of shape (n_batch_x1,n_bathc_x2,n_samples_x1,n_samples_x2, n_dim).
