@@ -1,9 +1,10 @@
 import sys
 sys.path.append('./')
 from kernelmtd.kernel.matern import *
+from kernelmtd.kernel.gaussian_rbf import *
 import os
-if not os.path.exists('./pic/'):
-    os.makedirs('./pic/')
+if not os.path.exists('./pic/test/kernel'):
+    os.makedirs('./pic/test/kernel')
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -45,7 +46,7 @@ def test_matern_nu(nu=0.5):
     except:
         pass
     plt.legend()
-    plt.savefig(f'./pic/matern_nu_{string}.png')
+    plt.savefig(f'./pic/test/kernel/matern_nu_{string}.png')
     plt.close()
 
 def check_matern_sklearn(nu):
@@ -58,7 +59,7 @@ def check_matern_kernelmtd(nu):
     matk = MaternKernel(l=1.,nu=nu)
     return matk.kde(x.reshape(100,1,1),np.array([[0],[1]]).reshape(2,1,1)).reshape(100,2)
 
-def test_equivalent_function():
+def test_matern_equivalent_function():
     print('test nu=0.5')
     np.testing.assert_almost_equal(check_matern_sklearn(0.5),
                                    check_matern_kernelmtd(0.5))
@@ -83,12 +84,43 @@ def test_equivalent_function():
     print(f'nu=inf sklearn:{timeit.timeit("check_matern_sklearn(np.inf)", globals = globals(), number=1000)/1000:.8f}')
     print(f'nu=inf kernelmtd:{timeit.timeit("check_matern_kernelmtd(np.inf)", globals = globals(), number=1000)/1000:.8f}')
 
+def test_gauss_1d():
+    x = np.linspace(-10,10,100).reshape(100,1)
+    plt.plot(x,np.squeeze(gauss1d_pairwise(x,np.array([[0.]]),1.)),label='gauss1d')
+    plt.plot(x,np.squeeze(grad_gauss1d_pairwise(x,np.array([[0.]]),1.)),label='gradient')
+    plt.legend()
+    plt.savefig('./pic/test/kernel/gauss1d.png')
+    plt.close()
+    
+def test_gauss():
+    XX,YY = np.meshgrid(np.arange(-2,2,0.1),np.arange(-2,2,0.1))
+    S = np.array([[1.,0.5],[0.5,1.]])
+    Q = np.linalg.inv(S)
+    kde = np.squeeze(
+        gauss_pairwise(
+            np.expand_dims(np.c_[XX.ravel(),YY.ravel()],axis=0),
+            np.array([[[0.,0.]]]),
+            Q),
+        axis=(0,1))
+    gradkde = np.squeeze(
+        grad_gauss_pairwise(np.expand_dims(np.c_[XX.ravel(),YY.ravel()],axis=0),
+                            np.array([[[0.,0.]]]),
+                            Q),
+        axis=(0,1))
+    c =np.sqrt(gradkde[:,0,0]**2+gradkde[:,0,1]**2)
+    plt.contour(XX,YY,kde.reshape(XX.shape[0],-1))
+    plt.quiver(XX.ravel(),YY.ravel(),gradkde[:,0,0],gradkde[:,0,1],c)
+    plt.savefig('./pic/test/kernel/gauss.png')
+    plt.close()
+
 def main():
     test_matern_nu(0.5)
     test_matern_nu(1.5)
     test_matern_nu(2.5)
     test_matern_nu(np.inf)
-    test_equivalent_function()
+    test_matern_equivalent_function()
+    test_gauss_1d()
+    test_gauss()
 
 if __name__ == '__main__':
     main()
