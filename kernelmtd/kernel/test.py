@@ -57,7 +57,7 @@ def check_matern_sklearn(nu):
 def check_matern_kernelmtd(nu):
     x = jnp.atleast_2d(jnp.linspace(-10.,10.,100)).T
     matk = MaternKernel(l=1.,nu=nu)
-    return matk.kde(x.reshape(100,1,1),np.array([[0],[1]]).reshape(2,1,1)).reshape(100,2)
+    return matk.kde(x.reshape(100,1),np.array([[0],[1]]))
 
 def test_matern_equivalent_function():
     print('test nu=0.5')
@@ -96,17 +96,12 @@ def test_gauss():
     XX,YY = np.meshgrid(np.arange(-2,2,0.1),np.arange(-2,2,0.1))
     S = np.array([[1.,0.5],[0.5,1.]])
     Q = np.linalg.inv(S)
-    kde = np.squeeze(
-        gauss_pairwise(
-            np.expand_dims(np.c_[XX.ravel(),YY.ravel()],axis=0),
-            np.array([[[0.,0.]]]),
-            Q),
-        axis=(0,1))
-    gradkde = np.squeeze(
-        grad_gauss_pairwise(np.expand_dims(np.c_[XX.ravel(),YY.ravel()],axis=0),
-                            np.array([[[0.,0.]]]),
-                            Q),
-        axis=(0,1))
+    kde = gauss_pairwise(np.c_[XX.ravel(),YY.ravel()],
+                         np.array([[0.,0.]]),
+                         Q)
+    gradkde = grad_gauss_pairwise(np.c_[XX.ravel(),YY.ravel()],
+                                  np.array([[0.,0.]]),
+                                  Q)
     c =np.sqrt(gradkde[:,0,0]**2+gradkde[:,0,1]**2)
     plt.contour(XX,YY,kde.reshape(XX.shape[0],-1))
     plt.quiver(XX.ravel(),YY.ravel(),gradkde[:,0,0],gradkde[:,0,1],c)

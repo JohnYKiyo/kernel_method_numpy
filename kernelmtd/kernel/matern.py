@@ -13,31 +13,39 @@ from ..utils import transform_data, pairwise,gradpairwise
 def K_0p5(x1,x2,l):
     return np.exp(-euclid_distance(x1,x2,False)/l)
 
-K_0p5_pairwise = pairwise(pairwise(K_0p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l)
-grad_K_0p5_pairwise = pairwise(gradpairwise(K_0p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l,d)
+#K_0p5_pairwise = pairwise(pairwise(K_0p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l)
+#grad_K_0p5_pairwise = pairwise(gradpairwise(K_0p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l,d)
+K_0p5_pairwise = pairwise(K_0p5,1) #(i,d),(j,d) -> (i,j)
+grad_K_0p5_pairwise = gradpairwise(K_0p5,1) #(i,d),(j,d) -> (i,j,d)
 
 def K_1p5(x1,x2,l):
     K = euclid_distance(x1,x2,False)/l * np.sqrt(3)
     return (1. + K) * np.exp(-K)
 
-K_1p5_pairwise = pairwise(pairwise(K_1p5,1),1)
-grad_K_1p5_pairwise = pairwise(gradpairwise(K_1p5,1),1)
+#K_1p5_pairwise = pairwise(pairwise(K_1p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l)
+#grad_K_1p5_pairwise = pairwise(gradpairwise(K_1p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l,d)
+K_1p5_pairwise = pairwise(K_1p5,1) #(i,d),(j,d) -> (i,j)
+grad_K_1p5_pairwise = gradpairwise(K_1p5,1) #(i,d),(j,d) -> (i,j,d)
 
 def K_2p5(x1,x2,l):
     K = euclid_distance(x1,x2,False)/l * np.sqrt(5)
     return (1. + K + K ** 2 / 3.0) * np.exp(-K)
 
-K_2p5_pairwise = pairwise(pairwise(K_2p5,1),1)
-grad_K_2p5_pairwise = pairwise(gradpairwise(K_2p5,1),1)
+#K_2p5_pairwise = pairwise(pairwise(K_2p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l)
+#grad_K_2p5_pairwise = pairwise(gradpairwise(K_2p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l,d)
+K_2p5_pairwise = pairwise(K_2p5,1) #(i,d),(j,d) -> (i,j)
+grad_K_2p5_pairwise = gradpairwise(K_2p5,1) #(i,d),(j,d) -> (i,j,d)
 
 def K_inf(x1,x2,l):
     return np.exp(-euclid_distance(x1,x2,True) / 2.0 /l**2)
 
-K_inf_pairwise = pairwise(pairwise(K_inf,1),1)
-grad_K_inf_pairwise = pairwise(gradpairwise(K_inf,1),1)
+#K_inf_pairwise = pairwise(pairwise(K_inf,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l)
+#grad_K_inf_pairwise = pairwise(gradpairwise(K_inf,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l,d)
+K_inf_pairwise = pairwise(K_inf,1) #(i,d),(j,d) -> (i,j)
+grad_K_inf_pairwise = gradpairwise(K_inf,1) #(i,d),(j,d) -> (i,j,d)
 
 def K_other_pairwise(x1,x2,l,nu):
-    dists = pairwise(pairwise(euclid_distance, 1),1)
+    dists = pairwise(euclid_distance, 1)
     dists_matrix = dists(x1,x2,False)/l
     dists_matrix = np.where(dists_matrix==0, np.finfo(float).eps, dists_matrix)
     tmp = (np.sqrt(2 * nu) * dists_matrix)
@@ -102,8 +110,7 @@ class MaternKernel(object):
         >>> import numpy as onp
         >>> kernel_matern = MaternKernel(l=1.,nu=0.5)
         >>> x = np.atleast_2d(np.linspace(-5.,5.,3)).T
-        >>> x = np.expand_dims(x,axis=0)
-        >>> onp.asarray(np.squeeze(kernel_matern.kde(x,np.array([[[0.],[1.]]])),axis=(0,1)))
+        >>> onp.asarray(kernel_matern.kde(x,np.array([[0.],[1.]])))
         array([[0.00673795, 0.00247875],
                [1.        , 0.36787944],
                [0.00673795, 0.01831564]])
@@ -131,11 +138,11 @@ class MaternKernel(object):
         """compute kernel density
 
         Args:
-            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim).
-            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim).
+            x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
 
         Returns:
-            KV (ndarray): return kernel value tensor. ndarray of shape (n_batch_x1,n_bathc_x2,n_samples_x1,n_samples_x2).
+            KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
                 Kernel k(x1,x2)
         """        
         return self.__a*matern(x1,x2, self.__l, self.__nu)
@@ -144,11 +151,11 @@ class MaternKernel(object):
         """compute kernel density
 
         Args:
-            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim).
-            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim).
+            x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
 
         Returns:
-            KV (ndarray): return kernel value tensor. ndarray of shape (n_batch_x1,n_bathc_x2,n_samples_x1,n_samples_x2).
+            KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
                 Kernel log(k(x1,x2))
         """        
         return np.log(self.__a*matern(x1, x2, self.__l, self.__nu))
@@ -157,11 +164,11 @@ class MaternKernel(object):
         """compute gradient of kernel density
 
         Args:
-            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim).
-            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim).
+            x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
 
         Returns:
-            KV (ndarray): return gradient value tensor. ndarray of shape (n_batch_x1,n_bathc_x2,n_samples_x1,n_samples_x2, n_dim).
+            KV (ndarray): return gradient value tensor. ndarray of shape (n_samples_x1,n_samples_x2, n_dim).
                 Derivative value at x1 of kernel centered on x2. dk(x,x2)/dx (x=x1)
         """        
         return self.__a*grad_matern(x1, x2, self.__l, self.__nu)
