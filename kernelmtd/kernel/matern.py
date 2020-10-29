@@ -125,11 +125,11 @@ class MaternKernel(object):
         """compute kernel density
 
         Args:
-            x1 (ndarray): ndarray of shape (n_batch_x1, n_samples_x1, n_dim).
-            x2 (ndarray): ndarray of shape (n_batch_x2, n_samples_x2, n_dim).
+            x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
 
         Returns:
-            KV (ndarray): return kernel value tensor. ndarray of shape (n_batch_x1,n_bathc_x2,n_samples_x1,n_samples_x2).
+            KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
                 Kernel k(x1,x2)
         """        
         return self.kde(x1,x2)
