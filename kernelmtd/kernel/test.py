@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import timeit
 from sklearn.gaussian_process.kernels import Matern as sk_Matern
+from sklearn.gaussian_process.kernels import RBF as sk_Gauss
 import jax.numpy as jnp
 
 def test_matern_nu(nu=0.5):
@@ -108,6 +109,23 @@ def test_gauss():
     plt.savefig('./pic/test/kernel/gauss.png')
     plt.close()
 
+def check_gauss_sklearn():
+    x = jnp.atleast_2d(jnp.linspace(-10.,10.,100)).T
+    skgauss = sk_Gauss(length_scale=1.)
+    return skgauss(x,jnp.array([[0.],[-2.5],[5.]]))
+
+def check_gauss_kernelmtd():
+    x = jnp.atleast_2d(jnp.linspace(-10.,10.,100)).T
+    gk = GaussKernel(sigma=1.)
+    return gk.kde(x,jnp.array([[0.],[-2.5],[5.]]))
+
+def test_gauss_equivalent_function():
+    print('test sigma=1.')
+    np.testing.assert_almost_equal(check_gauss_sklearn(),
+                                   check_gauss_kernelmtd())
+    print(f'sklearn:{timeit.timeit("check_gauss_sklearn()", globals = globals(), number=1000)/1000:.8f}')
+    print(f'kernelmtd:{timeit.timeit("check_gauss_kernelmtd()", globals = globals(), number=1000)/1000:.8f}')
+
 def main():
     test_matern_nu(0.5)
     test_matern_nu(1.5)
@@ -116,6 +134,7 @@ def main():
     test_matern_equivalent_function()
     test_gauss_1d()
     test_gauss()
+    test_gauss_equivalent_function()
 
 if __name__ == '__main__':
     main()
