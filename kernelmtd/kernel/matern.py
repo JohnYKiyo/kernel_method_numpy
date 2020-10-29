@@ -140,20 +140,22 @@ class MaternKernel(object):
         Args:
             x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
             x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
-
+            **kwargs : Not specified.
+            
         Returns:
             KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
                 Kernel k(x1,x2)
         """        
         return self.__a*matern(x1,x2, self.__l, self.__nu)
     
-    def logkde(self,x1,x2,**kwargs):
+    def logkde(self,x1,x2,**kwargs):        
         """compute kernel density
 
         Args:
             x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
             x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
-
+            **kwargs : Not specified.
+            
         Returns:
             KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
                 Kernel log(k(x1,x2))
@@ -166,7 +168,8 @@ class MaternKernel(object):
         Args:
             x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
             x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
-
+            **kwargs : Not specified.
+            
         Returns:
             KV (ndarray): return gradient value tensor. ndarray of shape (n_samples_x1,n_samples_x2, n_dim).
                 Derivative value at x1 of kernel centered on x2. dk(x,x2)/dx (x=x1)
