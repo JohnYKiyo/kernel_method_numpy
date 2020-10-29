@@ -113,6 +113,15 @@ class GaussKernel(object):
             self.__norm_factor = np.sqrt(2*np.pi)*self.__sigma
     
     def __call__(self,x1,x2,**kwargs):
+        """[summary]
+        Args:
+            x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
+
+        Returns:
+            KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
+                Kernel k(x1,x2)
+        """        
         ##　Other kernels may not have a normalize option, so use kwargs.
         normalize = kwargs.get('normalize',False)
         return self.kde(x1,x2,normalize=normalize)
@@ -126,6 +135,15 @@ class GaussKernel(object):
         return val
     
     def logkde(self,x1,x2, **kwargs):
+        """[summary]
+        Args:
+            x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
+
+        Returns:
+            KV (ndarray): return log kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
+                Kernel k(x1,x2)
+        """    
         normalize = kwargs.get('normalize',False)
         x1 = np.atleast_2d(x1)
         x2 = np.atleast_2d(x2)
@@ -140,6 +158,15 @@ class GaussKernel(object):
         return val
     
     def kde(self,x1,x2,**kwargs):
+        """[summary]
+        Args:
+            x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
+
+        Returns:
+            KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
+                Kernel k(x1,x2)
+        """    
         normalize = kwargs.get('normalize',False)
         x1 = np.atleast_2d(x1)
         x2 = np.atleast_2d(x2)
@@ -154,7 +181,17 @@ class GaussKernel(object):
         return val
     
     def gradkde(self,x1,x2,**kwargs):
-        normalize = kwargs.get('normalize',False) 
+        """compute gradient of kernel density
+
+        Args:
+            x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
+            x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
+
+        Returns:
+            KV (ndarray): return gradient value tensor. ndarray of shape (n_samples_x1,n_samples_x2, n_dim).
+                Derivative value at x1 of kernel centered on x2. dk(x,x2)/dx (x=x1)
+        """
+        normalize = kwargs.get('normalize',False)
         x1 = np.atleast_2d(x1)
         x2 = np.atleast_2d(x2)
         if self.__cov is not None: 
