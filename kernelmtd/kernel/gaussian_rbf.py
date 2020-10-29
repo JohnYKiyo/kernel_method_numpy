@@ -100,7 +100,7 @@ class GaussKernel(object):
             self.__norm_factor = _calculate_normalize_factor(self.__cov)
 
         if sigma is not None:
-            if not np.isscalar(sigma):
+            if not (np.isscalar(sigma) or sigma.size==1):
                 raise ValueError('sigma should be scalar !')
             self.__n_features = None
             self.__cov = covariance
