@@ -69,6 +69,21 @@ class KernelMean(object):
         #    raise ValueError('kernel is not defined.')
     
     def __call__(self,val,**kwargs):
+        """compute kernel density
+        Args:
+            val (ndarray): ndarray of shape (n_samples_val, n_dim).
+            **kwargs : 
+                *kwargs* is used to specify the configuration for kernel mean calculation.
+                
+                normalize (bool, optional): Defaults to False. 
+                    Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
+                
+                weights_normalise (bool, optional): Defaults to False.
+                    Specify `True` when normalizing kernel average weighting.
+                
+        Returns:
+            KV (ndarray): return kernel mean value. ndarray of shape (n_samples_val,n_samples_data).
+        """
         return self.kde(val,**kwargs)
    
     def __repr__(self):
@@ -81,21 +96,41 @@ class KernelMean(object):
         """compute kernel density
         Args:
             val (ndarray): ndarray of shape (n_samples_val, n_dim).
-
+            **kwargs : 
+                *kwargs* is used to specify the configuration for kernel mean calculation.
+                
+                normalize (bool, optional): Defaults to False. 
+                    Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
+                
+                weights_normalise (bool, optional): Defaults to False.
+                    Specify `True` when normalizing kernel average weighting.
+                
         Returns:
-            KV (ndarray): return gradient value tensor. ndarray of shape (n_samples_val,n_samples_data).
-                Derivative value at val of kernel centered on data. dk(x,data)/dx (x=val)
-        """        
+            KV (ndarray): return kernel mean value. ndarray of shape (n_samples_val,n_samples_data).
+        """
+        weights_normalize = kwargs.get('weights_normalize',False)
         val = transform_data(val)
         kde = self.kernel.kde(val,self._data.values,**kwargs)
+        w = self._weights 
+        if weights_normalize:
+            w = self.__weights_normalize()
+        
         #return np.average(kde,weights=self._weights,axis=1)
-        return np.dot(kde,self._weights)
+        return np.dot(kde,w)
     
     def gradkde(self,val,**kwargs):
         """compute gradient of kernel density
         Args:
             val (ndarray): ndarray of shape (n_samples_val, n_dim).
-
+            **kwargs : 
+                *kwargs* is used to specify the configuration for kernel mean calculation.
+                
+                normalize (bool, optional): Defaults to False. 
+                    Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
+                
+                weights_normalise (bool, optional): Defaults to False.
+                    Specify `True` when normalizing kernel average weighting.
+                    
         Returns:
             KV (ndarray): return gradient value tensor. ndarray of shape (n_samples_val,n_samples_data, n_dim).
                 Derivative value at val of kernel centered on data. dk(x,data)/dx (x=val)
@@ -104,13 +139,21 @@ class KernelMean(object):
             NotImplementedError: If the gradient cannot be calculated, it returns a NotImplementedError.
         """        
         val = transform_data(val)
+        weights_normalize = kwargs.get('weights_normalize',False)
         try:
             grad = self.kernel.gradkde(val,self._data.values,**kwargs)
         except:
             raise NotImplementedError
+        
+        w = self._weights 
+        if weights_normalize:
+            w = self.__weights_normalize()
         #return np.average(grad,weights=self._weights,axis=1)
-        return np.einsum('ijd,jk->id',grad,self._weights)
+        return np.einsum('ijd,jk->id',grad,w)
 
+    def __weights_normalize(self):
+        return self._weights/np.sum(self._weights)
+    
     @property
     def kernel(self):
         return self.__kernel
