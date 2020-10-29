@@ -91,3 +91,45 @@ class KernelMean(object):
     @property
     def kernel(self):
         return self.__kernel
+
+
+def test(data):
+    plt.figure()
+    plt.title('plot sample data')
+    sns.scatterplot(x='0',y='1',data=data)
+    plt.savefig('./pic/test/kernelmean/sample.png')
+    plt.close()
+    
+    #bandwidth selection by scott
+    bw = Bandwidth(data=data,method='scott',weights=None)
+    print(bw)
+    kernel = GaussKernel(sigma=bw.bandwidth)
+    kernelmean = KernelMean(data=data,kernel=kernel,weights=None)
+    
+    x = np.arange(-10.0,10,0.5)
+    y = np.arange(-10.0,10,0.5)
+    xx,yy = np.meshgrid(x,y)
+    z  = kernelmean(np.array([xx.ravel(),yy.ravel()]).T)
+    z_grad = kernelmean.gradkde(np.array([xx.ravel(),yy.ravel()]).T)
+    zz = z.reshape(xx.shape[0],yy.shape[0])
+    c = np.mean(np.square(z_grad),axis=1)
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.contour(xx,yy,zz)
+    sns.scatterplot(x='0',y='1',data=data,ax=ax)
+    plt.quiver(xx.ravel(),yy.ravel(),z_grad[:,0],z_grad[:,1],c)
+    fig.savefig('./pic/test/kernelmean/kernelmean.png')
+    
+if __name__ == '__main__':
+    from .data import testdata
+    from .utils import Bandwidth
+    
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    import os
+    if not os.path.exists('./pic/test/kernelmean/'):
+        os.makedirs('./pic/test/kernelmean/')
+    
+    test(testdata)
+    
