@@ -117,6 +117,11 @@ class GaussKernel(object):
         Args:
             x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
             x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
+            **kwargs : 
+                *kwargs* is used to specify the configuration for kernel density estimation.
+                
+                normalize (bool, optional): Defaults to False. 
+                    Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
 
         Returns:
             KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
@@ -139,6 +144,11 @@ class GaussKernel(object):
         Args:
             x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
             x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
+            **kwargs : 
+                *kwargs* is used to specify the configuration for kernel density estimation.
+                
+                normalize (bool, optional): Defaults to False. 
+                    Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
 
         Returns:
             KV (ndarray): return log kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
@@ -162,6 +172,11 @@ class GaussKernel(object):
         Args:
             x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
             x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
+            **kwargs : 
+                *kwargs* is used to specify the configuration for kernel density estimation.
+                
+                normalize (bool, optional): Defaults to False. 
+                    Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
 
         Returns:
             KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
@@ -186,6 +201,11 @@ class GaussKernel(object):
         Args:
             x1 (ndarray): ndarray of shape (n_samples_x1, n_dim).
             x2 (ndarray): ndarray of shape (n_samples_x2, n_dim).
+            **kwargs : 
+                *kwargs* is used to specify the configuration for kernel density estimation.
+                
+                normalize (bool, optional): Defaults to False. 
+                    Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
 
         Returns:
             KV (ndarray): return gradient value tensor. ndarray of shape (n_samples_x1,n_samples_x2, n_dim).
