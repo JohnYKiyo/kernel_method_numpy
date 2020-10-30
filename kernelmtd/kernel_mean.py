@@ -140,17 +140,23 @@ class KernelMean(object):
         """        
         val = transform_data(val)
         weights_normalize = kwargs.get('weights_normalize',False)
-        try:
-            grad = self.kernel.gradkde(val,self._data.values,**kwargs)
-        except:
-            raise NotImplementedError
-        
+        grad = self.__calculate_grad(val,**kwargs)
         w = self._weights 
         if weights_normalize:
             w = self.__weights_normalize()
         #return np.average(grad,weights=self._weights,axis=1)
         return np.einsum('ijd,jk->id',grad,w)
-
+    
+    def __calculate_grad(self,val,**kwargs):
+        try:
+            grad = self.kernel.gradkde(val, self._data.values, **kwargs)
+            if np.isnan(grad).any():
+                val = jax.ops.index_add(val,np.isnan(grad),1e-12)
+                grad = self.__calculate_grad(val,**kwargs)
+        except:
+            raise NotImplementedError 
+        return grad
+        
     def __weights_normalize(self):
         return self._weights/np.sum(self._weights)
     
