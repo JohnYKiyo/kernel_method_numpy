@@ -78,7 +78,7 @@ class KernelMean(object):
                 normalize (bool, optional): Defaults to False. 
                     Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
                 
-                weights_normalise (bool, optional): Defaults to False.
+                weights_normalize (bool, optional): Defaults to False.
                     Specify `True` when normalizing kernel average weighting.
                 
         Returns:
@@ -102,7 +102,7 @@ class KernelMean(object):
                 normalize (bool, optional): Defaults to False. 
                     Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
                 
-                weights_normalise (bool, optional): Defaults to False.
+                weights_normalize (bool, optional): Defaults to False.
                     Specify `True` when normalizing kernel average weighting.
                 
         Returns:
@@ -128,7 +128,7 @@ class KernelMean(object):
                 normalize (bool, optional): Defaults to False. 
                     Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
                 
-                weights_normalise (bool, optional): Defaults to False.
+                weights_normalize (bool, optional): Defaults to False.
                     Specify `True` when normalizing kernel average weighting.
                     
         Returns:
