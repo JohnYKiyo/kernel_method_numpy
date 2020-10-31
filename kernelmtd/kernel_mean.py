@@ -4,7 +4,6 @@ from jax.config import config; config.update("jax_enable_x64", True)
 import jax.numpy as np
 from jax import jit
 
-from .utils import transform_data
 from .kernel import GaussKernel, MaternKernel
 
 class KernelMean(object):
@@ -109,7 +108,6 @@ class KernelMean(object):
             KV (ndarray): return kernel mean value. ndarray of shape (n_samples_val,n_samples_data).
         """
         weights_normalize = kwargs.get('weights_normalize',False)
-        val = transform_data(val)
         kde = self.kernel.kde(val,self._data.values,**kwargs)
         w = self._weights 
         if weights_normalize:
@@ -138,7 +136,7 @@ class KernelMean(object):
         Raises:
             NotImplementedError: If the gradient cannot be calculated, it returns a NotImplementedError.
         """        
-        val = transform_data(val)
+        val = val
         weights_normalize = kwargs.get('weights_normalize',False)
         grad = self.__calculate_grad(val,**kwargs)
         w = self._weights 
