@@ -4,7 +4,6 @@ from jax.config import config; config.update("jax_enable_x64", True)
 import jax.numpy as np
 from jax import jit
 
-from .utils import transform_data
 from .kernel import GaussKernel, MaternKernel
 from .kernel_mean import KernelMean
 
@@ -41,8 +40,8 @@ class KernelABC(object):
             error = f'Data and parameters must have a one-to-one correspondence.'\
                   + f'but the number of data:{data.shape[0]}, para:{para.shape[0]}'
             raise ValueError(error)
-        self.__data = transform_data(data)
-        self.__para = transform_data(para)
+        self.__data = data
+        self.__para = para
         self.__epsilon = epsilon
         self.__ndim_data = data.shape[1]
         self.__ndim_para = para.shape[1]
@@ -68,7 +67,7 @@ class KernelABC(object):
             obs (array-like):
                 The shape of array should be (n_samples, n_data_dim).
         """        
-        self.__obs = transform_data(obs)
+        self.__obs = obs
         if obs.shape[1] != self.__data.shape[1]:
             error = f'Observed data should be same dimension of "data",'\
                   + f'but got obs dim:{obs.shape[1]}, data dim:{self.__data.shape[1]}'
@@ -95,7 +94,7 @@ class KernelABC(object):
         Expected A Posteriori
         :math:`E_{\\theta|Y_{obs}}[\\theta] = < m_{\\theta}|Y_{obs} | \\cdot > = \\sum_i w_i \\theta_i`.
         """
-        EAP= np.average(self.__para, axis=0, weights=self.__weights)
+        EAP= np.einsum('ij,id->jd',self.__weights,self.__para)
         print(f'EAP: {EAP}') 
         return EAP
 
@@ -129,6 +128,10 @@ class KernelABC(object):
     @property
     def k_obs(self):
         return self.__k_obs
+
+    @property
+    def obs(self):
+        return self.__obs
 
 def test(data):
     import numpy as np
