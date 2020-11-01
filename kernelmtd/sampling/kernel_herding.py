@@ -11,6 +11,13 @@ from ..kernel_mean import KernelMean
 from ..kernel import GaussKernel,MaternKernel
 
 class KernelHerding(object):
+    """[summary]
+    The class of Kernel Herding. Sampling from Kernel Mean.
+    Args:
+        KernelMeanObj (KernelMean): KernelMean.
+    Note:
+        [1] Chen, Y., Welling, M., & Smola, A. (2010). Super-samples from kernel herding. Proceedings of the 26th Conference on Uncertainty in Artificial Intelligence, UAI 2010, 109–116.
+    """    
     def __init__(self, KernelMeanObj):
         if not isinstance(KernelMeanObj, KernelMean):
             raise TypeError(f"init object shuld be KernelMean class, but got {type(KernelMeanObj)}")
@@ -31,9 +38,21 @@ class KernelHerding(object):
                 
                 weights_normalize (bool, optional): Defaults to False.
                     Specify `True` when normalizing kernel average weighting.
-                max_trial (int, optional): Defaults to 2.
+                    
+                max_trial (int, optional): Defaults to 2. 
+                    Search by changing the initial value by the number of max_trial.
+                    
                 derivatives (bool, optional): Defaults to False.
-                
+                    If the derivative is defined in the kernel, the search is performed using the derivative value.
+        
+        Example:
+            >>> from kernelmtd.data import testdata
+            >>> bw = Bandwidth(data=testdata,method='scott')
+            >>> KM = KernelMean(data=testdata,kernel=GaussKernel(sigma=bw.bandwidth))
+            >>> KH = KH = KernelHerding(KM)
+            >>> supersamples = KH.sampling(sample_size=10,max_trial=2)
+            >>> KH.sampling(sample_size=10,max_trial=2,derivatives=True)
+            
         Returns:
             ndarray : supersamples.
         """
@@ -114,3 +133,76 @@ class KernelHerding(object):
         if self.__samples is None:
             raise ValueError(f'super samples do not exist.')
         return self.__samples
+
+
+def test(data):
+    import numpy as np
+    import scipy as scp
+    import matplotlib.pyplot as plt
+    
+    KM = KernelMean(data=data.testdata,kernel=GaussKernel(sigma=1.))
+    KH = KernelHerding(KM)
+    supersamples = KH.sampling(sample_size=50,max_trial=2,derivatives=True)
+    KM_herding = KernelMean(data=supersamples,kernel=GaussKernel(sigma=1.))
+    
+    x = np.arange(-10.0,10,0.1)
+    y = np.arange(-10.0,10,0.1)
+    xx,yy = np.meshgrid(x,y)
+    z = KM.kde(np.array([xx.ravel(),yy.ravel()]).T)
+    zz = z.reshape(xx.shape[0],-1)
+    z_h = KM_herding.kde(np.array([xx.ravel(),yy.ravel()]).T)
+    zz_h = z_h.reshape(xx.shape[0],-1)
+    
+    fig = plt.figure(figsize=[10,5])
+    ax = fig.add_subplot(121)
+    bar = ax.contour(xx,yy,zz,20,alpha=0.5,cmap='jet')
+    ax.scatter(KM.data.iloc[:,0],KM.data.iloc[:,1],alpha=1,marker='.',color='C1',label='data')
+    ax.set_title('original samples kernel mean')
+    ax.axis("image")
+    cax = fig.colorbar(bar,ax=ax)
+    ax_pos = ax.get_position()
+    cax_pos = cax.ax.get_position()
+    cax_pos = [cax_pos.x0,ax_pos.y0,cax_pos.x1-cax_pos.x0, ax_pos.y1-ax_pos.y0]
+    cax.ax.set_position(cax_pos)
+    ax.legend()
+    
+    ax = fig.add_subplot(122)
+    bar = ax.contour(xx,yy,zz_h,20,alpha=0.5,cmap='jet')
+    ax.scatter(KM_herding.data.iloc[:,0],KM_herding.data.iloc[:,1],alpha=1,marker='.',color='C1',label='data')
+    ax.set_title('supersamples kernel mean')
+    ax.axis("image")
+    cax = fig.colorbar(bar,ax=ax)
+    ax_pos = ax.get_position()
+    cax_pos = cax.ax.get_position()
+    cax_pos = [cax_pos.x0,ax_pos.y0,cax_pos.x1-cax_pos.x0, ax_pos.y1-ax_pos.y0]
+    cax.ax.set_position(cax_pos)
+    ax.legend()
+    fig.savefig('./pic/test/kernelherding/supersample.png')
+    fig.clear()
+    
+    mmd_herding = []
+    mmd_random = []
+    for i in range(50):
+        mmd_herding.append(metrics.maximum_mean_discrepancy(X=KM.data.values,
+                                                            Y=KM_herding.data.values[:i+1],
+                                                            kernel=KM.kernel))
+        mmd_random.append(metrics.maximum_mean_discrepancy(X=KM.data.values,
+                                                           Y=KM.data.values[:i+1],
+                                                           kernel=KM.kernel))
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(mmd_herding,label='herding')
+    ax.plot(mmd_random,label='random')
+    ax.set_yscale('log')
+    ax.set_xscale('log')
+    ax.set_xlabel('sample')
+    ax.set_ylabel(r'$||\mu - \mu_p||^2$')
+    plt.legend()
+    fig.savefig('./pic/test/kernelherding/mmd.png')
+
+if __name__ == '__main__':
+    from kernelmtd import data, metrics
+    import os
+    if not os.path.exists('./pic/test/kernelherding/'):
+        os.makedirs('./pic/test/kernelherding/')
+    test(data)
