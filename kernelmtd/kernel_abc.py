@@ -129,7 +129,7 @@ class KernelABC(object):
     def weights(self):
         try:
             return self.__weights.ravel()
-        except AttributeError:
+        except:  # noqa
             raise ValueError('Did you add the observation data and conditioning?')
 
     @property
