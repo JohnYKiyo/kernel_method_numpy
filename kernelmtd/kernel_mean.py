@@ -46,7 +46,7 @@ class KernelMean(object):
         else:
             self._data = pd.DataFrame(data)
         self._n_samples, self._n_features = self._data.shape
-        self._weights = np.atleast_2d(np.full(self._n_samples, 1./self._n_samples)).T
+        self._weights = np.atleast_2d(np.full(self._n_samples, 1. / self._n_samples)).T
         if weights is not None:
             if not isinstance(weights, np.ndarray):
                 raise ValueError('weights should be ndarray')
@@ -165,7 +165,7 @@ class KernelMean(object):
         return grad
 
     def __weights_normalize(self):
-        return self._weights/np.sum(self._weights)
+        return self._weights / np.sum(self._weights)
 
     @property
     def kernel(self):
