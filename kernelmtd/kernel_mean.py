@@ -159,7 +159,7 @@ class KernelMean(object):
                 val = jax.ops.index_add(val, np.isnan(grad), 1e-12)
                 grad = self.__calculate_grad(val, **kwargs)
 
-        except NotImplementedError:
+        except:  # noqa
             raise NotImplementedError()
 
         return grad

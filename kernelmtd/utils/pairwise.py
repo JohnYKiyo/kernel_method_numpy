@@ -1,21 +1,21 @@
-from jax.config import config; config.update("jax_enable_x64", True)
-import jax
-import jax.numpy as np
-from jax import jit, vmap,grad
+from jax.config import config
+config.update("jax_enable_x64", True)
+from jax import jit, vmap, grad
 
-def pairwise(function,Nopts=0):
+
+def pairwise(function, Nopts=0):
     """return vectorized function
     Args:
         function (function):
             This pairwise function automatic vectorize input function when defined as scalar-output.
             d_ij = function(X_i , Y_j).
             i,j are assumed to indicate the data index.
-        
+
         Nopts (int, optional): function. Defaults to 0.
             Number of option arguments that the function has
     Returns:
         function : the function that returns d_ij array.
-    
+
     Examples:
         >>> import sys
         >>> sys.path.append('../')
@@ -34,29 +34,30 @@ def pairwise(function,Nopts=0):
         DeviceArray([[  0.,   3.,  24.],
                      [ 36.,  31.,   2.],
                      [144., 131.,  52.]], dtype=float64)
-    
-    """    
-    add_in_axes= [None]*Nopts
-    static_argnums=[2+i for i in range(Nopts)]
+
+    """
+    add_in_axes = [None] * Nopts
+    static_argnums = [2 + i for i in range(Nopts)]
     return jit(
         vmap(
-            vmap(function,in_axes=(None,0, *add_in_axes)),
-            in_axes=(0,None, *add_in_axes)),
+            vmap(function, in_axes=(None, 0, *add_in_axes)),
+            in_axes=(0, None, *add_in_axes)),
         static_argnums=static_argnums)
 
-def gradpairwise(function,Nopts=0):
+
+def gradpairwise(function, Nopts=0):
     """return vectorized gradient function
     Args:
         function (function):
             This gradpairwise function automatic gradiented vectorize input function when defined as scalar-output.
             d_ij = d function(X_i , Y_j) / dX .
             i,j are assumed to indicate the data index.
-        
+
         Nopts (int, optional): function. Defaults to 0.
             Number of option arguments that the function has
     Returns:
         function : the function that returns d_ij array.
-    
+
     Examples:
         >>> import sys
         >>> sys.path.append('../')
@@ -66,24 +67,25 @@ def gradpairwise(function,Nopts=0):
         DeviceArray([[[ 0.,  0.],
                       [-2.,  2.],
                       [-4., -2.]],
-        <BLANKLINE> 
+        <BLANKLINE>
                      [[ 4.,  4.],
                       [ 2.,  6.],
                       [ 0.,  2.]],
-        <BLANKLINE> 
+        <BLANKLINE>
                      [[ 8.,  8.],
                       [ 6., 10.],
                       [ 4.,  6.]]], dtype=float64)
-    
+
     """
-    add_in_axes= [None]*Nopts
-    static_argnums=[2+i for i in range(Nopts)]
+    add_in_axes = [None] * Nopts
+    static_argnums = [2 + i for i in range(Nopts)]
     return jit(
         vmap(
-            vmap(grad(function),in_axes=(None,0, *add_in_axes)),
-            in_axes=(0,None, *add_in_axes)),
+            vmap(grad(function), in_axes=(None, 0, *add_in_axes)),
+            in_axes=(0, None, *add_in_axes)),
         static_argnums=static_argnums)
-        
+
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
