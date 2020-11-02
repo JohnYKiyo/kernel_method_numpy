@@ -1,4 +1,4 @@
-from .Metropolis import Metropolis
-from .Hamiltonian import Hamiltonian
+from .metropolis import Metropolis
+from .hamiltonian import Hamiltonian
 
 __all__ = ['Metropolis', 'Hamiltonian']
