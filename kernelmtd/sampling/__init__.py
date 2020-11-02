@@ -1,2 +1,4 @@
 from .kernel_herding import KernelHerding
-#from . import MCMC
+# from . import MCMC
+
+__all__ = ['KernelHerding']
