@@ -45,10 +45,20 @@ class KernelABC(object):
         self.__ndim_data = data.shape[1]
         self.__ndim_para = para.shape[1]
         self.__ndata = data.shape[0]
-
         self.__kernel = kernel
-
         self.__calculate_gram_matrix()
+
+    def __repr__(self):
+        val = 'KernelABC Class\n'
+        val += f'{self.kernel}\n'
+        val += f'Data shape: \n\t data:{self.data.shape} \n\t para:{self.para.shape}\n'
+        val += f'epsilon:{self.epsilon}\n'
+        try:
+            val += f'obs: {self.obs.shape}\n'
+            val += f'Expected a posteriori: {self.eap}'
+        except ValueError:
+            pass
+        return val
 
     def __calculate_gram_matrix(self):
         G = self.__kernel(self.__data, self.__data)
@@ -93,8 +103,11 @@ class KernelABC(object):
         Expected A Posteriori
         :math:`E_{\\theta|Y_{obs}}[\\theta] = < m_{\\theta}|Y_{obs} | \\cdot > = \\sum_i w_i \\theta_i`.
         """
-        EAP = np.einsum('ij,id->jd', self.__weights, self.__para)
-        print(f'EAP: {EAP}')
+        try:
+            EAP = np.einsum('ij,id->jd', self.__weights, self.__para)
+        except:  #noqa
+            raise ValueError('Not yet conditioned. Did you condition it?')
+
         return EAP
 
     @property
@@ -104,6 +117,17 @@ class KernelABC(object):
     @property
     def kernel(self):
         return self.__kernel
+
+    @kernel.setter
+    def kernel(self, kernel):
+        self.__init__(data=self.__data,
+                      para=self.__para,
+                      kernel=kernel,
+                      epsilon=self.__epsilon)
+        try:
+            self.conditioning(obs=self.__obs)
+        except AttributeError:  #noqa
+            print('obs not defined')
 
     @property
     def ndim_data(self):
@@ -130,7 +154,11 @@ class KernelABC(object):
         try:
             return self.__weights.ravel()
         except:  # noqa
-            raise ValueError('Did you add the observation data and conditioning?')
+            raise ValueError('Not yet conditioned. Did you condition it?')
+
+    @property
+    def epsilon(self):
+        return self.__epsilon
 
     @property
     def k_obs(self):
@@ -138,8 +166,10 @@ class KernelABC(object):
 
     @property
     def obs(self):
-        return self.__obs
-
+        try:
+            return self.__obs
+        except:  #noqa
+            raise ValueError('Not yet conditioned. Did you condition it?')
 
 def test(data):
     import numpy as np
