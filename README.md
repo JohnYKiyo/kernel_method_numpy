@@ -1,9 +1,17 @@
 # Kernel method library
 ## 1\. Overview
+
 ## 2\. Installation
 
-You can install the package from
-Or install manualy
+You can install manualy,
+``` :sh
+$ git clone https://github.com/JohnYKiyo/bayesian_optimization.git
+$ cd bayesian_optimization
+$ python setup.py install
+```
+
+## 3\. Tutrial
+See [notebook](./notebooks/Tutrial.ipynb)
 
 ## Dependencies
 
