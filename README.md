@@ -5,8 +5,7 @@
 
 You can install manualy,
 ``` :sh
-$ git clone https://github.com/JohnYKiyo/bayesian_optimization.git
-$ cd bayesian_optimization
+$ cd kernel_method
 $ python setup.py install
 ```
 
