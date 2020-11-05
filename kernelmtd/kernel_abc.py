@@ -83,7 +83,6 @@ class KernelABC(object):
             raise ValueError(error)
         self.__k_obs = np.prod(self.__kernel(self.__data, self.__obs, normalize=False), axis=1, keepdims=True)  # (ndata,1) vector
         self.__weights = np.dot(self.__gram_inv, self.__k_obs)
-        print(f'sum weights:{self.__weights.sum()}')
 
     def posterior_kernel_mean(self, kernel):
         """[summary]
@@ -105,7 +104,7 @@ class KernelABC(object):
         """
         try:
             EAP = np.einsum('ij,id->jd', self.__weights, self.__para)
-        except:  #noqa
+        except:  # noqa
             raise ValueError('Not yet conditioned. Did you condition it?')
 
         return EAP
@@ -126,7 +125,7 @@ class KernelABC(object):
                       epsilon=self.__epsilon)
         try:
             self.conditioning(obs=self.__obs)
-        except AttributeError:  #noqa
+        except AttributeError:
             print('obs not defined')
 
     @property
@@ -168,8 +167,9 @@ class KernelABC(object):
     def obs(self):
         try:
             return self.__obs
-        except:  #noqa
+        except:  # noqa
             raise ValueError('Not yet conditioned. Did you condition it?')
+
 
 def test(data):
     import numpy as np
