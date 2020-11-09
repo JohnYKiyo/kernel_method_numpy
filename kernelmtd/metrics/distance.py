@@ -1,14 +1,13 @@
-from jax.config import config
-config.update("jax_enable_x64", True)
-import jax.numpy as np
+import numpy as np
 
 
-def euclid_distance(x, y, square=True):
-    """[summary]
-    d(x,y) = (x-y)^2
+def pairwise_euclid_distances(x, y, square=True):
+    """
+    return a pairwise distance matrix.
+    d_ij = (x_i-y_i)^2
     Args:
-        x (1d numpy.array): [description]
-        y (1d numpy.array): [description]
+        x (2d numpy.array): [description]
+        y (2d numpy.array): [description]
         square (bool, optional):
             Set to True to square the return value, (x-y)^2,
             if set to False, return |x-y|. Defaults to True.
@@ -17,36 +16,26 @@ def euclid_distance(x, y, square=True):
         array: if square is Ture, return (x-y)^2, else, return |x-y|.
 
     Examples:
-        >>> euclid_distance(np.array([1.,2.]),np.array([3.,4.])).item()
-        8.0
-
-        >>> euclid_distance(np.array([1.,2.]),np.array([3.,4.]),False).item()
-        2.8284271247461903
-
-        >>> euclid_distance_jit = jit(euclid_distance,static_argnums=(2,))
-        >>> euclid_distance_jit(np.array([1.,2.]),np.array([3.,4.]),True).item()
-        8.0
-
-        >>> euclid_distance_jit = jit(euclid_distance,static_argnums=(2,))
-        >>> euclid_distance_jit(np.array([1.,2.]),np.array([3.,4.]),False).item()
-        2.8284271247461903
-
+        >>> pairwise_euclid_distances(np.array([[1.,2.]]),np.array([[3.,4.]]))
+        array([[8.]])
+        >>> pairwise_euclid_distances(np.array([[1.,2.],[3.,4.]]),np.array([[1.,1.],[1.,2.]]))
+        array([[ 1.,  0.],
+               [13.,  8.]])
     """
-
-    XX = np.dot(x, x)
-    YY = np.dot(y, y)
-    XY = np.dot(x, y)
+    XX = np.einsum('id,id->i', x, x)[:, np.newaxis]
+    YY = np.einsum('id,id->i', y, y)[np.newaxis, :]
+    XY = np.einsum('id,jd->ij', x, y)
     if not square:
         return np.sqrt(XX + YY - 2. * XY)
     return XX + YY - 2. * XY
 
 
-def mahalanobis_distance(x, y, Q, square=True):
+def pairwise_mahalanobis_distances(x, y, Q, square=True):
     """[summary]
     d(x,y) = (x-y)Q(x-y)
     Args:
-        x (1d numpy.array): [description]
-        y (1d numpy.array): [description]
+        x (2d numpy.array): [description]
+        y (2d numpy.array): [description]
         square (bool, optional):
             Set to True to square the return value, (x-y)Q(x-y)^T,
             if set to False, return ((x-y)Q(x-y)^T)^0.5. Defaults to True.
@@ -55,25 +44,20 @@ def mahalanobis_distance(x, y, Q, square=True):
         array: if square is Ture, return (x-y)Q(x-y)^T, else, return ((x-y)Q(x-y)^T)^0.5.
 
     Examples:
-        >>> mahalanobis_distance(np.array([1,2]),np.array([3,4.]),np.array([[0.5,1],[4,0.5]])).item()
-        24.0
+        >>> pairwise_mahalanobis_distances(np.array([[1,2]]),np.array([[3,4.]]),np.array([[0.5,1],[4,0.5]]))
+        array([[24.]])
 
-        >>> mahalanobis_distance(np.array([1,2]),np.array([3,4.]),np.array([[0.5,1],[4,0.5]]),False).item()
-        4.898979485566356
+        >>> pairwise_mahalanobis_distances(np.array([[1,2]]),np.array([[3,4.]]),np.array([[0.5,1],[4,0.5]]),False)
+        array([[4.89897949]])
 
-        >>> mahalanobis_distance_jit = jit(mahalanobis_distance,static_argnums=(3,))
-        >>> mahalanobis_distance_jit(np.array([1,2]),np.array([3,4.]),np.array([[0.5,1],[4,0.5]]),True).item()
-        24.0
-
-        >>> mahalanobis_distance_jit = jit(mahalanobis_distance,static_argnums=(3,))
-        >>> mahalanobis_distance_jit(np.array([1,2]),np.array([3,4.]),np.array([[0.5,1],[4,0.5]]),False).item()
-        4.898979485566356
-
+        >>> pairwise_mahalanobis_distances(np.array([[1.,2.],[3.,4.]]),np.array([[1.,1.],[1.,2.]]),np.array([[1.,2.],[1.,1.]]))
+        array([[ 1.,  0.],
+               [31., 20.]])
     """
-    XQX = np.dot(x, np.dot(Q, x))
-    YQY = np.dot(y, np.dot(Q, y))
-    XQY = np.dot(x, np.dot(Q, y))
-    YQX = np.dot(y, np.dot(Q, x))
+    XQX = np.einsum('ij,jk,ik->i', x, Q, x)[:, np.newaxis]
+    YQY = np.einsum('ij,jk,ik->i', y, Q, y)[np.newaxis, :]
+    XQY = np.einsum('ij,jk,lk->il', x, Q, y)
+    YQX = np.einsum('ij,jk,lk->li', y, Q, x)
     if not square:
         return np.sqrt(XQX + YQY - XQY - YQX)
     return XQX + YQY - XQY - YQX
