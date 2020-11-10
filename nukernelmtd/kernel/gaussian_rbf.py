@@ -1,15 +1,10 @@
-from jax.config import config
-config.update("jax_enable_x64", True)
-import jax.numpy as np
-from jax import jit
+import numpy as np
 from functools import partial
 
-from ..metrics.distance import euclid_distance, mahalanobis_distance
-from ..utils import pairwise, gradpairwise
+from ..metrics.distance import pairwise_euclid_distances, pairwise_mahalanobis_distances
 
 
 # this is jit compiled distance for exec speed.
-@jit
 def _calculate_normalize_factor(C):
     """
     nom_factor = np.sqrt((2*pi)^k |C|)
@@ -17,36 +12,34 @@ def _calculate_normalize_factor(C):
     return np.sqrt(np.linalg.det(2 * np.pi * C))
 
 
-def loggaussK(x1, x2, Q):
-    return -0.5 * mahalanobis_distance(x1, x2, Q, True)
+def loggauss_pairwise(x1, x2, Q):
+    return -0.5 * pairwise_mahalanobis_distances(x1, x2, Q, True)
 
 
-def gauss(x1, x2, Q):
-    return np.exp(-0.5 * mahalanobis_distance(x1, x2, Q, True))
+def gauss_pairwise(x1, x2, Q):
+    return np.exp(-0.5 * pairwise_mahalanobis_distances(x1, x2, Q, True))
 
 
-# loggauss_pairwise = pairwise(pairwise(loggaussK,1),1)
-# gauss_pairwise = pairwise(pairwise(gauss,1),1)
-# grad_gauss_pairwise = pairwise(gradpairwise(gauss,1),1)
-loggauss_pairwise = pairwise(loggaussK, 1)
-gauss_pairwise = pairwise(gauss, 1)
-grad_gauss_pairwise = gradpairwise(gauss, 1)
+def grad_gauss_pairwise(x1, x2, Q):
+    d = pairwise_mahalanobis_distances(x1, x2, Q, True)
+    exp = np.exp(-0.5 * d)
+    prime_log_exp = -1. * np.sqrt(d)[:,:,np.newaxis] * np.sign(np.sign(x1[:, np.newaxis, :]-x2[np.newaxis, :, :]))
+    return np.einsum('ij,ijk->ijk', exp, prime_log_exp)
 
 
-def loggauss1d(x1, x2, sigma):
-    return -0.5 * euclid_distance(x1, x2, True) / (sigma * sigma)
+def loggauss1d_pairwise(x1, x2, sigma):
+    return -0.5 * pairwise_euclid_distances(x1, x2, True) / (sigma * sigma)
 
 
-def gauss1d(x1, x2, sigma):
-    return np.exp(-0.5 * euclid_distance(x1, x2, True) / (sigma * sigma))
+def gauss1d_pairwise(x1, x2, sigma):
+    return np.exp(-0.5 * pairwise_euclid_distances(x1, x2, True) / (sigma * sigma))
 
 
-# loggauss1d_pairwise = pairwise(pairwise(loggauss1d,1),1)
-# gauss1d_pairwise = pairwise(pairwise(gauss1d,1),1)
-# grad_gauss1d_pairwise = pairwise(gradpairwise(gauss1d,1),1)
-loggauss1d_pairwise = pairwise(loggauss1d, 1)
-gauss1d_pairwise = pairwise(gauss1d, 1)
-grad_gauss1d_pairwise = gradpairwise(gauss1d, 1)
+def grad_gauss1d_pairwise(x1, x2, sigma):
+    d = pairwise_euclid_distances(x1, x2, True)
+    exp = np.exp(-0.5 * d / (sigma * sigma))
+    prime_log_exp = -1. * np.sqrt(d)[:,:,np.newaxis] * np.sign(np.sign(x1[:, np.newaxis, :] - x2[np.newaxis, :, :]))
+    return np.einsum('ij,ijk->ijk', exp, prime_log_exp)
 
 
 class GaussKernel(object):
@@ -70,10 +63,10 @@ class GaussKernel(object):
         ValueError: Sigma should be scalar.
 
     Examples:
-        >>> import numpy as onp
+        >>> import numpy as np
         >>> kernel_gauss = GaussKernel(sigma=1.)
         >>> x = np.atleast_2d(np.linspace(-5.,5.,10)).T
-        >>> onp.asarray(kernel_gauss.kde(x,np.array([[0.],[1.]])))
+        >>> np.asarray(kernel_gauss.kde(x,np.array([[0.],[1.]])))
         array([[3.72665317e-06, 1.52299797e-08],
                [5.19975743e-04, 6.45524691e-06],
                [2.11096565e-02, 7.96086691e-04],
@@ -101,9 +94,9 @@ class GaussKernel(object):
             self.__inv_cov = np.linalg.inv(covariance)
             self.__sigma = sigma
             self.__inv_sigma = None
-            self.__kde = jit(partial(lambda x1, x2, Q: gauss_pairwise(x1, x2, Q), Q=self.__inv_cov))
-            self.__logkde = jit(partial(lambda x1, x2, Q: loggauss_pairwise(x1, x2, Q), Q=self.__inv_cov))
-            self.__grad_kde = jit(partial(lambda x1, x2, Q: grad_gauss_pairwise(x1, x2, Q), Q=self.__inv_cov))
+            self.__kde = partial(gauss_pairwise, Q=self.__inv_cov)
+            self.__logkde = partial(loggauss_pairwise, Q=self.__inv_cov)
+            self.__grad_kde = partial(grad_gauss_pairwise, Q=self.__inv_cov)
             self.__norm_factor = _calculate_normalize_factor(self.__cov)
 
         if sigma is not None:
@@ -114,9 +107,9 @@ class GaussKernel(object):
             self.__inv_cov = None
             self.__sigma = float(sigma)
             self.__inv_sigma = 1. / sigma
-            self.__kde = jit(partial(lambda x1, x2, sig: gauss1d_pairwise(x1, x2, sig), sig=self.__sigma))
-            self.__logkde = jit(partial(lambda x1, x2, sig: loggauss1d_pairwise(x1, x2, sig), sig=self.__sigma))
-            self.__grad_kde = jit(partial(lambda x1, x2, sig: grad_gauss1d_pairwise(x1, x2, sig), sig=self.__sigma))
+            self.__kde = partial(gauss1d_pairwise, sigma=self.__sigma)
+            self.__logkde = partial(loggauss1d_pairwise, sigma=self.__sigma)
+            self.__grad_kde = partial(grad_gauss1d_pairwise, sigma=self.__sigma)
             self.__norm_factor = np.sqrt(2 * np.pi) * self.__sigma
 
     def __call__(self, x1, x2, **kwargs):
