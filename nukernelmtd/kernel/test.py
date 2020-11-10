@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import timeit
 from sklearn.gaussian_process.kernels import Matern as sk_Matern
 from sklearn.gaussian_process.kernels import RBF as sk_Gauss
-import jax.numpy as jnp
 
 import warnings
 
@@ -53,13 +52,13 @@ def test_matern_nu(nu=0.5):
 
 
 def check_matern_sklearn(nu):
-    x = jnp.atleast_2d(jnp.linspace(-10., 10., 100)).T
+    x = np.atleast_2d(np.linspace(-10., 10., 100)).T
     skmatern = sk_Matern(length_scale=1., nu=nu)
     return skmatern(x, np.array([[0], [1]]))
 
 
 def check_matern_kernelmtd(nu):
-    x = jnp.atleast_2d(jnp.linspace(-10., 10., 100)).T
+    x = np.atleast_2d(np.linspace(-10., 10., 100)).T
     matk = MaternKernel(l=1., nu=nu)
     return matk.kde(x.reshape(100, 1), np.array([[0], [1]]))
 
@@ -117,15 +116,15 @@ def test_gauss():
 
 
 def check_gauss_sklearn():
-    x = jnp.atleast_2d(jnp.linspace(-10., 10., 100)).T
+    x = np.atleast_2d(np.linspace(-10., 10., 100)).T
     skgauss = sk_Gauss(length_scale=1.)
-    return skgauss(x, jnp.array([[0.], [-2.5], [5.]]))
+    return skgauss(x, np.array([[0.], [-2.5], [5.]]))
 
 
 def check_gauss_kernelmtd():
-    x = jnp.atleast_2d(jnp.linspace(-10., 10., 100)).T
+    x = np.atleast_2d(np.linspace(-10., 10., 100)).T
     gk = GaussKernel(sigma=1.)
-    return gk.kde(x, jnp.array([[0.], [-2.5], [5.]]))
+    return gk.kde(x, np.array([[0.], [-2.5], [5.]]))
 
 
 def test_gauss_equivalent_function():
