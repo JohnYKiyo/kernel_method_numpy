@@ -1,11 +1,8 @@
-from ..utils import transform_data, pairwise
-from ..metrics import euclid_distance
+from ..utils import transform_data
+from ..metrics import pairwise_euclid_distances
 from ..kernel import GaussKernel
 
-from jax.config import config
-config.update("jax_enable_x64", True)
-import jax.numpy as np
-import numpy as onp
+import numpy as np
 
 
 class Bandwidth(object):
@@ -78,7 +75,7 @@ class Bandwidth(object):
         epsilon = 1e-12
         lambdaI = epsilon * np.eye(self.__ndim)
         if not hasattr(self, '__data_inv_cov'):
-            self.__data_cov = np.atleast_2d(onp.cov(self.__data, rowvar=False, bias=False, aweights=self.__weights))
+            self.__data_cov = np.atleast_2d(np.cov(self.__data, rowvar=False, bias=False, aweights=self.__weights))
 
             try:
                 self.__data_inv_cov = np.linalg.inv(self.__data_cov)
@@ -153,8 +150,7 @@ class Bandwidth(object):
         '''
         The Euclidean distance between data is calculated, and the mode of distance is defined as the bandwidth.
         '''
-        euclidean_distances = pairwise(euclid_distance, square=True)
-        dists = euclidean_distances(self.__data, self.__data)
+        dists = pairwise_euclid_distances(self.__data, self.__data, True)
         ind = np.triu_indices(self.__n_data, k=1)
         h = np.median(dists[ind])
         if self.__method == 'median':
@@ -177,13 +173,13 @@ class Bandwidth(object):
             #     cov = []
             #     for i in range(2):
             #         cov.append(trial.suggest_loguniform(f'h{i}', 1e-3, 1e+2))
-            #     cov = onp.diag(cov)
+            #     cov = np.diag(cov)
             #     M = gauss_kernel(self.__data,self.__data,cov=cov)
-            #     return np.log((M-np.diag(onp.diag(M))).mean(axis=1)+epsilon).mean().ravel()
+            #     return np.log((M-np.diag(np.diag(M))).mean(axis=1)+epsilon).mean().ravel()
             #
             # study = optuna.create_study(direction='maximize')
             # study.optimize(LogLikelihood,n_trials=100)
-            # self._cov = np.diag(onp.fromiter(study.best_params.values(),dtype=float))
+            # self._cov = np.diag(np.fromiter(study.best_params.values(),dtype=float))
             # self._inv_cov = np.linalg.inv(self._cov)
             try:
                 import gpbayesopt
