@@ -1,8 +1,5 @@
-from jax.config import config
-config.update("jax_enable_x64", True)
-import jax.numpy as np
+import numpy as np
 from functools import partial
-import numpy as onp
 from scipy.optimize import minimize
 from scipy import random
 from tqdm import tqdm
@@ -100,10 +97,10 @@ class KernelHerding(object):
         return fnc, f_prime
 
     def __argmax(self, h, h_prime, derivatives=False, max_trial=2, **kwargs):
-        minus_h = lambda x: onp.array(np.squeeze(-1. * h(np.atleast_2d(x))))  # noqa : E731 do not assign a lambda expression, use a def.
+        minus_h = lambda x: np.array(np.squeeze(-1. * h(np.atleast_2d(x))))  # noqa : E731 do not assign a lambda expression, use a def.
         minus_h_prime = None
         if derivatives:
-            minus_h_prime = lambda x: onp.array(np.squeeze(-1. * h_prime(np.atleast_2d(x))))  # noqa : E731 do not assign a lambda expression, use a def.
+            minus_h_prime = lambda x: np.array(np.squeeze(-1. * h_prime(np.atleast_2d(x))))  # noqa : E731 do not assign a lambda expression, use a def.
         x, val = self.__optimizer_scipy(minus_h, minus_h_prime, derivatives=derivatives, max_trial=max_trial, **kwargs)
         return x, val
 
@@ -143,7 +140,7 @@ def test(data):
 
     KM = KernelMean(data=data.testdata, kernel=GaussKernel(sigma=1.))
     KH = KernelHerding(KM)
-    supersamples = KH.sampling(sample_size=50, max_trial=2, derivatives=True)
+    supersamples = KH.sampling(sample_size=50, max_trial=2, derivatives=False)
     KM_herding = KernelMean(data=supersamples, kernel=GaussKernel(sigma=1.))
 
     x = np.arange(-10.0, 10.0, 0.1)

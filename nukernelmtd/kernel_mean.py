@@ -1,9 +1,5 @@
 import pandas as pd
-
-from jax.config import config
-config.update("jax_enable_x64", True)
-import jax
-import jax.numpy as np
+import numpy as np
 
 from .kernel import GaussKernel
 
@@ -26,8 +22,6 @@ class KernelMean(object):
             Conditional kernel mean can be obtained by specifying the weights conditioned by kernel ABC.
 
     Examples:
-        >>> from kernelmtd.kernel import GaussKernel
-        >>> import numpy as np
         >>> kernel_gauss = GaussKernel(sigma=1.)
         >>> data = np.array([[0.],[1.],[3.]])
         >>> kernelmean = KernelMean(data=data,kernel=kernel_gauss,weights=None)
@@ -156,7 +150,8 @@ class KernelMean(object):
         try:
             grad = self.kernel.gradkde(val, self._data.values, **kwargs)
             if np.isnan(grad).any():
-                val = jax.ops.index_add(val, np.isnan(grad), 1e-12)
+                # val = jax.ops.index_add(val, np.isnan(grad), 1e-12)
+                val[np.isnan(grad)] += 1e-12
                 grad = self.__calculate_grad(val, **kwargs)
 
         except:  # noqa
