@@ -23,7 +23,7 @@ def gauss_pairwise(x1, x2, Q):
 def grad_gauss_pairwise(x1, x2, Q):
     d = pairwise_mahalanobis_distances(x1, x2, Q, True)
     exp = np.exp(-0.5 * d)
-    prime_log_exp = -1. * np.sqrt(d)[:,:,np.newaxis] * np.sign(np.sign(x1[:, np.newaxis, :]-x2[np.newaxis, :, :]))
+    prime_log_exp = -1. * np.sqrt(d)[:, :, np.newaxis] * np.sign(np.sign(x1[:, np.newaxis, :] - x2[np.newaxis, :, :]))
     return np.einsum('ij,ijk->ijk', exp, prime_log_exp)
 
 
@@ -38,7 +38,7 @@ def gauss1d_pairwise(x1, x2, sigma):
 def grad_gauss1d_pairwise(x1, x2, sigma):
     d = pairwise_euclid_distances(x1, x2, True)
     exp = np.exp(-0.5 * d / (sigma * sigma))
-    prime_log_exp = -1. * np.sqrt(d)[:,:,np.newaxis] * np.sign(np.sign(x1[:, np.newaxis, :] - x2[np.newaxis, :, :]))
+    prime_log_exp = -1. * np.sqrt(d)[:, :, np.newaxis] * np.sign(np.sign(x1[:, np.newaxis, :] - x2[np.newaxis, :, :]))
     return np.einsum('ij,ijk->ijk', exp, prime_log_exp)
 
 
