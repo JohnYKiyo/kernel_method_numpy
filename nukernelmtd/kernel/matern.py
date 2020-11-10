@@ -1,60 +1,48 @@
-from jax.config import config
-config.update("jax_enable_x64", True)
-import jax.numpy as np
-import jax.scipy as scp
+import numpy as np
+import scipy as scp
 import scipy
 
 import warnings
 
-from ..metrics.distance import euclid_distance
-from ..utils import pairwise, gradpairwise
+from ..metrics.distance import pairwise_euclid_distances
 
 
-def K_0p5(x1, x2, l):  # noqa: E741
-    return np.exp(-euclid_distance(x1, x2, False) / l)
+def K_0p5_pairwise(x1, x2, l):  # noqa: E741
+    return np.exp(-pairwise_euclid_distances(x1, x2, False) / l)
 
 
-# K_0p5_pairwise = pairwise(pairwise(K_0p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l)
-# grad_K_0p5_pairwise = pairwise(gradpairwise(K_0p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l,d)
-K_0p5_pairwise = pairwise(K_0p5, 1)  # (i,d),(j,d) -> (i,j)
-grad_K_0p5_pairwise = gradpairwise(K_0p5, 1)  # (i,d),(j,d) -> (i,j,d)
+def grad_K_0p5_pairwise(x1, x2, l):  # noqa: E741
+    raise NotImplementedError
 
 
-def K_1p5(x1, x2, l):  # noqa: E741
-    K = euclid_distance(x1, x2, False) / l * np.sqrt(3)
+def K_1p5_pairwise(x1, x2, l):  # noqa: E741
+    K = pairwise_euclid_distances(x1, x2, False) / l * np.sqrt(3)
     return (1. + K) * np.exp(-K)
 
 
-# K_1p5_pairwise = pairwise(pairwise(K_1p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l)
-# grad_K_1p5_pairwise = pairwise(gradpairwise(K_1p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l,d)
-K_1p5_pairwise = pairwise(K_1p5, 1)  # (i,d),(j,d) -> (i,j)
-grad_K_1p5_pairwise = gradpairwise(K_1p5, 1)  # (i,d),(j,d) -> (i,j,d)
+def grad_K_1p5_pairwise(x1, x2, l):  # noqa: E741
+    raise NotImplementedError
 
 
-def K_2p5(x1, x2, l):  # noqa: E741
-    K = euclid_distance(x1, x2, False) / l * np.sqrt(5)
+def K_2p5_pairwise(x1, x2, l):  # noqa: E741
+    K = pairwise_euclid_distances(x1, x2, False) / l * np.sqrt(5)
     return (1. + K + K ** 2 / 3.0) * np.exp(-K)
 
 
-# K_2p5_pairwise = pairwise(pairwise(K_2p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l)
-# grad_K_2p5_pairwise = pairwise(gradpairwise(K_2p5,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l,d)
-K_2p5_pairwise = pairwise(K_2p5, 1)  # (i,d),(j,d) -> (i,j)
-grad_K_2p5_pairwise = gradpairwise(K_2p5, 1)  # (i,d),(j,d) -> (i,j,d)
+def grad_K_2p5_pairwise(x1, x2, l):  # noqa: E741
+    raise NotImplementedError
 
 
-def K_inf(x1, x2, l):  # noqa: E741
-    return np.exp(-euclid_distance(x1, x2, True) / 2.0 / l**2)
+def K_inf_pairwise(x1, x2, l):  # noqa: E741
+    return np.exp(-pairwise_euclid_distances(x1, x2, True) / 2.0 / l**2)
 
 
-# K_inf_pairwise = pairwise(pairwise(K_inf,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l)
-# grad_K_inf_pairwise = pairwise(gradpairwise(K_inf,1),1) #(i,j,d),(k,l,d) -> (i,k,j,l,d)
-K_inf_pairwise = pairwise(K_inf, 1)  # (i,d),(j,d) -> (i,j)
-grad_K_inf_pairwise = gradpairwise(K_inf, 1)  # (i,d),(j,d) -> (i,j,d)
+def grad_K_inf_pairwise(x1, x2, l):  # noqa: E741
+    raise NotImplementedError
 
 
 def K_other_pairwise(x1, x2, l, nu):  # noqa: E741
-    dists = pairwise(euclid_distance, 1)
-    dists_matrix = dists(x1, x2, False) / l
+    dists_matrix = pairwise_euclid_distances(x1, x2, False) / l
     dists_matrix = np.where(dists_matrix == 0, np.finfo(float).eps, dists_matrix)
     tmp = (np.sqrt(2 * nu) * dists_matrix)
     val = (2 ** (1. - nu)) / np.exp(scp.special.gammaln(nu))

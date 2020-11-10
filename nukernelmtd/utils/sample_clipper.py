@@ -1,6 +1,4 @@
-from jax.config import config
-config.update("jax_enable_x64", True)
-import jax.numpy as np
+import numpy as np
 
 
 def sample_clipper(samples, bounds):
@@ -20,9 +18,9 @@ def sample_clipper(samples, bounds):
 
     Examples:
         >>> samples = np.array([[1., 2.],[2., 5.],[3., 3.], [2., 4.]])
-        >>> sample_clipper(samples,bounds=np.array([[2,5],[2,4]]))
-        (DeviceArray([[3., 3.],
-                     [2., 4.]], dtype=float64), DeviceArray(2, dtype=int64))
+        >>> sample_clipper(samples,bounds=np.array([[2., 5.],[2., 4.]]))
+        (array([[3., 3.],
+               [2., 4.]]), 2)
     """
     if not isinstance(bounds, np.ndarray):
         bounds = np.array(bounds)

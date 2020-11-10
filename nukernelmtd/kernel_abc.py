@@ -1,6 +1,4 @@
-from jax.config import config
-config.update("jax_enable_x64", True)
-import jax.numpy as np
+import numpy as np
 
 from .kernel import GaussKernel
 from .kernel_mean import KernelMean
