@@ -1,6 +1,4 @@
-from jax.config import config
-config.update("jax_enable_x64", True)
-import jax.numpy as np
+import numpy as np
 import pandas as pd
 
 
@@ -18,12 +16,12 @@ def transform_data(x):
 
     Examples:
         >>> transform_data([1,2,3])
-        DeviceArray([[1.],
-                     [2.],
-                     [3.]], dtype=float64)
+        array([[1.],
+               [2.],
+               [3.]])
 
         >>> transform_data([[1,2,3]])
-        DeviceArray([[1., 2., 3.]], dtype=float64)
+        array([[1., 2., 3.]])
 
     """
     if isinstance(x, np.ndarray):
