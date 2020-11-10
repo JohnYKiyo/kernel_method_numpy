@@ -11,7 +11,7 @@ def K_0p5_pairwise(x1, x2, l):  # noqa: E741
     return np.exp(-pairwise_euclid_distances(x1, x2, False) / l)
 
 
-def grad_K_0p5_pairwise(x1, x2, l):
+def grad_K_0p5_pairwise(x1, x2, l):  # noqa: E741
     raise NotImplementedError
 
 
@@ -20,7 +20,7 @@ def K_1p5_pairwise(x1, x2, l):  # noqa: E741
     return (1. + K) * np.exp(-K)
 
 
-def grad_K_1p5_pairwise(x1, x2, l):
+def grad_K_1p5_pairwise(x1, x2, l):  # noqa: E741
     raise NotImplementedError
 
 
@@ -29,7 +29,7 @@ def K_2p5_pairwise(x1, x2, l):  # noqa: E741
     return (1. + K + K ** 2 / 3.0) * np.exp(-K)
 
 
-def grad_K_2p5_pairwise(x1, x2, l):
+def grad_K_2p5_pairwise(x1, x2, l):  # noqa: E741
     raise NotImplementedError
 
 
@@ -37,7 +37,7 @@ def K_inf_pairwise(x1, x2, l):  # noqa: E741
     return np.exp(-pairwise_euclid_distances(x1, x2, True) / 2.0 / l**2)
 
 
-def grad_K_inf_pairwise(x1, x2, l):
+def grad_K_inf_pairwise(x1, x2, l):  # noqa: E741
     raise NotImplementedError
 
 
