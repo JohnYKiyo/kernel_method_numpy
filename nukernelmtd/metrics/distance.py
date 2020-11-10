@@ -27,8 +27,8 @@ def pairwise_euclid_distances(x, y, square=True):
     XY = np.einsum('id,jd->ij', x, y)
     ret = XX + YY - 2. * XY
     if not square:
-        return np.sqrt(np.where(np.abs(ret) < 1e-12, 0., ret))
-    return np.where(np.abs(ret) < 1e-12, 0., ret)
+        return np.sqrt(np.where(ret < 0., 0., ret))  # Solved the problem that a minus appears due to bit accuracy when the two points for calculating the distance are the same.
+    return np.where(ret < 0., 0., ret)  # Solved the problem that a minus appears due to bit accuracy when the two points for calculating the distance are the same.
 
 
 def pairwise_mahalanobis_distances(x, y, Q, square=True):
@@ -61,8 +61,8 @@ def pairwise_mahalanobis_distances(x, y, Q, square=True):
     YQX = np.einsum('ij,jk,lk->li', y, Q, x)
     ret = XQX + YQY - XQY - YQX
     if not square:
-        return np.sqrt(np.where(np.abs(ret) < 1e-12, 0., ret))
-    return np.where(np.abs(ret) < 1e-12, 0., ret)
+        return np.sqrt(np.where(ret < 0., 0., ret))  # Solved the problem that a minus appears due to bit accuracy when the two points for calculating the distance are the same.
+    return np.where(ret < 0., 0., ret)  # Solved the problem that a minus appears due to bit accuracy when the two points for calculating the distance are the same.
 
 
 if __name__ == '__main__':
