@@ -65,7 +65,7 @@ class KernelHerding(object):
         grad_h = None
         if derivatives:
             try:
-                self.__KernelMean.gradkde(self.__KernelMean.data.iloc[0:1, :])  # check gradkde is defined.
+                self.__KernelMean.gradkde(self.__KernelMean.data.iloc[0:2, :].values)  # check gradkde is defined.
                 derivatives = True
                 grad_h = partial(self.__KernelMean.gradkde, normalize=normalize, weights_normalize=weights_normalize)
             except:  # noqa
