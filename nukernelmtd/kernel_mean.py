@@ -137,7 +137,6 @@ class KernelMean(object):
             NotImplementedError:
                 If the gradient cannot be calculated, it returns the error.
         """
-        val = val
         weights_normalize = kwargs.get('weights_normalize', False)
         grad = self.__calculate_grad(val, **kwargs)
         w = self._weights
@@ -149,14 +148,8 @@ class KernelMean(object):
     def __calculate_grad(self, val, **kwargs):
         try:
             grad = self.kernel.gradkde(val, self._data.values, **kwargs)
-            if np.isnan(grad).any():
-                # val = jax.ops.index_add(val, np.isnan(grad), 1e-12)
-                val[np.isnan(grad)] += 1e-12
-                grad = self.__calculate_grad(val, **kwargs)
-
         except:  # noqa
             raise NotImplementedError()
-
         return grad
 
     def __weights_normalize(self):

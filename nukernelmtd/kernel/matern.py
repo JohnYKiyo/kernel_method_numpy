@@ -73,18 +73,18 @@ def matern(x, y, l=1., nu=1.5):  # noqa: E741
 
 def grad_matern(x, y, l=1., nu=0.5):  # noqa: E741
     if nu == 0.5:
-        return grad_K_0p5_pairwise(x, y, l)
+        return np.nan_to_num(grad_K_0p5_pairwise(x, y, l))
     elif nu == 1.5:
-        return grad_K_1p5_pairwise(x, y, l)
+        return np.nan_tonum(grad_K_1p5_pairwise(x, y, l))
 
     elif nu == 2.5:
-        return grad_K_2p5_pairwise(x, y, l)
+        return np.nan_tonum(grad_K_2p5_pairwise(x, y, l))
 
     elif nu == np.inf:
-        return grad_K_inf_pairwise(x, y, l)
+        return np.nan_tonum(grad_K_inf_pairwise(x, y, l))
     else:
         warnings.warn('Slow processing speed. cuz not use XLA compiler.', Warning)
-        return grad_K_ohter_pairwise(x, y, l, nu)
+        return np.nan_tonum(grad_K_ohter_pairwise(x, y, l, nu))
 
 
 class MaternKernel(object):
@@ -146,6 +146,8 @@ class MaternKernel(object):
             KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
                 Kernel k(x1,x2)
         """
+        x1 = np.atleast_2d(x1)
+        x2 = np.atleast_2d(x2)
         return self.__a * matern(x1, x2, self.__l, self.__nu)
 
     def logkde(self, x1, x2, **kwargs):
@@ -160,6 +162,8 @@ class MaternKernel(object):
             KV (ndarray): return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).
                 Kernel log(k(x1,x2))
         """
+        x1 = np.atleast_2d(x1)
+        x2 = np.atleast_2d(x2)
         return np.log(self.__a * matern(x1, x2, self.__l, self.__nu))
 
     def gradkde(self, x1, x2, **kwargs):
@@ -174,6 +178,8 @@ class MaternKernel(object):
             KV (ndarray): return gradient value tensor. ndarray of shape (n_samples_x1,n_samples_x2, n_dim).
                 Derivative value at x1 of kernel centered on x2. dk(x,x2)/dx (x=x1)
         """
+        x1 = np.atleast_2d(x1)
+        x2 = np.atleast_2d(x2)
         return self.__a * grad_matern(x1, x2, self.__l, self.__nu)
 
     @property
