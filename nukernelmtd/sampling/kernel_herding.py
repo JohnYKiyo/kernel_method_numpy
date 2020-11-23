@@ -1,5 +1,5 @@
-import numpy as np
 from functools import partial
+import numpy as np
 from scipy.optimize import minimize
 from scipy import random
 from tqdm import tqdm
@@ -30,8 +30,6 @@ class KernelHerding(object):
         Args:
             sample_size (int): sample size of herding.
             **kwargs:
-                see scipy.optimizer.minimize kwargs.
-
                 normalize (bool, optional): Defaults to False.
                     Specify `True` when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel's docstrings.
 
@@ -43,6 +41,29 @@ class KernelHerding(object):
 
                 derivatives (bool, optional): Defaults to False.
                     If the derivative is defined in the kernel, the search is performed using the derivative value.
+
+                The remainder of the keyword arguments are inherited from
+                `scipy.optimize.minimize`, and their descriptions are copied here for convenience.
+
+                method (str, optional): Defaults to 'L-BFGS-B'.
+                    Type of solver.  Should be one of
+                    - 'Nelder-Mead' :ref:`(see here) <optimize.minimize-neldermead>`
+                    - 'Powell'      :ref:`(see here) <optimize.minimize-powell>`
+                    - 'CG'          :ref:`(see here) <optimize.minimize-cg>`
+                    - 'BFGS'        :ref:`(see here) <optimize.minimize-bfgs>`
+                    - 'Newton-CG'   :ref:`(see here) <optimize.minimize-newtoncg>`
+                    - 'L-BFGS-B'    :ref:`(see here) <optimize.minimize-lbfgsb>`
+                    - 'TNC'         :ref:`(see here) <optimize.minimize-tnc>`
+                    - 'COBYLA'      :ref:`(see here) <optimize.minimize-cobyla>`
+                    - 'SLSQP'       :ref:`(see here) <optimize.minimize-slsqp>`
+                    - 'trust-constr':ref:`(see here) <optimize.minimize-trustconstr>`
+                    - 'dogleg'      :ref:`(see here) <optimize.minimize-dogleg>`
+                    - 'trust-ncg'   :ref:`(see here) <optimize.minimize-trustncg>`
+                    - 'trust-exact' :ref:`(see here) <optimize.minimize-trustexact>`
+                    - 'trust-krylov' :ref:`(see here) <optimize.minimize-trustkrylov>`
+                    - custom - a callable object (added in version 0.14.0),
+                see below for description.
+                If not given, chosen to be one of ``BFGS``, ``L-BFGS-B``, ``SLSQP``,depending if the problem has constraints or bounds.
 
         Example:
             >>> from kernelmtd.data import testdata
@@ -88,12 +109,16 @@ class KernelHerding(object):
         return self.__samples
 
     def __herding_update(self, samples, normalize=False, weights_normalize=False, derivatives=False, **kwargs):
-        fnc = lambda x: self.__KernelMean.kde(x, normalize=normalize, weights_normalize=weights_normalize) - np.mean(self.__kernel.kde(x, samples, normalize=normalize), axis=1, keepdims=True)  # noqa : E731 do not assign a lambda expression, use a def.
-
+        def fnc(x):
+            kmean = self.__KernelMean.kde(x, normalize=normalize, weights_normalize=weights_normalize)
+            phi = np.mean(self.__kernel.kde(x, samples, normalize=normalize), axis=1, keepdims=True)
+            return kmean - phi
         f_prime = None
         if derivatives:
-            f_prime = lambda x: self.__KernelMean.gradkde(x, weights_normalize=weights_normalize, normalize=normalize) - np.mean(self.__kernel.gradkde(x, samples, normalize=normalize), axis=1, keepdims=True)  # noqa : E731 do not assign a lambda expression, use a def.
-
+            def f_prime(x):
+                m_prime = self.__KernelMean.gradkde(x, weights_normalize=weights_normalize, normalize=normalize)
+                phi_prime = np.mean(self.__kernel.gradkde(x, samples, normalize=normalize), axis=1, keepdims=True)
+                return m_prime - phi_prime
         return fnc, f_prime
 
     def __argmax(self, h, h_prime, derivatives=False, max_trial=2, **kwargs):
@@ -105,22 +130,22 @@ class KernelHerding(object):
         return x, val
 
     def __optimizer_scipy(self, h, h_prime, derivatives=False, max_trial=2, **kwargs):
-        kwargs['method'] = 'L-BFGS-B'
+        kwargs['method'] = kwargs.pop('method', 'L-BFGS-B')
         if 'x0' not in kwargs:
-            kwargs['x0'] = np.squeeze(self.__KernelMean.data.sample().values)
+            kwargs['x0'] = random.uniform(low=np.min(self.__KernelMean.data, axis=0), high=np.max(self.__KernelMean.data, axis=0))
         if derivatives:
             kwargs['jac'] = h_prime
 
         x, val = kwargs['x0'], np.inf
         for i in range(max_trial):
-            optimize_fail = True
-            while optimize_fail:
+            optimize_success = False
+            while not optimize_success:
                 optimize_result = minimize(h, **kwargs)
                 if not optimize_result.success:
-                    kwargs['x0'] = random.uniform(low=np.min(self.__KernelMean.data, axis=0),
-                                                  high=np.max(self.__KernelMean.data, axis=0))
+                    kwargs['x0'] = random.uniform(low=np.min(self.__KernelMean.data, axis=0), high=np.max(self.__KernelMean.data, axis=0))
                     continue
-                optimize_fail = False
+                else:
+                    optimize_success = True
 
             if optimize_result.fun < val:
                 x = optimize_result.x
