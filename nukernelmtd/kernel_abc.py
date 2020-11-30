@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 
 from .kernel import GaussKernel
 from .kernel_mean import KernelMean
@@ -57,6 +58,9 @@ class KernelABC(object):
         except ValueError:
             pass
         return val
+
+    def copy(self):
+        return copy.deepcopy(self)
 
     def __calculate_gram_matrix(self):
         G = self.__kernel(self.__data, self.__data)
