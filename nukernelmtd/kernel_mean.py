@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import copy
 
 from .kernel import GaussKernel
 
@@ -87,6 +88,9 @@ class KernelMean(object):
         val += f'The number of data: {self.n_samples}\n'
         val += f'Kernel: \n{self.kernel}\n'
         return val
+
+    def copy(self):
+        return copy.deepcopy(self)
 
     def kde(self, val, **kwargs):
         """compute kernel density
