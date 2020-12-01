@@ -13,7 +13,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="nukernelmtd",
-    version="1.0.0",
+    version="1.0.3",
     license="MIT License",
     description="A Python Package for Kernel methods.",
     long_description=long_description,

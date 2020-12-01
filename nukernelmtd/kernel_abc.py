@@ -131,6 +131,21 @@ class KernelABC(object):
             print('obs not defined')
 
     @property
+    def epsilon(self):
+        return self.__epsilon
+
+    @epsilon.setter
+    def epsilon(self, epsilon):
+        self.__init__(data=self.__data,
+                      para=self.__para,
+                      kernel=self.__kernel,
+                      epsilon=epsilon)
+        try:
+            self.conditioning(obs=self.__obs)
+        except AttributeError:
+            print('obs not defined')
+
+    @property
     def ndim_data(self):
         return self.__ndim_data
 
@@ -156,10 +171,6 @@ class KernelABC(object):
             return self.__weights.ravel()
         except:  # noqa
             raise ValueError('Not yet conditioned. Did you condition it?')
-
-    @property
-    def epsilon(self):
-        return self.__epsilon
 
     @property
     def k_obs(self):
