@@ -86,6 +86,10 @@ class KernelABC(object):
         self.__k_obs = np.prod(self.__kernel(self.__data, self.__obs, normalize=False), axis=1, keepdims=True)  # (ndata,1) vector
         self.__weights = np.dot(self.__gram_inv, self.__k_obs)
 
+        if np.all(self.__weights == 0):
+            error = 'All weights are 0. Review the \"kernel\". Bandwidth may not be appropriate.'
+            raise ValueError(error)
+
     def posterior_kernel_mean(self, kernel):
         """[summary]
         Returns the posterior kernel mean of para which is class instance of KernelMean
