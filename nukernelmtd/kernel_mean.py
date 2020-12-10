@@ -165,7 +165,7 @@ class KernelMean(object):
 
     @kernel.setter
     def kernel(self, kernel):
-        self.__init__(self, self._data, kernel, weights=self._weights)
+        self.__init__(data=self._data, kernel=kernel, weights=self._weights)
 
     @property
     def weights(self):
