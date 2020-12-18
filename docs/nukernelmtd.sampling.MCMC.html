@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nukernelmtd.sampling.MCMC package &mdash; nukernelmtd 1.0.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="nukernelmtd.utils package" href="nukernelmtd.utils.html" />
+    <link rel="prev" title="nukernelmtd.sampling package" href="nukernelmtd.sampling.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> nukernelmtd
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nukernelmtd.html">nukernelmtd package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="nukernelmtd.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.data.html">nukernelmtd.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.kernel.html">nukernelmtd.kernel package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.metrics.html">nukernelmtd.metrics package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="nukernelmtd.sampling.html">nukernelmtd.sampling package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="nukernelmtd.sampling.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nukernelmtd.sampling.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nukernelmtd.sampling.html#module-nukernelmtd.sampling.kernel_herding">nukernelmtd.sampling.kernel_herding module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nukernelmtd.sampling.html#module-nukernelmtd.sampling">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.utils.html">nukernelmtd.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_abc">nukernelmtd.kernel_abc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_mean">nukernelmtd.kernel_mean module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nukernelmtd</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="nukernelmtd.html">nukernelmtd package</a> &raquo;</li>
+        
+          <li><a href="nukernelmtd.sampling.html">nukernelmtd.sampling package</a> &raquo;</li>
+        
+      <li>nukernelmtd.sampling.MCMC package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/nukernelmtd.sampling.MCMC.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nukernelmtd-sampling-mcmc-package">
+<h1>nukernelmtd.sampling.MCMC package<a class="headerlink" href="#nukernelmtd-sampling-mcmc-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nukernelmtd.sampling.MCMC.hamiltonian">
+<span id="nukernelmtd-sampling-mcmc-hamiltonian-module"></span><h2>nukernelmtd.sampling.MCMC.hamiltonian module<a class="headerlink" href="#module-nukernelmtd.sampling.MCMC.hamiltonian" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="nukernelmtd.sampling.MCMC.hamiltonian.Hamiltonian">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.sampling.MCMC.hamiltonian.</code><code class="sig-name descname">Hamiltonian</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logp</span></em>, <em class="sig-param"><span class="n">grad_logp</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">initial_position</span></em>, <em class="sig-param"><span class="n">T</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">tau</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.MCMC.hamiltonian.Hamiltonian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parameters:</p>
+<dl class="py method">
+<dt id="nukernelmtd.sampling.MCMC.hamiltonian.Hamiltonian.sampling">
+<code class="sig-name descname">sampling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_size</span></em>, <em class="sig-param"><span class="n">WarmUp</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.MCMC.hamiltonian.Hamiltonian.sampling" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.sampling.MCMC.metropolis">
+<span id="nukernelmtd-sampling-mcmc-metropolis-module"></span><h2>nukernelmtd.sampling.MCMC.metropolis module<a class="headerlink" href="#module-nukernelmtd.sampling.MCMC.metropolis" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="nukernelmtd.sampling.MCMC.metropolis.Metropolis">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.sampling.MCMC.metropolis.</code><code class="sig-name descname">Metropolis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">proposal_std</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">sample_rate</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.MCMC.metropolis.Metropolis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Sampling from a certain probability distribution <span class="math notranslate nohighlight">\(p (x) = \frac {\hat {p} (x)} {Z_p}\)</span>.
+The normalization constant satisfies <span class="math notranslate nohighlight">\(Z_p = \int \hat {p} (x) dx \)</span> even if <span class="math notranslate nohighlight">\(Z_p\)</span> is not known by the Metropolis method.
+Prepare a distribution that can be directly sampled, called a proposed distribution,
+algorithm
+1. Initial value $ x_1 $
+2. One sample ($ x ^ * $) from the proposal distribution around $ x_i $
+3. $ min (1, frac {hat {p} (x ^ <a href="#id1"><span class="problematic" id="id2">*</span></a>)} {hat {p} (x_i)}) $ with a probability of $ <a href="#id5"><span class="problematic" id="id6">x_</span></a> {i + 1} = x_i $
+4. The sequence $ {x_n } _ {n = 1} ^ {N} $ obtained by repeating Steps 2 and 3</p>
+<blockquote>
+<div><p>is taken as a sample from the probability distribution $ p (x) $.</p>
+</div></blockquote>
+<p>ndim : sample’s dimention
+proposal_std : proposal distribution std
+sample_rate : Interval for thinning samples
+T : Number of ignore initial samples</p>
+<dl class="py method">
+<dt id="nukernelmtd.sampling.MCMC.metropolis.Metropolis.sampling">
+<code class="sig-name descname">sampling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_size</span></em>, <em class="sig-param"><span class="n">WarmUp</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.MCMC.metropolis.Metropolis.sampling" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.sampling.MCMC">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nukernelmtd.sampling.MCMC" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="nukernelmtd.sampling.MCMC.Hamiltonian">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.sampling.MCMC.</code><code class="sig-name descname">Hamiltonian</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logp</span></em>, <em class="sig-param"><span class="n">grad_logp</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">initial_position</span></em>, <em class="sig-param"><span class="n">T</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">tau</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.MCMC.Hamiltonian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parameters:</p>
+<dl class="py method">
+<dt id="nukernelmtd.sampling.MCMC.Hamiltonian.sampling">
+<code class="sig-name descname">sampling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_size</span></em>, <em class="sig-param"><span class="n">WarmUp</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.MCMC.Hamiltonian.sampling" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nukernelmtd.sampling.MCMC.Metropolis">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.sampling.MCMC.</code><code class="sig-name descname">Metropolis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em>, <em class="sig-param"><span class="n">ndim</span></em>, <em class="sig-param"><span class="n">proposal_std</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">sample_rate</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.MCMC.Metropolis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Sampling from a certain probability distribution <span class="math notranslate nohighlight">\(p (x) = \frac {\hat {p} (x)} {Z_p}\)</span>.
+The normalization constant satisfies <span class="math notranslate nohighlight">\(Z_p = \int \hat {p} (x) dx \)</span> even if <span class="math notranslate nohighlight">\(Z_p\)</span> is not known by the Metropolis method.
+Prepare a distribution that can be directly sampled, called a proposed distribution,
+algorithm
+1. Initial value $ x_1 $
+2. One sample ($ x ^ * $) from the proposal distribution around $ x_i $
+3. $ min (1, frac {hat {p} (x ^ <a href="#id3"><span class="problematic" id="id4">*</span></a>)} {hat {p} (x_i)}) $ with a probability of $ <a href="#id7"><span class="problematic" id="id8">x_</span></a> {i + 1} = x_i $
+4. The sequence $ {x_n } _ {n = 1} ^ {N} $ obtained by repeating Steps 2 and 3</p>
+<blockquote>
+<div><p>is taken as a sample from the probability distribution $ p (x) $.</p>
+</div></blockquote>
+<p>ndim : sample’s dimention
+proposal_std : proposal distribution std
+sample_rate : Interval for thinning samples
+T : Number of ignore initial samples</p>
+<dl class="py method">
+<dt id="nukernelmtd.sampling.MCMC.Metropolis.sampling">
+<code class="sig-name descname">sampling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_size</span></em>, <em class="sig-param"><span class="n">WarmUp</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.MCMC.Metropolis.sampling" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nukernelmtd.utils.html" class="btn btn-neutral float-right" title="nukernelmtd.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nukernelmtd.sampling.html" class="btn btn-neutral float-left" title="nukernelmtd.sampling package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Yu Kiyokawa
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
