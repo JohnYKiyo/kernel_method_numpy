@@ -9,7 +9,12 @@ $ cd kernel_method_numpy
 $ python setup.py install
 ```
 
-## 3\. Tutrial
+## 3\. Uninstall
+```
+pip uninstall nukernelmtd
+```
+
+## 4\. Tutrial
 See [notebook](./notebooks/Tutrial.ipynb)
 
 ## Dependencies
