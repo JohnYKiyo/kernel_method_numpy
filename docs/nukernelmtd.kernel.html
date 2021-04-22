@@ -1,0 +1,976 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nukernelmtd.kernel package &mdash; nukernelmtd 1.0.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="nukernelmtd.metrics package" href="nukernelmtd.metrics.html" />
+    <link rel="prev" title="nukernelmtd.data package" href="nukernelmtd.data.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> nukernelmtd
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nukernelmtd.html">nukernelmtd package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="nukernelmtd.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.data.html">nukernelmtd.data package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">nukernelmtd.kernel package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.kernel.gaussian_rbf">nukernelmtd.kernel.gaussian_rbf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.kernel.matern">nukernelmtd.kernel.matern module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.kernel.test">nukernelmtd.kernel.test module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.kernel">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.metrics.html">nukernelmtd.metrics package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.sampling.html">nukernelmtd.sampling package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.utils.html">nukernelmtd.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_abc">nukernelmtd.kernel_abc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_mean">nukernelmtd.kernel_mean module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nukernelmtd</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="nukernelmtd.html">nukernelmtd package</a> &raquo;</li>
+        
+      <li>nukernelmtd.kernel package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/nukernelmtd.kernel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nukernelmtd-kernel-package">
+<h1>nukernelmtd.kernel package<a class="headerlink" href="#nukernelmtd-kernel-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nukernelmtd.kernel.gaussian_rbf">
+<span id="nukernelmtd-kernel-gaussian-rbf-module"></span><h2>nukernelmtd.kernel.gaussian_rbf module<a class="headerlink" href="#module-nukernelmtd.kernel.gaussian_rbf" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.kernel.gaussian_rbf.</code><code class="sig-name descname">GaussKernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">covariance</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sigma</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>[summary]
+The class of Gauss kernel. This class requires sigma or covariance. Specify either sigma or covariance.
+When using cov, measure the distance of the vector by Mahalanobis distance. If the variables are independent, specify the diagonal matrix.
+Even if the size of cov is 1000 * 1000 or less, inverse matrix calculation is not possible.
+When using sigma, measure the distance of the vector by Euclidean distance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>covariance</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Defaults to None.
+A scale used to measure the distance between vectors. Multidimensional version of kernel bandwidth.</p></li>
+<li><p><strong>sigma</strong> (<em>scalar</em><em>, </em><em>optional</em>) – Defaults to None.
+A scale used to measure the distance between vectors. Simple gauss kernel bandwidth.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – Require that either the covariance matrix (covariance) “or” the bandwidth (sigma) be defined.</p></li>
+<li><p><strong>ValueError</strong> – Covariance should be numpy.ndarray.</p></li>
+<li><p><strong>ValueError</strong> – The size of covariance matrix is huge.</p></li>
+<li><p><strong>ValueError</strong> – Sigma should be scalar.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kernel_gauss</span> <span class="o">=</span> <span class="n">GaussKernel</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">5.</span><span class="p">,</span><span class="mf">5.</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kernel_gauss</span><span class="o">.</span><span class="n">kde</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">]])))</span>
+<span class="go">array([[3.72665317e-06, 1.52299797e-08],</span>
+<span class="go">       [5.19975743e-04, 6.45524691e-06],</span>
+<span class="go">       [2.11096565e-02, 7.96086691e-04],</span>
+<span class="go">       [2.49352209e-01, 2.85655008e-02],</span>
+<span class="go">       [8.56996891e-01, 2.98234096e-01],</span>
+<span class="go">       [8.56996891e-01, 9.05955191e-01],</span>
+<span class="go">       [2.49352209e-01, 8.00737403e-01],</span>
+<span class="go">       [2.11096565e-02, 2.05924246e-01],</span>
+<span class="go">       [5.19975743e-04, 1.54084456e-02],</span>
+<span class="go">       [3.72665317e-06, 3.35462628e-04]])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel.cov">
+<em class="property">property </em><code class="sig-name descname">cov</code><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel.cov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel.gradkde">
+<code class="sig-name descname">gradkde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel.gradkde" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute gradient of kernel density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x1, n_dim).</p></li>
+<li><p><strong>x2</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x2, n_dim).</p></li>
+<li><p><strong>**kwargs</strong> – <p><em>kwargs</em> is used to specify the configuration for kernel density estimation.</p>
+<dl class="simple">
+<dt>normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel’s docstrings.</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>return gradient value tensor. ndarray of shape (n_samples_x1,n_samples_x2, n_dim).</dt><dd><p>Derivative value at x1 of kernel centered on x2. dk(x,x2)/dx (x=x1)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel.inv_cov">
+<em class="property">property </em><code class="sig-name descname">inv_cov</code><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel.inv_cov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel.inv_sigma">
+<em class="property">property </em><code class="sig-name descname">inv_sigma</code><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel.inv_sigma" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel.kde">
+<code class="sig-name descname">kde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel.kde" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+:param x1: ndarray of shape (n_samples_x1, n_dim).
+:type x1: ndarray
+:param x2: ndarray of shape (n_samples_x2, n_dim).
+:type x2: ndarray
+:param **kwargs: <em>kwargs</em> is used to specify the configuration for kernel density estimation.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel’s docstrings.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).</dt><dd><p>Kernel k(x1,x2)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel.logkde">
+<code class="sig-name descname">logkde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel.logkde" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+:param x1: ndarray of shape (n_samples_x1, n_dim).
+:type x1: ndarray
+:param x2: ndarray of shape (n_samples_x2, n_dim).
+:type x2: ndarray
+:param **kwargs: <em>kwargs</em> is used to specify the configuration for kernel density estimation.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel’s docstrings.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>return log kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).</dt><dd><p>Kernel k(x1,x2)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel.n_features">
+<em class="property">property </em><code class="sig-name descname">n_features</code><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel.n_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel.norm_factor">
+<em class="property">property </em><code class="sig-name descname">norm_factor</code><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel.norm_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.gaussian_rbf.GaussKernel.sigma">
+<em class="property">property </em><code class="sig-name descname">sigma</code><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.GaussKernel.sigma" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.gaussian_rbf.gauss1d_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.gaussian_rbf.</code><code class="sig-name descname">gauss1d_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">sigma</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.gauss1d_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.gaussian_rbf.gauss_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.gaussian_rbf.</code><code class="sig-name descname">gauss_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">Q</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.gauss_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.gaussian_rbf.grad_gauss1d_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.gaussian_rbf.</code><code class="sig-name descname">grad_gauss1d_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">sigma</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.grad_gauss1d_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.gaussian_rbf.grad_gauss_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.gaussian_rbf.</code><code class="sig-name descname">grad_gauss_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">Q</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.grad_gauss_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.gaussian_rbf.loggauss1d_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.gaussian_rbf.</code><code class="sig-name descname">loggauss1d_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">sigma</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.loggauss1d_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.gaussian_rbf.loggauss_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.gaussian_rbf.</code><code class="sig-name descname">loggauss_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">Q</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.gaussian_rbf.loggauss_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.kernel.matern">
+<span id="nukernelmtd-kernel-matern-module"></span><h2>nukernelmtd.kernel.matern module<a class="headerlink" href="#module-nukernelmtd.kernel.matern" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.K_0p5_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">K_0p5_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.K_0p5_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.K_1p5_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">K_1p5_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.K_1p5_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.K_2p5_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">K_2p5_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.K_2p5_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.K_inf_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">K_inf_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.K_inf_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.K_other_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">K_other_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em>, <em class="sig-param"><span class="n">nu</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.K_other_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="nukernelmtd.kernel.matern.MaternKernel">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">MaternKernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">nu</span><span class="o">=</span><span class="default_value">1.5</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.MaternKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Matern kernel.
+The class of Matern kernels.
+It has a <span class="math notranslate nohighlight">\(\nu\)</span> parameter which controls the smoothness of the function.
+When <span class="math notranslate nohighlight">\(\nu\)</span> is 0.5, the kernel becomes Laplace kernel (absolute exponential kernel).
+As <span class="math notranslate nohighlight">\(\nu\rightarrow\infty\)</span>, the kernel becomes equivalent to Gaussian kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>float &gt; 0</em><em>, </em><em>optional</em>) – Multiply the output of the function by this value. Defaults to 1.0.</p></li>
+<li><p><strong>l</strong> (<em>float &gt; 0</em><em>, </em><em>optional</em>) – The length scale of the kernel. Defaults to 1.0.</p></li>
+<li><p><strong>nu</strong> (<em>float &gt; 0</em><em>, </em><em>optional</em>) – Defaults to 1.5.
+The parameter nu controlling the smoothness of function. The smaller nu, the less smooth function is.
+For nu=inf, the kernel becomes equivalent to the Gaussian kernel.
+For nu=0.5 the kernel becomes Laplace kernel.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use a value other than the following nu, the calculation time will be significantly worse, due to not use XLA compiling.
+nu = [0.5,1.5,2.5,np.inf]</p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kernel_matern</span> <span class="o">=</span> <span class="n">MaternKernel</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span><span class="n">nu</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">5.</span><span class="p">,</span><span class="mf">5.</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kernel_matern</span><span class="o">.</span><span class="n">kde</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">]])))</span>
+<span class="go">array([[0.00673795, 0.00247875],</span>
+<span class="go">       [1.        , 0.36787944],</span>
+<span class="go">       [0.00673795, 0.01831564]])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="nukernelmtd.kernel.matern.MaternKernel.a">
+<em class="property">property </em><code class="sig-name descname">a</code><a class="headerlink" href="#nukernelmtd.kernel.matern.MaternKernel.a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.matern.MaternKernel.gradkde">
+<code class="sig-name descname">gradkde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.MaternKernel.gradkde" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute gradient of kernel density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x1, n_dim).</p></li>
+<li><p><strong>x2</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x2, n_dim).</p></li>
+<li><p><strong>**kwargs</strong> – Not specified.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>return gradient value tensor. ndarray of shape (n_samples_x1,n_samples_x2, n_dim).</dt><dd><p>Derivative value at x1 of kernel centered on x2. dk(x,x2)/dx (x=x1)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.matern.MaternKernel.kde">
+<code class="sig-name descname">kde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.MaternKernel.kde" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute kernel density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x1, n_dim).</p></li>
+<li><p><strong>x2</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x2, n_dim).</p></li>
+<li><p><strong>**kwargs</strong> – Not specified.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).</dt><dd><p>Kernel k(x1,x2)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.matern.MaternKernel.l">
+<em class="property">property </em><code class="sig-name descname">l</code><a class="headerlink" href="#nukernelmtd.kernel.matern.MaternKernel.l" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.matern.MaternKernel.logkde">
+<code class="sig-name descname">logkde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.MaternKernel.logkde" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute kernel density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x1, n_dim).</p></li>
+<li><p><strong>x2</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x2, n_dim).</p></li>
+<li><p><strong>**kwargs</strong> – Not specified.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).</dt><dd><p>Kernel log(k(x1,x2))</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.matern.MaternKernel.nu">
+<em class="property">property </em><code class="sig-name descname">nu</code><a class="headerlink" href="#nukernelmtd.kernel.matern.MaternKernel.nu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.grad_K_0p5_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">grad_K_0p5_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.grad_K_0p5_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.grad_K_1p5_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">grad_K_1p5_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.grad_K_1p5_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.grad_K_2p5_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">grad_K_2p5_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.grad_K_2p5_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.grad_K_inf_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">grad_K_inf_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.grad_K_inf_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.grad_K_ohter_pairwise">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">grad_K_ohter_pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">l</span></em>, <em class="sig-param"><span class="n">nu</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.grad_K_ohter_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.grad_matern">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">grad_matern</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">nu</span><span class="o">=</span><span class="default_value">0.5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.grad_matern" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.matern.matern">
+<code class="sig-prename descclassname">nukernelmtd.kernel.matern.</code><code class="sig-name descname">matern</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">nu</span><span class="o">=</span><span class="default_value">1.5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.matern.matern" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.kernel.test">
+<span id="nukernelmtd-kernel-test-module"></span><h2>nukernelmtd.kernel.test module<a class="headerlink" href="#module-nukernelmtd.kernel.test" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.check_gauss_kernelmtd">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">check_gauss_kernelmtd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.check_gauss_kernelmtd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.check_gauss_sklearn">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">check_gauss_sklearn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.check_gauss_sklearn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.check_matern_kernelmtd">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">check_matern_kernelmtd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nu</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.check_matern_kernelmtd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.check_matern_sklearn">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">check_matern_sklearn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nu</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.check_matern_sklearn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.main">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.test_gauss">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">test_gauss</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.test_gauss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.test_gauss_1d">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">test_gauss_1d</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.test_gauss_1d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.test_gauss_equivalent_function">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">test_gauss_equivalent_function</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.test_gauss_equivalent_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.test_matern_equivalent_function">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">test_matern_equivalent_function</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.test_matern_equivalent_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.kernel.test.test_matern_nu">
+<code class="sig-prename descclassname">nukernelmtd.kernel.test.</code><code class="sig-name descname">test_matern_nu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nu</span><span class="o">=</span><span class="default_value">0.5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.test.test_matern_nu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.kernel">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nukernelmtd.kernel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="nukernelmtd.kernel.GaussKernel">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.kernel.</code><code class="sig-name descname">GaussKernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">covariance</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sigma</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>[summary]
+The class of Gauss kernel. This class requires sigma or covariance. Specify either sigma or covariance.
+When using cov, measure the distance of the vector by Mahalanobis distance. If the variables are independent, specify the diagonal matrix.
+Even if the size of cov is 1000 * 1000 or less, inverse matrix calculation is not possible.
+When using sigma, measure the distance of the vector by Euclidean distance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>covariance</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Defaults to None.
+A scale used to measure the distance between vectors. Multidimensional version of kernel bandwidth.</p></li>
+<li><p><strong>sigma</strong> (<em>scalar</em><em>, </em><em>optional</em>) – Defaults to None.
+A scale used to measure the distance between vectors. Simple gauss kernel bandwidth.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – Require that either the covariance matrix (covariance) “or” the bandwidth (sigma) be defined.</p></li>
+<li><p><strong>ValueError</strong> – Covariance should be numpy.ndarray.</p></li>
+<li><p><strong>ValueError</strong> – The size of covariance matrix is huge.</p></li>
+<li><p><strong>ValueError</strong> – Sigma should be scalar.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kernel_gauss</span> <span class="o">=</span> <span class="n">GaussKernel</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">5.</span><span class="p">,</span><span class="mf">5.</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kernel_gauss</span><span class="o">.</span><span class="n">kde</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">]])))</span>
+<span class="go">array([[3.72665317e-06, 1.52299797e-08],</span>
+<span class="go">       [5.19975743e-04, 6.45524691e-06],</span>
+<span class="go">       [2.11096565e-02, 7.96086691e-04],</span>
+<span class="go">       [2.49352209e-01, 2.85655008e-02],</span>
+<span class="go">       [8.56996891e-01, 2.98234096e-01],</span>
+<span class="go">       [8.56996891e-01, 9.05955191e-01],</span>
+<span class="go">       [2.49352209e-01, 8.00737403e-01],</span>
+<span class="go">       [2.11096565e-02, 2.05924246e-01],</span>
+<span class="go">       [5.19975743e-04, 1.54084456e-02],</span>
+<span class="go">       [3.72665317e-06, 3.35462628e-04]])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="nukernelmtd.kernel.GaussKernel.cov">
+<em class="property">property </em><code class="sig-name descname">cov</code><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel.cov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.GaussKernel.gradkde">
+<code class="sig-name descname">gradkde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel.gradkde" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute gradient of kernel density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x1, n_dim).</p></li>
+<li><p><strong>x2</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x2, n_dim).</p></li>
+<li><p><strong>**kwargs</strong> – <p><em>kwargs</em> is used to specify the configuration for kernel density estimation.</p>
+<dl class="simple">
+<dt>normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel’s docstrings.</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>return gradient value tensor. ndarray of shape (n_samples_x1,n_samples_x2, n_dim).</dt><dd><p>Derivative value at x1 of kernel centered on x2. dk(x,x2)/dx (x=x1)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.GaussKernel.inv_cov">
+<em class="property">property </em><code class="sig-name descname">inv_cov</code><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel.inv_cov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.GaussKernel.inv_sigma">
+<em class="property">property </em><code class="sig-name descname">inv_sigma</code><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel.inv_sigma" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.GaussKernel.kde">
+<code class="sig-name descname">kde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel.kde" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+:param x1: ndarray of shape (n_samples_x1, n_dim).
+:type x1: ndarray
+:param x2: ndarray of shape (n_samples_x2, n_dim).
+:type x2: ndarray
+:param **kwargs: <em>kwargs</em> is used to specify the configuration for kernel density estimation.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel’s docstrings.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).</dt><dd><p>Kernel k(x1,x2)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.GaussKernel.logkde">
+<code class="sig-name descname">logkde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel.logkde" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+:param x1: ndarray of shape (n_samples_x1, n_dim).
+:type x1: ndarray
+:param x2: ndarray of shape (n_samples_x2, n_dim).
+:type x2: ndarray
+:param **kwargs: <em>kwargs</em> is used to specify the configuration for kernel density estimation.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel’s docstrings.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>return log kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).</dt><dd><p>Kernel k(x1,x2)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.GaussKernel.n_features">
+<em class="property">property </em><code class="sig-name descname">n_features</code><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel.n_features" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.GaussKernel.norm_factor">
+<em class="property">property </em><code class="sig-name descname">norm_factor</code><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel.norm_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.GaussKernel.sigma">
+<em class="property">property </em><code class="sig-name descname">sigma</code><a class="headerlink" href="#nukernelmtd.kernel.GaussKernel.sigma" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nukernelmtd.kernel.MaternKernel">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.kernel.</code><code class="sig-name descname">MaternKernel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">nu</span><span class="o">=</span><span class="default_value">1.5</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.MaternKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Matern kernel.
+The class of Matern kernels.
+It has a <span class="math notranslate nohighlight">\(\nu\)</span> parameter which controls the smoothness of the function.
+When <span class="math notranslate nohighlight">\(\nu\)</span> is 0.5, the kernel becomes Laplace kernel (absolute exponential kernel).
+As <span class="math notranslate nohighlight">\(\nu\rightarrow\infty\)</span>, the kernel becomes equivalent to Gaussian kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>float &gt; 0</em><em>, </em><em>optional</em>) – Multiply the output of the function by this value. Defaults to 1.0.</p></li>
+<li><p><strong>l</strong> (<em>float &gt; 0</em><em>, </em><em>optional</em>) – The length scale of the kernel. Defaults to 1.0.</p></li>
+<li><p><strong>nu</strong> (<em>float &gt; 0</em><em>, </em><em>optional</em>) – Defaults to 1.5.
+The parameter nu controlling the smoothness of function. The smaller nu, the less smooth function is.
+For nu=inf, the kernel becomes equivalent to the Gaussian kernel.
+For nu=0.5 the kernel becomes Laplace kernel.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use a value other than the following nu, the calculation time will be significantly worse, due to not use XLA compiling.
+nu = [0.5,1.5,2.5,np.inf]</p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">onp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kernel_matern</span> <span class="o">=</span> <span class="n">MaternKernel</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span><span class="n">nu</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">5.</span><span class="p">,</span><span class="mf">5.</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">kernel_matern</span><span class="o">.</span><span class="n">kde</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">]])))</span>
+<span class="go">array([[0.00673795, 0.00247875],</span>
+<span class="go">       [1.        , 0.36787944],</span>
+<span class="go">       [0.00673795, 0.01831564]])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="nukernelmtd.kernel.MaternKernel.a">
+<em class="property">property </em><code class="sig-name descname">a</code><a class="headerlink" href="#nukernelmtd.kernel.MaternKernel.a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.MaternKernel.gradkde">
+<code class="sig-name descname">gradkde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.MaternKernel.gradkde" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute gradient of kernel density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x1, n_dim).</p></li>
+<li><p><strong>x2</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x2, n_dim).</p></li>
+<li><p><strong>**kwargs</strong> – Not specified.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>return gradient value tensor. ndarray of shape (n_samples_x1,n_samples_x2, n_dim).</dt><dd><p>Derivative value at x1 of kernel centered on x2. dk(x,x2)/dx (x=x1)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.MaternKernel.kde">
+<code class="sig-name descname">kde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.MaternKernel.kde" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute kernel density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x1, n_dim).</p></li>
+<li><p><strong>x2</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x2, n_dim).</p></li>
+<li><p><strong>**kwargs</strong> – Not specified.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).</dt><dd><p>Kernel k(x1,x2)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.MaternKernel.l">
+<em class="property">property </em><code class="sig-name descname">l</code><a class="headerlink" href="#nukernelmtd.kernel.MaternKernel.l" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.MaternKernel.logkde">
+<code class="sig-name descname">logkde</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.kernel.MaternKernel.logkde" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute kernel density</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x1, n_dim).</p></li>
+<li><p><strong>x2</strong> (<em>ndarray</em>) – ndarray of shape (n_samples_x2, n_dim).</p></li>
+<li><p><strong>**kwargs</strong> – Not specified.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>return kernel value tensor. ndarray of shape (n_samples_x1,n_samples_x2).</dt><dd><p>Kernel log(k(x1,x2))</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KV (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.kernel.MaternKernel.nu">
+<em class="property">property </em><code class="sig-name descname">nu</code><a class="headerlink" href="#nukernelmtd.kernel.MaternKernel.nu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nukernelmtd.metrics.html" class="btn btn-neutral float-right" title="nukernelmtd.metrics package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nukernelmtd.data.html" class="btn btn-neutral float-left" title="nukernelmtd.data package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Yu Kiyokawa
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nukernelmtd.sampling package &mdash; nukernelmtd 1.0.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="nukernelmtd.sampling.MCMC package" href="nukernelmtd.sampling.MCMC.html" />
+    <link rel="prev" title="nukernelmtd.metrics package" href="nukernelmtd.metrics.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> nukernelmtd
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nukernelmtd.html">nukernelmtd package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="nukernelmtd.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.data.html">nukernelmtd.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.kernel.html">nukernelmtd.kernel package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.metrics.html">nukernelmtd.metrics package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">nukernelmtd.sampling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.sampling.kernel_herding">nukernelmtd.sampling.kernel_herding module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.sampling">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.utils.html">nukernelmtd.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_abc">nukernelmtd.kernel_abc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_mean">nukernelmtd.kernel_mean module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nukernelmtd</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="nukernelmtd.html">nukernelmtd package</a> &raquo;</li>
+        
+      <li>nukernelmtd.sampling package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/nukernelmtd.sampling.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nukernelmtd-sampling-package">
+<h1>nukernelmtd.sampling package<a class="headerlink" href="#nukernelmtd-sampling-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nukernelmtd.sampling.MCMC.html">nukernelmtd.sampling.MCMC package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.sampling.MCMC.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.sampling.MCMC.html#module-nukernelmtd.sampling.MCMC.hamiltonian">nukernelmtd.sampling.MCMC.hamiltonian module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.sampling.MCMC.html#module-nukernelmtd.sampling.MCMC.metropolis">nukernelmtd.sampling.MCMC.metropolis module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.sampling.MCMC.html#module-nukernelmtd.sampling.MCMC">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nukernelmtd.sampling.kernel_herding">
+<span id="nukernelmtd-sampling-kernel-herding-module"></span><h2>nukernelmtd.sampling.kernel_herding module<a class="headerlink" href="#module-nukernelmtd.sampling.kernel_herding" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="nukernelmtd.sampling.kernel_herding.KernelHerding">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.sampling.kernel_herding.</code><code class="sig-name descname">KernelHerding</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">KernelMeanObj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.kernel_herding.KernelHerding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>[summary]
+The class of Kernel Herding. Sampling from Kernel Mean.
+:param KernelMeanObj: KernelMean.
+:type KernelMeanObj: KernelMean</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>[1] Chen, Y., Welling, M., &amp; Smola, A. (2010). Super-samples from kernel herding. Proceedings of the 26th Conference on Uncertainty in Artificial Intelligence, UAI 2010, 109–116.</p>
+</div>
+<dl class="py method">
+<dt id="nukernelmtd.sampling.kernel_herding.KernelHerding.sampling">
+<code class="sig-name descname">sampling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_size</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.kernel_herding.KernelHerding.sampling" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+:param sample_size: sample size of herding.
+:type sample_size: int
+:param **kwargs:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel’s docstrings.</p>
+</dd>
+<dt>weights_normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing kernel average weighting.</p>
+</dd>
+<dt>max_trial (int, optional): Defaults to 2.</dt><dd><p>Search by changing the initial value by the number of max_trial.</p>
+</dd>
+<dt>derivatives (bool, optional): Defaults to False.</dt><dd><p>If the derivative is defined in the kernel, the search is performed using the derivative value.</p>
+</dd>
+</dl>
+<p>The remainder of the keyword arguments are inherited from
+<cite>scipy.optimize.minimize</cite>, and their descriptions are copied here for convenience.</p>
+<dl class="simple">
+<dt>method (str, optional): Defaults to ‘L-BFGS-B’.</dt><dd><p>Type of solver.  Should be one of
+- ‘Nelder-Mead’ <span class="xref std std-ref">(see here)</span>
+- ‘Powell’      <span class="xref std std-ref">(see here)</span>
+- ‘CG’          <span class="xref std std-ref">(see here)</span>
+- ‘BFGS’        <span class="xref std std-ref">(see here)</span>
+- ‘Newton-CG’   <span class="xref std std-ref">(see here)</span>
+- ‘L-BFGS-B’    <span class="xref std std-ref">(see here)</span>
+- ‘TNC’         <span class="xref std std-ref">(see here)</span>
+- ‘COBYLA’      <span class="xref std std-ref">(see here)</span>
+- ‘SLSQP’       <span class="xref std std-ref">(see here)</span>
+- ‘trust-constr’<span class="xref std std-ref">(see here)</span>
+- ‘dogleg’      <span class="xref std std-ref">(see here)</span>
+- ‘trust-ncg’   <span class="xref std std-ref">(see here)</span>
+- ‘trust-exact’ <span class="xref std std-ref">(see here)</span>
+- ‘trust-krylov’ <span class="xref std std-ref">(see here)</span>
+- custom - a callable object (added in version 0.14.0),</p>
+</dd>
+</dl>
+<p>see below for description.
+If not given, chosen to be one of <code class="docutils literal notranslate"><span class="pre">BFGS</span></code>, <code class="docutils literal notranslate"><span class="pre">L-BFGS-B</span></code>, <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code>,depending if the problem has constraints or bounds.</p>
+</div></blockquote>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kernelmtd.data</span> <span class="kn">import</span> <span class="n">testdata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bw</span> <span class="o">=</span> <span class="n">Bandwidth</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">testdata</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;scott&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">KM</span> <span class="o">=</span> <span class="n">KernelMean</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">testdata</span><span class="p">,</span><span class="n">kernel</span><span class="o">=</span><span class="n">GaussKernel</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="n">bw</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">KH</span> <span class="o">=</span> <span class="n">KH</span> <span class="o">=</span> <span class="n">KernelHerding</span><span class="p">(</span><span class="n">KM</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">supersamples</span> <span class="o">=</span> <span class="n">KH</span><span class="o">.</span><span class="n">sampling</span><span class="p">(</span><span class="n">sample_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">max_trial</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">KH</span><span class="o">.</span><span class="n">sampling</span><span class="p">(</span><span class="n">sample_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">max_trial</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">derivatives</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>supersamples.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.sampling.kernel_herding.KernelHerding.supersamples">
+<em class="property">property </em><code class="sig-name descname">supersamples</code><a class="headerlink" href="#nukernelmtd.sampling.kernel_herding.KernelHerding.supersamples" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.sampling.kernel_herding.test">
+<code class="sig-prename descclassname">nukernelmtd.sampling.kernel_herding.</code><code class="sig-name descname">test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.kernel_herding.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.sampling">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nukernelmtd.sampling" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="nukernelmtd.sampling.KernelHerding">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.sampling.</code><code class="sig-name descname">KernelHerding</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">KernelMeanObj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.KernelHerding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>[summary]
+The class of Kernel Herding. Sampling from Kernel Mean.
+:param KernelMeanObj: KernelMean.
+:type KernelMeanObj: KernelMean</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>[1] Chen, Y., Welling, M., &amp; Smola, A. (2010). Super-samples from kernel herding. Proceedings of the 26th Conference on Uncertainty in Artificial Intelligence, UAI 2010, 109–116.</p>
+</div>
+<dl class="py method">
+<dt id="nukernelmtd.sampling.KernelHerding.sampling">
+<code class="sig-name descname">sampling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_size</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.sampling.KernelHerding.sampling" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+:param sample_size: sample size of herding.
+:type sample_size: int
+:param **kwargs:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing the kernel. Some kernels do not have a normalization option, so see the kernel’s docstrings.</p>
+</dd>
+<dt>weights_normalize (bool, optional): Defaults to False.</dt><dd><p>Specify <cite>True</cite> when normalizing kernel average weighting.</p>
+</dd>
+<dt>max_trial (int, optional): Defaults to 2.</dt><dd><p>Search by changing the initial value by the number of max_trial.</p>
+</dd>
+<dt>derivatives (bool, optional): Defaults to False.</dt><dd><p>If the derivative is defined in the kernel, the search is performed using the derivative value.</p>
+</dd>
+</dl>
+<p>The remainder of the keyword arguments are inherited from
+<cite>scipy.optimize.minimize</cite>, and their descriptions are copied here for convenience.</p>
+<dl class="simple">
+<dt>method (str, optional): Defaults to ‘L-BFGS-B’.</dt><dd><p>Type of solver.  Should be one of
+- ‘Nelder-Mead’ <span class="xref std std-ref">(see here)</span>
+- ‘Powell’      <span class="xref std std-ref">(see here)</span>
+- ‘CG’          <span class="xref std std-ref">(see here)</span>
+- ‘BFGS’        <span class="xref std std-ref">(see here)</span>
+- ‘Newton-CG’   <span class="xref std std-ref">(see here)</span>
+- ‘L-BFGS-B’    <span class="xref std std-ref">(see here)</span>
+- ‘TNC’         <span class="xref std std-ref">(see here)</span>
+- ‘COBYLA’      <span class="xref std std-ref">(see here)</span>
+- ‘SLSQP’       <span class="xref std std-ref">(see here)</span>
+- ‘trust-constr’<span class="xref std std-ref">(see here)</span>
+- ‘dogleg’      <span class="xref std std-ref">(see here)</span>
+- ‘trust-ncg’   <span class="xref std std-ref">(see here)</span>
+- ‘trust-exact’ <span class="xref std std-ref">(see here)</span>
+- ‘trust-krylov’ <span class="xref std std-ref">(see here)</span>
+- custom - a callable object (added in version 0.14.0),</p>
+</dd>
+</dl>
+<p>see below for description.
+If not given, chosen to be one of <code class="docutils literal notranslate"><span class="pre">BFGS</span></code>, <code class="docutils literal notranslate"><span class="pre">L-BFGS-B</span></code>, <code class="docutils literal notranslate"><span class="pre">SLSQP</span></code>,depending if the problem has constraints or bounds.</p>
+</div></blockquote>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">kernelmtd.data</span> <span class="kn">import</span> <span class="n">testdata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bw</span> <span class="o">=</span> <span class="n">Bandwidth</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">testdata</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;scott&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">KM</span> <span class="o">=</span> <span class="n">KernelMean</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">testdata</span><span class="p">,</span><span class="n">kernel</span><span class="o">=</span><span class="n">GaussKernel</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="n">bw</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">KH</span> <span class="o">=</span> <span class="n">KH</span> <span class="o">=</span> <span class="n">KernelHerding</span><span class="p">(</span><span class="n">KM</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">supersamples</span> <span class="o">=</span> <span class="n">KH</span><span class="o">.</span><span class="n">sampling</span><span class="p">(</span><span class="n">sample_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">max_trial</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">KH</span><span class="o">.</span><span class="n">sampling</span><span class="p">(</span><span class="n">sample_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">max_trial</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">derivatives</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>supersamples.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.sampling.KernelHerding.supersamples">
+<em class="property">property </em><code class="sig-name descname">supersamples</code><a class="headerlink" href="#nukernelmtd.sampling.KernelHerding.supersamples" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nukernelmtd.sampling.MCMC.html" class="btn btn-neutral float-right" title="nukernelmtd.sampling.MCMC package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nukernelmtd.metrics.html" class="btn btn-neutral float-left" title="nukernelmtd.metrics package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Yu Kiyokawa
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
