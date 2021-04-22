@@ -1,0 +1,639 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nukernelmtd.utils package &mdash; nukernelmtd 1.0.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="nukernelmtd.sampling.MCMC package" href="nukernelmtd.sampling.MCMC.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> nukernelmtd
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nukernelmtd.html">nukernelmtd package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="nukernelmtd.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.data.html">nukernelmtd.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.kernel.html">nukernelmtd.kernel package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.metrics.html">nukernelmtd.metrics package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.sampling.html">nukernelmtd.sampling package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">nukernelmtd.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.utils.band_width">nukernelmtd.utils.band_width module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.utils.pairwise">nukernelmtd.utils.pairwise module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.utils.sample_clipper">nukernelmtd.utils.sample_clipper module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.utils.transform_data">nukernelmtd.utils.transform_data module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_abc">nukernelmtd.kernel_abc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_mean">nukernelmtd.kernel_mean module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nukernelmtd</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="nukernelmtd.html">nukernelmtd package</a> &raquo;</li>
+        
+      <li>nukernelmtd.utils package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/nukernelmtd.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nukernelmtd-utils-package">
+<h1>nukernelmtd.utils package<a class="headerlink" href="#nukernelmtd-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nukernelmtd.utils.band_width">
+<span id="nukernelmtd-utils-band-width-module"></span><h2>nukernelmtd.utils.band_width module<a class="headerlink" href="#module-nukernelmtd.utils.band_width" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="nukernelmtd.utils.band_width.Bandwidth">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.utils.band_width.</code><code class="sig-name descname">Bandwidth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'scott'</span></em>, <em class="sig-param"><span class="n">weights</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.band_width.Bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>bandwidth selection for rbf-kernel hyperparameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cov</strong> (<em>ndarray</em>) – [description]</p></li>
+<li><p><strong>inv_cov</strong> (<em>ndarray</em>) – [description]</p></li>
+<li><p><strong>bandwidth</strong> (<em>ndarray</em>) – [description]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – [description]</p></li>
+<li><p><strong>ValueError</strong> – [description]</p></li>
+<li><p><strong>NotImplementedError</strong> – [description]</p></li>
+<li><p><strong>ValueError</strong> – [description]</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>[description]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>[type]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Bandwidth selection strongly affects kernel density estimation.
+[1] D.W. Scott, “Multivariate Density Estimation: Theory, Practice, and Visualization”, John Wiley &amp; Sons, New York, Chicester, 1992.
+[2] B.W. Silverman, “Density Estimation for Statistics and Data Analysis”, Vol. 26, Monographs on Statistics and Applied Probability, Chapman and Hall, London, 1986.
+[3] P. Hall, “Large Sample Optimality of Least Squares Cross-Validation in Density Estimation,” Ann. Stat., vol. 11, no. 4, pp. 1156–1174, 1983.
+[4] C. J. Stone, “An Asymptotically Optimal Window Selection Rule for Kernel Density Estimates,” Ann. Stat., vol. 12, no. 4, pp. 1285–1297, 1984.
+[5] W. Härdle, P. Hall, and J. S. Marron, “How far are automatically chosen regression smoothing parameters from their optimum?,” J. Am. Stat. Assoc., vol. 83, no. 401, pp. 86–95, 1988.</p>
+<dl class="py method">
+<dt id="nukernelmtd.utils.band_width.Bandwidth.LCV_method">
+<code class="sig-name descname">LCV_method</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.band_width.Bandwidth.LCV_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.band_width.Bandwidth.bandwidth">
+<em class="property">property </em><code class="sig-name descname">bandwidth</code><a class="headerlink" href="#nukernelmtd.utils.band_width.Bandwidth.bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.band_width.Bandwidth.cov">
+<em class="property">property </em><code class="sig-name descname">cov</code><a class="headerlink" href="#nukernelmtd.utils.band_width.Bandwidth.cov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.band_width.Bandwidth.inv_cov">
+<em class="property">property </em><code class="sig-name descname">inv_cov</code><a class="headerlink" href="#nukernelmtd.utils.band_width.Bandwidth.inv_cov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.band_width.Bandwidth.median_method">
+<code class="sig-name descname">median_method</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.band_width.Bandwidth.median_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Euclidean distance between data is calculated, and the mode of distance is defined as the bandwidth.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.band_width.Bandwidth.scott_factor">
+<code class="sig-name descname">scott_factor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.band_width.Bandwidth.scott_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Scott’s factor.
+: n ^ (-1/(d+4))</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.band_width.Bandwidth.set_bandwidth">
+<code class="sig-name descname">set_bandwidth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.band_width.Bandwidth.set_bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.band_width.Bandwidth.silverman_factor">
+<code class="sig-name descname">silverman_factor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.band_width.Bandwidth.silverman_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the Silverman’s factor.
+factor = (4/(d+2))**(1/(d+4)) * n**(-1/(d+4))
+so, j-th bandwidth
+h_j = factor*sig_j</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.utils.pairwise">
+<span id="nukernelmtd-utils-pairwise-module"></span><h2>nukernelmtd.utils.pairwise module<a class="headerlink" href="#module-nukernelmtd.utils.pairwise" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="nukernelmtd.utils.pairwise.gradpairwise">
+<code class="sig-prename descclassname">nukernelmtd.utils.pairwise.</code><code class="sig-name descname">gradpairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em>, <em class="sig-param"><span class="n">Nopts</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.pairwise.gradpairwise" title="Permalink to this definition">¶</a></dt>
+<dd><p>return vectorized gradient function
+:param function: This gradpairwise function automatic gradiented vectorize input function when defined as scalar-output.</p>
+<blockquote>
+<div><p>d_ij = d function(X_i , Y_j) / dX .
+i,j are assumed to indicate the data index.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Nopts</strong> (<em>int</em><em>, </em><em>optional</em>) – function. Defaults to 0.
+Number of option arguments that the function has</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the function that returns d_ij array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">metrics.distance</span> <span class="kn">import</span> <span class="n">mahalanobis_distance</span><span class="p">,</span><span class="n">euclid_distance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">gradpairwise</span><span class="p">(</span><span class="n">euclid_distance</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mf">5.</span><span class="p">,</span><span class="mf">6.</span><span class="p">,]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">2.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">3.</span><span class="p">]]),</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">DeviceArray([[[ 0.,  0.],</span>
+<span class="go">              [-2.,  2.],</span>
+<span class="go">              [-4., -2.]],</span>
+
+<span class="go">             [[ 4.,  4.],</span>
+<span class="go">              [ 2.,  6.],</span>
+<span class="go">              [ 0.,  2.]],</span>
+
+<span class="go">             [[ 8.,  8.],</span>
+<span class="go">              [ 6., 10.],</span>
+<span class="go">              [ 4.,  6.]]], dtype=float64)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.utils.pairwise.pairwise">
+<code class="sig-prename descclassname">nukernelmtd.utils.pairwise.</code><code class="sig-name descname">pairwise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em>, <em class="sig-param"><span class="n">Nopts</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.pairwise.pairwise" title="Permalink to this definition">¶</a></dt>
+<dd><p>return vectorized function
+:param function: This pairwise function automatic vectorize input function when defined as scalar-output.</p>
+<blockquote>
+<div><p>d_ij = function(X_i , Y_j).
+i,j are assumed to indicate the data index.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Nopts</strong> (<em>int</em><em>, </em><em>optional</em>) – function. Defaults to 0.
+Number of option arguments that the function has</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the function that returns d_ij array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">metrics.distance</span> <span class="kn">import</span> <span class="n">mahalanobis_distance</span><span class="p">,</span><span class="n">euclid_distance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">pairwise</span><span class="p">(</span><span class="n">euclid_distance</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">],[</span><span class="mf">5.</span><span class="p">,</span><span class="mf">6.</span><span class="p">,]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">2.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">3.</span><span class="p">]]),</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">DeviceArray([[ 0.,  2.,  5.],</span>
+<span class="go">             [ 8., 10.,  1.],</span>
+<span class="go">             [32., 34., 13.]], dtype=float64)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">metrics.distance</span> <span class="kn">import</span> <span class="n">mahalanobis_distance</span><span class="p">,</span><span class="n">euclid_distance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">pairwise</span><span class="p">(</span><span class="n">mahalanobis_distance</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mf">5.</span><span class="p">,</span><span class="mf">6.</span><span class="p">,]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">2.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">3.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">4.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">2.</span><span class="p">,</span><span class="mf">2.</span><span class="p">]]),</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">DeviceArray([[  0.,   3.,  24.],</span>
+<span class="go">             [ 36.,  31.,   2.],</span>
+<span class="go">             [144., 131.,  52.]], dtype=float64)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.utils.sample_clipper">
+<span id="nukernelmtd-utils-sample-clipper-module"></span><h2>nukernelmtd.utils.sample_clipper module<a class="headerlink" href="#module-nukernelmtd.utils.sample_clipper" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="nukernelmtd.utils.sample_clipper.sample_clipper">
+<code class="sig-prename descclassname">nukernelmtd.utils.sample_clipper.</code><code class="sig-name descname">sample_clipper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">samples</span></em>, <em class="sig-param"><span class="n">bounds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.sample_clipper.sample_clipper" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method to clip samples into range.
+Clip the samples according to the max and min of bounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samples</strong> (<em>array-like</em>) – the shape of array is (n_samples,ndim)</p></li>
+<li><p><strong>bounds</strong> (<em>array-like</em>) – <p>the shape of array is (n_dim, 2).
+If you want to clip 3-dimentional data, the bounds should be:
+bounds = np.array([[min, max],</p>
+<blockquote>
+<div><p>[min, max],
+[min, max]])</p>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Clipped samples and sample size after clipping.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array, int</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sample_clipper</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="n">bounds</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">],[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]]))</span>
+<span class="go">(array([[3., 3.],</span>
+<span class="go">       [2., 4.]]), 2)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.utils.transform_data">
+<span id="nukernelmtd-utils-transform-data-module"></span><h2>nukernelmtd.utils.transform_data module<a class="headerlink" href="#module-nukernelmtd.utils.transform_data" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="nukernelmtd.utils.transform_data.transform_data">
+<code class="sig-prename descclassname">nukernelmtd.utils.transform_data.</code><code class="sig-name descname">transform_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.transform_data.transform_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>data transform</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>array-like</em>) – transform input data into 2d-array of shape (N, n_feature).</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – [description]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>[description]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array-like</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform_data</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="go">array([[1.],</span>
+<span class="go">       [2.],</span>
+<span class="go">       [3.]])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform_data</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="go">array([[1., 2., 3.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nukernelmtd.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="nukernelmtd.utils.Bandwidth">
+<em class="property">class </em><code class="sig-prename descclassname">nukernelmtd.utils.</code><code class="sig-name descname">Bandwidth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'scott'</span></em>, <em class="sig-param"><span class="n">weights</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.Bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>bandwidth selection for rbf-kernel hyperparameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cov</strong> (<em>ndarray</em>) – [description]</p></li>
+<li><p><strong>inv_cov</strong> (<em>ndarray</em>) – [description]</p></li>
+<li><p><strong>bandwidth</strong> (<em>ndarray</em>) – [description]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – [description]</p></li>
+<li><p><strong>ValueError</strong> – [description]</p></li>
+<li><p><strong>NotImplementedError</strong> – [description]</p></li>
+<li><p><strong>ValueError</strong> – [description]</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>[description]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>[type]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Bandwidth selection strongly affects kernel density estimation.
+[1] D.W. Scott, “Multivariate Density Estimation: Theory, Practice, and Visualization”, John Wiley &amp; Sons, New York, Chicester, 1992.
+[2] B.W. Silverman, “Density Estimation for Statistics and Data Analysis”, Vol. 26, Monographs on Statistics and Applied Probability, Chapman and Hall, London, 1986.
+[3] P. Hall, “Large Sample Optimality of Least Squares Cross-Validation in Density Estimation,” Ann. Stat., vol. 11, no. 4, pp. 1156–1174, 1983.
+[4] C. J. Stone, “An Asymptotically Optimal Window Selection Rule for Kernel Density Estimates,” Ann. Stat., vol. 12, no. 4, pp. 1285–1297, 1984.
+[5] W. Härdle, P. Hall, and J. S. Marron, “How far are automatically chosen regression smoothing parameters from their optimum?,” J. Am. Stat. Assoc., vol. 83, no. 401, pp. 86–95, 1988.</p>
+<dl class="py method">
+<dt id="nukernelmtd.utils.Bandwidth.LCV_method">
+<code class="sig-name descname">LCV_method</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.Bandwidth.LCV_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.Bandwidth.bandwidth">
+<em class="property">property </em><code class="sig-name descname">bandwidth</code><a class="headerlink" href="#nukernelmtd.utils.Bandwidth.bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.Bandwidth.cov">
+<em class="property">property </em><code class="sig-name descname">cov</code><a class="headerlink" href="#nukernelmtd.utils.Bandwidth.cov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.Bandwidth.inv_cov">
+<em class="property">property </em><code class="sig-name descname">inv_cov</code><a class="headerlink" href="#nukernelmtd.utils.Bandwidth.inv_cov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.Bandwidth.median_method">
+<code class="sig-name descname">median_method</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.Bandwidth.median_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Euclidean distance between data is calculated, and the mode of distance is defined as the bandwidth.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.Bandwidth.scott_factor">
+<code class="sig-name descname">scott_factor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.Bandwidth.scott_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute Scott’s factor.
+: n ^ (-1/(d+4))</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.Bandwidth.set_bandwidth">
+<code class="sig-name descname">set_bandwidth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.Bandwidth.set_bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="nukernelmtd.utils.Bandwidth.silverman_factor">
+<code class="sig-name descname">silverman_factor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.Bandwidth.silverman_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the Silverman’s factor.
+factor = (4/(d+2))**(1/(d+4)) * n**(-1/(d+4))
+so, j-th bandwidth
+h_j = factor*sig_j</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.utils.sample_clipper">
+<code class="sig-prename descclassname">nukernelmtd.utils.</code><code class="sig-name descname">sample_clipper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">samples</span></em>, <em class="sig-param"><span class="n">bounds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.sample_clipper" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method to clip samples into range.
+Clip the samples according to the max and min of bounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samples</strong> (<em>array-like</em>) – the shape of array is (n_samples,ndim)</p></li>
+<li><p><strong>bounds</strong> (<em>array-like</em>) – <p>the shape of array is (n_dim, 2).
+If you want to clip 3-dimentional data, the bounds should be:
+bounds = np.array([[min, max],</p>
+<blockquote>
+<div><p>[min, max],
+[min, max]])</p>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Clipped samples and sample size after clipping.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array, int</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sample_clipper</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="n">bounds</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">],[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]]))</span>
+<span class="go">(array([[3., 3.],</span>
+<span class="go">       [2., 4.]]), 2)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.utils.transform_data">
+<code class="sig-prename descclassname">nukernelmtd.utils.</code><code class="sig-name descname">transform_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.utils.transform_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>data transform</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>array-like</em>) – transform input data into 2d-array of shape (N, n_feature).</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – [description]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>[description]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array-like</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform_data</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="go">array([[1.],</span>
+<span class="go">       [2.],</span>
+<span class="go">       [3.]])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform_data</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="go">array([[1., 2., 3.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="nukernelmtd.sampling.MCMC.html" class="btn btn-neutral float-left" title="nukernelmtd.sampling.MCMC package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Yu Kiyokawa
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

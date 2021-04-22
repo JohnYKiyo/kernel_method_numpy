@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nukernelmtd.metrics package &mdash; nukernelmtd 1.0.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="nukernelmtd.sampling package" href="nukernelmtd.sampling.html" />
+    <link rel="prev" title="nukernelmtd.kernel package" href="nukernelmtd.kernel.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> nukernelmtd
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="nukernelmtd.html">nukernelmtd package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="nukernelmtd.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.data.html">nukernelmtd.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.kernel.html">nukernelmtd.kernel package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">nukernelmtd.metrics package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.metrics.distance">nukernelmtd.metrics.distance module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.metrics.mmd">nukernelmtd.metrics.mmd module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-nukernelmtd.metrics">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.sampling.html">nukernelmtd.sampling package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nukernelmtd.utils.html">nukernelmtd.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_abc">nukernelmtd.kernel_abc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd.kernel_mean">nukernelmtd.kernel_mean module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nukernelmtd.html#module-nukernelmtd">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nukernelmtd</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="nukernelmtd.html">nukernelmtd package</a> &raquo;</li>
+        
+      <li>nukernelmtd.metrics package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/nukernelmtd.metrics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="nukernelmtd-metrics-package">
+<h1>nukernelmtd.metrics package<a class="headerlink" href="#nukernelmtd-metrics-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-nukernelmtd.metrics.distance">
+<span id="nukernelmtd-metrics-distance-module"></span><h2>nukernelmtd.metrics.distance module<a class="headerlink" href="#module-nukernelmtd.metrics.distance" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="nukernelmtd.metrics.distance.pairwise_euclid_distances">
+<code class="sig-prename descclassname">nukernelmtd.metrics.distance.</code><code class="sig-name descname">pairwise_euclid_distances</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">square</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.metrics.distance.pairwise_euclid_distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a pairwise distance matrix.
+d_ij = (x_i-y_i)^2
+:param x: [description]
+:type x: 2d numpy.array
+:param y: [description]
+:type y: 2d numpy.array
+:param square: Set to True to square the return value, (x-y)^2,</p>
+<blockquote>
+<div><p>if set to False, return <a href="#id1"><span class="problematic" id="id2">|x-y|</span></a>. Defaults to True.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>if square is Ture, return (x-y)^2, else, return <a href="#id3"><span class="problematic" id="id4">|x-y|</span></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_euclid_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]))</span>
+<span class="go">array([[8.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_euclid_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">]]))</span>
+<span class="go">array([[ 1.,  0.],</span>
+<span class="go">       [13.,  8.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.metrics.distance.pairwise_mahalanobis_distances">
+<code class="sig-prename descclassname">nukernelmtd.metrics.distance.</code><code class="sig-name descname">pairwise_mahalanobis_distances</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">Q</span></em>, <em class="sig-param"><span class="n">square</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.metrics.distance.pairwise_mahalanobis_distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+d(x,y) = (x-y)Q(x-y)
+:param x: [description]
+:type x: 2d numpy.array
+:param y: [description]
+:type y: 2d numpy.array
+:param square: Set to True to square the return value, (x-y)Q(x-y)^T,</p>
+<blockquote>
+<div><p>if set to False, return ((x-y)Q(x-y)^T)^0.5. Defaults to True.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>if square is Ture, return (x-y)Q(x-y)^T, else, return ((x-y)Q(x-y)^T)^0.5.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_mahalanobis_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">]]))</span>
+<span class="go">array([[24.]])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_mahalanobis_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">]]),</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">array([[4.89897949]])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_mahalanobis_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">1.</span><span class="p">]]))</span>
+<span class="go">array([[ 1.,  0.],</span>
+<span class="go">       [31., 20.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.metrics.mmd">
+<span id="nukernelmtd-metrics-mmd-module"></span><h2>nukernelmtd.metrics.mmd module<a class="headerlink" href="#module-nukernelmtd.metrics.mmd" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="nukernelmtd.metrics.mmd.maximum_mean_discrepancy">
+<code class="sig-prename descclassname">nukernelmtd.metrics.mmd.</code><code class="sig-name descname">maximum_mean_discrepancy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">Y</span></em>, <em class="sig-param"><span class="n">kernel</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.metrics.mmd.maximum_mean_discrepancy" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+Compute Maximum Mean Discrepancy: ||m_X-m_Y||^2 = 1/(N^2) k(X,X) + 1/(M^2) k(Y,Y) - 2*1/(NM) k(X,Y)
+:param X:
+:type X: ndarray or KernelMean
+:param Y:
+:type Y: ndarray or KernelMean
+:param kernel: Defaults to None.
+:type kernel: kernel class, optional</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>[description]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>[type]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nukernelmtd.metrics">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nukernelmtd.metrics" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="nukernelmtd.metrics.maximum_mean_discrepancy">
+<code class="sig-prename descclassname">nukernelmtd.metrics.</code><code class="sig-name descname">maximum_mean_discrepancy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">Y</span></em>, <em class="sig-param"><span class="n">kernel</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.metrics.maximum_mean_discrepancy" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+Compute Maximum Mean Discrepancy: ||m_X-m_Y||^2 = 1/(N^2) k(X,X) + 1/(M^2) k(Y,Y) - 2*1/(NM) k(X,Y)
+:param X:
+:type X: ndarray or KernelMean
+:param Y:
+:type Y: ndarray or KernelMean
+:param kernel: Defaults to None.
+:type kernel: kernel class, optional</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>[description]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>[type]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.metrics.pairwise_euclid_distances">
+<code class="sig-prename descclassname">nukernelmtd.metrics.</code><code class="sig-name descname">pairwise_euclid_distances</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">square</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.metrics.pairwise_euclid_distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a pairwise distance matrix.
+d_ij = (x_i-y_i)^2
+:param x: [description]
+:type x: 2d numpy.array
+:param y: [description]
+:type y: 2d numpy.array
+:param square: Set to True to square the return value, (x-y)^2,</p>
+<blockquote>
+<div><p>if set to False, return <a href="#id5"><span class="problematic" id="id6">|x-y|</span></a>. Defaults to True.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>if square is Ture, return (x-y)^2, else, return <a href="#id7"><span class="problematic" id="id8">|x-y|</span></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_euclid_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]))</span>
+<span class="go">array([[8.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_euclid_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">]]))</span>
+<span class="go">array([[ 1.,  0.],</span>
+<span class="go">       [13.,  8.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="nukernelmtd.metrics.pairwise_mahalanobis_distances">
+<code class="sig-prename descclassname">nukernelmtd.metrics.</code><code class="sig-name descname">pairwise_mahalanobis_distances</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">Q</span></em>, <em class="sig-param"><span class="n">square</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#nukernelmtd.metrics.pairwise_mahalanobis_distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>[summary]
+d(x,y) = (x-y)Q(x-y)
+:param x: [description]
+:type x: 2d numpy.array
+:param y: [description]
+:type y: 2d numpy.array
+:param square: Set to True to square the return value, (x-y)Q(x-y)^T,</p>
+<blockquote>
+<div><p>if set to False, return ((x-y)Q(x-y)^T)^0.5. Defaults to True.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>if square is Ture, return (x-y)Q(x-y)^T, else, return ((x-y)Q(x-y)^T)^0.5.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_mahalanobis_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">]]))</span>
+<span class="go">array([[24.]])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_mahalanobis_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">]]),</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">array([[4.89897949]])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pairwise_mahalanobis_distances</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">3.</span><span class="p">,</span><span class="mf">4.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">]]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">1.</span><span class="p">]]))</span>
+<span class="go">array([[ 1.,  0.],</span>
+<span class="go">       [31., 20.]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nukernelmtd.sampling.html" class="btn btn-neutral float-right" title="nukernelmtd.sampling package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nukernelmtd.kernel.html" class="btn btn-neutral float-left" title="nukernelmtd.kernel package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Yu Kiyokawa
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
