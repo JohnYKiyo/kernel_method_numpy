@@ -163,27 +163,27 @@ class KernelABC(object):
 
     @property
     def data(self):
-        return self.__data
+        return self.__data.copy()
 
     @property
     def para(self):
-        return self.__para
+        return self.__para.copy()
 
     @property
     def weights(self):
         try:
-            return self.__weights.ravel()
+            return self.__weights.ravel().copy()
         except:  # noqa
             raise ValueError('Not yet conditioned. Did you condition it?')
 
     @property
     def k_obs(self):
-        return self.__k_obs
+        return self.__k_obs.copy()
 
     @property
     def obs(self):
         try:
-            return self.__obs
+            return self.__obs.copy()
         except:  # noqa
             raise ValueError('Not yet conditioned. Did you condition it?')
 
