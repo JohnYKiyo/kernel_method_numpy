@@ -40,6 +40,7 @@ class KernelMean(object):
             self._data = data
         else:
             self._data = pd.DataFrame(data)
+
         self._n_samples, self._n_features = self._data.shape
         self._weights = np.atleast_2d(np.full(self._n_samples, 1. / self._n_samples)).T
         if weights is not None:
@@ -169,15 +170,15 @@ class KernelMean(object):
 
     @property
     def weights(self):
-        return self._weights
+        return self._weights.copy()
 
     @property
     def data(self):
-        return self._data
+        return self._data.copy()
 
     @property
     def n_samples(self):
-        return self._n_samples
+        return copy.copy(self._n_samples)
 
 
 def test(data):

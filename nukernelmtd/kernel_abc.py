@@ -117,7 +117,7 @@ class KernelABC(object):
 
     @property
     def gram(self):
-        return self.__gram_matrix
+        return self.__gram_matrix.copy()
 
     @property
     def kernel(self):
@@ -136,7 +136,7 @@ class KernelABC(object):
 
     @property
     def epsilon(self):
-        return self.__epsilon
+        return copy.copy(self.__epsilon)
 
     @epsilon.setter
     def epsilon(self, epsilon):
@@ -151,15 +151,15 @@ class KernelABC(object):
 
     @property
     def ndim_data(self):
-        return self.__ndim_data
+        return copy.copy(self.__ndim_data)
 
     @property
     def ndim_para(self):
-        return self.__ndim_para
+        return copy.copy(self.__ndim_para)
 
     @property
     def ndata(self):
-        return self.__ndata
+        return copy.copy(self.__ndata)
 
     @property
     def data(self):
@@ -217,5 +217,5 @@ if __name__ == '__main__':
     if not os.path.exists('./pic/test/kernelabc/'):
         os.makedirs('./pic/test/kernelabc/')
 
-    from kernelmtd import data
+    from nukernelmtd import data
     test(data)
