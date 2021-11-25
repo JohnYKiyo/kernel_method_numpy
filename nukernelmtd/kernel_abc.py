@@ -109,7 +109,8 @@ class KernelABC(object):
         :math:`E_{\\theta|Y_{obs}}[\\theta] = < m_{\\theta}|Y_{obs} | \\cdot > = \\sum_i w_i \\theta_i`.
         """
         try:
-            EAP = np.einsum('ij,id->jd', self.__weights, self.__para)
+            # EAP = np.einsum('ij,id->jd', self.__weights, self.__para)
+            EAP = np.einsum('ij,id->jd', self.weights_normalize, self.__para)
         except:  # noqa
             raise ValueError('Not yet conditioned. Did you condition it?')
 
@@ -176,6 +177,10 @@ class KernelABC(object):
         except:  # noqa
             raise ValueError('Not yet conditioned. Did you condition it?')
 
+    @property
+    def weights_normalize(self):
+        return self.__weights / np.sum(self.__weights)
+    
     @property
     def k_obs(self):
         return self.__k_obs.copy()
